@@ -71,7 +71,6 @@
             this.toolStripEditor = new System.Windows.Forms.ToolStrip();
             this.btnSaveEditor = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.textBoxEditor = new System.Windows.Forms.TextBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -80,6 +79,7 @@
             this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.textBoxEditor2 = new ScintillaNet.Scintilla();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -94,6 +94,7 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView1
@@ -137,13 +138,13 @@
             // 
             this.MiNew.Enabled = false;
             this.MiNew.Name = "MiNew";
-            this.MiNew.Size = new System.Drawing.Size(152, 22);
+            this.MiNew.Size = new System.Drawing.Size(114, 22);
             this.MiNew.Text = "New";
             // 
             // MiOpen
             // 
             this.MiOpen.Name = "MiOpen";
-            this.MiOpen.Size = new System.Drawing.Size(152, 22);
+            this.MiOpen.Size = new System.Drawing.Size(114, 22);
             this.MiOpen.Text = "Open";
             this.MiOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -151,7 +152,7 @@
             // 
             this.MiSave.Enabled = false;
             this.MiSave.Name = "MiSave";
-            this.MiSave.Size = new System.Drawing.Size(152, 22);
+            this.MiSave.Size = new System.Drawing.Size(114, 22);
             this.MiSave.Text = "Save";
             this.MiSave.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -159,7 +160,7 @@
             // 
             this.MiSaveAs.Enabled = false;
             this.MiSaveAs.Name = "MiSaveAs";
-            this.MiSaveAs.Size = new System.Drawing.Size(152, 22);
+            this.MiSaveAs.Size = new System.Drawing.Size(114, 22);
             this.MiSaveAs.Text = "Save As";
             this.MiSaveAs.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -167,19 +168,19 @@
             // 
             this.MiClose.Enabled = false;
             this.MiClose.Name = "MiClose";
-            this.MiClose.Size = new System.Drawing.Size(152, 22);
+            this.MiClose.Size = new System.Drawing.Size(114, 22);
             this.MiClose.Text = "Close";
             this.MiClose.Click += new System.EventHandler(this.MiClose_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(111, 6);
             // 
             // MiExit
             // 
             this.MiExit.Name = "MiExit";
-            this.MiExit.Size = new System.Drawing.Size(152, 22);
+            this.MiExit.Size = new System.Drawing.Size(114, 22);
             this.MiExit.Text = "Exit";
             this.MiExit.Click += new System.EventHandler(this.MiExit_Click);
             // 
@@ -358,6 +359,7 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // toolStripDesigner
@@ -475,8 +477,8 @@
             this.panelEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelEditor.Controls.Add(this.textBoxEditor2);
             this.panelEditor.Controls.Add(this.toolStripEditor);
-            this.panelEditor.Controls.Add(this.textBoxEditor);
             this.panelEditor.Location = new System.Drawing.Point(3, 3);
             this.panelEditor.Name = "panelEditor";
             this.panelEditor.Size = new System.Drawing.Size(958, 680);
@@ -511,19 +513,6 @@
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(59, 22);
             this.toolStripLabel1.Text = "No Errors.";
-            // 
-            // textBoxEditor
-            // 
-            this.textBoxEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxEditor.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxEditor.Location = new System.Drawing.Point(3, 28);
-            this.textBoxEditor.Multiline = true;
-            this.textBoxEditor.Name = "textBoxEditor";
-            this.textBoxEditor.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxEditor.Size = new System.Drawing.Size(952, 649);
-            this.textBoxEditor.TabIndex = 0;
             // 
             // propertyGrid1
             // 
@@ -616,6 +605,24 @@
             this.toolStripButton1.Size = new System.Drawing.Size(36, 36);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
+            // textBoxEditor2
+            // 
+            this.textBoxEditor2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxEditor2.Location = new System.Drawing.Point(0, 25);
+            this.textBoxEditor2.Margins.Margin0.Width = 30;
+            this.textBoxEditor2.Margins.Margin1.Width = 2;
+            this.textBoxEditor2.Name = "textBoxEditor2";
+            this.textBoxEditor2.Size = new System.Drawing.Size(958, 655);
+            this.textBoxEditor2.Styles.BraceBad.FontName = "Verdana";
+            this.textBoxEditor2.Styles.BraceLight.FontName = "Verdana";
+            this.textBoxEditor2.Styles.ControlChar.FontName = "Verdana";
+            this.textBoxEditor2.Styles.Default.FontName = "Verdana";
+            this.textBoxEditor2.Styles.IndentGuide.FontName = "Verdana";
+            this.textBoxEditor2.Styles.LastPredefined.FontName = "Verdana";
+            this.textBoxEditor2.Styles.LineNumber.FontName = "Verdana";
+            this.textBoxEditor2.Styles.Max.FontName = "Verdana";
+            this.textBoxEditor2.TabIndex = 2;
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -642,7 +649,6 @@
             this.toolStripDesigner.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panelEditor.ResumeLayout(false);
-            this.panelEditor.PerformLayout();
             this.toolStripEditor.ResumeLayout(false);
             this.toolStripEditor.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -650,6 +656,7 @@
             this.splitContainer1.ResumeLayout(false);
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -669,7 +676,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TextBox textBoxEditor;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MiResolution;
@@ -708,6 +714,7 @@
         private System.Windows.Forms.Panel panelDesignerInner;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton btnFading;
+        private ScintillaNet.Scintilla textBoxEditor2;
     }
 }
 

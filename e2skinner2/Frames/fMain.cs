@@ -24,6 +24,8 @@ namespace e2skinner2.Frames
         {
             InitializeComponent();
 
+            textBoxEditor2.ConfigurationManager.Language = "xml";
+
             this.Text = String.Format("{0} v{1}", ((AssemblyProductAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product, Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             pDesigner = new cDesigner(pictureBox1.CreateGraphics());
@@ -95,7 +97,8 @@ namespace e2skinner2.Frames
             cDataBase.clear();
             treeView1.Nodes.Clear();
             treeView1.Invalidate();
-            textBoxEditor.Clear();
+            //textBoxEditor.Clear();
+            textBoxEditor2.Text = "";
             propertyGrid1.SelectedObject = null;
 
             pictureBox1.Invalidate();
@@ -143,13 +146,19 @@ namespace e2skinner2.Frames
                 int hash = selectedNode.GetHashCode();
                 XmlNode node = pXmlHandler.XmlGetNode(hash);
                 {
-                    textBoxEditor.Clear();
+                    //textBoxEditor.Clear();
                     String text = node.OuterXml;
                     text = FormatXml(node);
-                    textBoxEditor.AppendText(text);
+                    //textBoxEditor.AppendText(text);
 
-                    textBoxEditor.SelectionStart = 0;
-                    textBoxEditor.ScrollToCaret();
+                    //textBoxEditor.SelectionStart = 0;
+                    //textBoxEditor.ScrollToCaret();
+
+                    //textBoxEditor2.Clear();
+                    textBoxEditor2.Text = text;
+
+                    //textBoxEditor2.SelectionStart = 0;
+                    //textBoxEditor2.ScrollToCaret();
                 }
             }
         }
@@ -476,7 +485,9 @@ namespace e2skinner2.Frames
             int hash = treeView1.SelectedNode.GetHashCode();
             try
             {
-                pXmlHandler.XmlReplaceNode(hash,textBoxEditor.Text); 
+                //pXmlHandler.XmlReplaceNode(hash,textBoxEditor.Text);
+
+                pXmlHandler.XmlReplaceNode(hash, textBoxEditor2.Text); 
 
                 refresh();
                 propertyGrid1_PropertyValueChanged(null, null);
@@ -488,16 +499,7 @@ namespace e2skinner2.Frames
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            sGraphicElement ele = pDesigner.getElement((uint)((MouseEventArgs)e).X, (uint)((MouseEventArgs)e).Y);
-            if (ele != null)
-            {
-                //toolStripLabel2.Text = ele.ToString();
-                if (ele.pAttr != null)
-                    treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(ele.pAttr.myNode);
-            }
-        }
+
 
         private void btnFading_Click(object sender, EventArgs e)
         {
@@ -509,6 +511,39 @@ namespace e2skinner2.Frames
         private void MiClose_Click(object sender, EventArgs e)
         {
             close();
+        }
+
+        int x = 0;
+        int y = 0;
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            System.Console.WriteLine("pictureBox1_Click");
+            sGraphicElement pele = pDesigner.getElement((uint)x, (uint)y);
+            if (pele != null)
+            {
+                pele.pX += (uint)(((MouseEventArgs)e).X - x);
+                pele.pY += (uint)(((MouseEventArgs)e).Y - y);
+                refresh();
+            }
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            System.Console.WriteLine("pictureBox1_MouseDown");
+
+            x = ((MouseEventArgs)e).X;
+            y = ((MouseEventArgs)e).Y;
+
+            sGraphicElement ele = pDesigner.getElement((uint)((MouseEventArgs)e).X, (uint)((MouseEventArgs)e).Y);
+            if (ele != null)
+            {
+                //toolStripLabel2.Text = ele.ToString();
+                if (ele.pAttr != null)
+                    treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(ele.pAttr.myNode);
+            }
+
+
         }
     }
 }

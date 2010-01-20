@@ -82,11 +82,12 @@ namespace e2skinner2.Structures
                     errormessage += error.TargetSite + "\n\n";
                     errormessage += name + "\n\n";
 
-                    MessageBox.Show(errormessage,
+                    //This message box is annoying
+                    /*MessageBox.Show(errormessage,
                         error.Message,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information,
-                        MessageBoxDefaultButton.Button1);
+                        MessageBoxDefaultButton.Button1);*/
 
                     return;
                 }

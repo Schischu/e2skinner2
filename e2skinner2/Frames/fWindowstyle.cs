@@ -128,6 +128,8 @@ namespace e2skinner2.Frames
             attr.pbpBottom = borderset.pbpBottom;
             attr.pbpBottomRight = borderset.pbpBottomRight;
 
+            //attr.Flags = "wfBorder";
+
             pDesigner.clear();
             pDesigner.draw(attr);
         }

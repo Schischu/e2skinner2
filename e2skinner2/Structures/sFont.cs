@@ -29,21 +29,34 @@ namespace e2skinner2.Structures
 
         public sFont(String name, String path, int scale, bool replacement)
         {
+            String fontPath = cProperties.getProperty("path_fonts");
             Name = name; 
             Path = path;
-            Filename = Path.Substring(Path.LastIndexOf('/')>0?Path.LastIndexOf('/'):0);
+            //This way we have only the file name, but what happens if the fonts are in the skin directory ?
+            //Lets check all posibilities
+            Filename = Path.Substring(Path.LastIndexOf('/')>0?Path.LastIndexOf('/')+1:0);
+            if (!File.Exists(fontPath + "/" + Filename))
+            {
+                Filename = Path;
+                Filename = Filename.Replace("enigma2", "");
+                Filename = Filename.Replace("usr", "");
+                Filename = Filename.Replace("local", "");
+                Filename = Filename.Replace("share", "");
+                Filename = Filename.Replace("var", "");
+                fontPath = fontPath.Replace("fonts", "");
+            }
             Scale = scale;
             Replacement = replacement;
 
             pfc = new PrivateFontCollection();
                 try
                 {
-                    pfc.AddFontFile(cProperties.getProperty("path_fonts") + "/" + Path);
+                    pfc.AddFontFile(fontPath + "/" + Filename);
                 }
                 catch (FileNotFoundException error)
                 {
                     String errormessage = error.Message + ":\n\n";
-                    errormessage += cProperties.getProperty("path_fonts") + "/" + Path + "\n";
+                    errormessage += fontPath + "/" + Filename + "\n";
                     errormessage += error.Message;
 
                     MessageBox.Show(errormessage,
@@ -54,12 +67,9 @@ namespace e2skinner2.Structures
 
                     return;
                 }
-                //pfc.Families.GetValue(0);
 
-                //FontFamily = pfc.Families[0];
                 FontFamily = pfc.Families[0];
                 String name2 = FontFamily.GetName(0);
-                //name2 = FontFamily.Name;
                 FontStyle = System.Drawing.FontStyle.Regular;
                 if (FontFamily.IsStyleAvailable(System.Drawing.FontStyle.Regular))
                     FontStyle = System.Drawing.FontStyle.Regular;
@@ -70,8 +80,6 @@ namespace e2skinner2.Structures
                 int t2 = FontFamily.GetCellDescent(FontStyle);
                 int t3 = FontFamily.GetEmHeight(FontStyle);
                 int t4 = FontFamily.GetLineSpacing(FontStyle);
-
-                //Font = new System.Drawing.Font(FontFamily, 20, FontStyle, System.Drawing.GraphicsUnit.Pixel);
         }
     }
 }
