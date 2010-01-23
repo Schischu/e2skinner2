@@ -187,6 +187,9 @@ namespace e2skinner2.Frames
                     if (screenNode != null)
                     {
                         //Draw Screen and its Elements
+
+                        pDesigner.drawBackground();
+
                         sAttribute subattr = null;
                         {
                             sAttribute attr = new sAttributeScreen(screenNode);
@@ -625,6 +628,21 @@ namespace e2skinner2.Frames
             return (isUP(e) || isDOWN(e) || isLEFT(e) || isRIGHT(e));
         }
 
+        private bool isPLUS(KeyEventArgs e)
+        {
+            return ((int)e.KeyCode) == 107;
+        }
+
+        private bool isMINUS(KeyEventArgs e)
+        {
+            return ((int)e.KeyCode) == 109;
+        }
+
+        private bool isF11(KeyEventArgs e)
+        {
+            return e.KeyCode == Keys.F11;
+        }
+
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
             // If CTRL pressed, use margin 1, else margin 5
@@ -661,6 +679,19 @@ namespace e2skinner2.Frames
 
                 e.Handled = true;
             }
+            else if (isPLUS(e))
+            {
+                //pDesigner.zoomIn();
+                //pictureBox1.Scale(new SizeF((float)0.5, (float)0.5));
+                //
+                pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+                pictureBox1.Invalidate();
+            }
+            else if (isMINUS(e))
+            {
+                pDesigner.zoomOut();
+                pictureBox1.Invalidate();
+            }
         }
 
         private void tabControl1_Enter(object sender, EventArgs e)
@@ -671,6 +702,70 @@ namespace e2skinner2.Frames
         private void tabControl1_Leave(object sender, EventArgs e)
         {
             this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.UnLock_icon;
+        }
+
+        private bool _bFullScreenMode = false;
+        private int x, y, w, h, h_ms1;
+
+        private void toggleFullscreen()
+        {
+            if (_bFullScreenMode == false)
+            {
+                x = this.Left;
+                y = this.Top;
+                w = this.Width;
+                h = this.Height;
+                h_ms1 = menuStrip1.Height;
+
+                this.FormBorderStyle = FormBorderStyle.None;
+                //menuStrip1.Hide();
+                //toolStripMain.Hide();
+
+                menuStrip1.Visible = false;
+                toolStripMain.Visible = false;
+
+                //menuStrip1.Height = 0;
+                //menuStrip1.Size = new Size(menuStrip1.Width, 0);
+                this.Left = 0;
+                this.Top = 0;
+                this.Width = Screen.PrimaryScreen.Bounds.Width;
+                this.Height = Screen.PrimaryScreen.Bounds.Height;
+                
+                _bFullScreenMode = true;
+            }
+            else
+            {
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+                
+                toolStripMain.Visible = true;
+                menuStrip1.Visible = true;
+
+                //menuStrip1.Height = h_ms1;
+
+                this.Left = x;
+                this.Top = y;
+                this.Width = w;
+                this.Height = h;
+
+                _bFullScreenMode = false;
+            }
+        }
+
+        private void fMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(isF11(e))
+                toggleFullscreen();
+        }
+
+        private void fMain_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            cProperties.setProperty("enable_alpha", btnFading.Checked);
+
+            pictureBox1.Invalidate();
         }
     }
 }

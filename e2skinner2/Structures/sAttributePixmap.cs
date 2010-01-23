@@ -63,6 +63,14 @@ namespace e2skinner2.Structures
                 else if (value == cProperty.eAlphatest.blend.ToString()) pAlphatest = cProperty.eAlphatest.blend;
                 else pAlphatest = cProperty.eAlphatest.off;
 
+                if (myNode.Attributes["alphatest"] != null)
+                    myNode.Attributes["alphatest"].Value = "off";
+                else
+                {
+                    myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("alphatest"));
+                    myNode.Attributes["alphatest"].Value = "off";
+                }
+
                 if (pAlphatest == cProperty.eAlphatest.on) myNode.Attributes["alphatest"].Value = "on";
                 else if (pAlphatest == cProperty.eAlphatest.blend) myNode.Attributes["alphatest"].Value = "blend";
                 else myNode.Attributes["alphatest"].Value = "off";

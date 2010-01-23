@@ -22,7 +22,8 @@ namespace e2skinner2.Frames
                 ListViewItem item = new ListViewItem(new String[] { key.Key.ToString(), key.Value.ToString() });
                 listView1.Items.Add(item);
             }
-            if(listView1.Items.Count>0)
+
+            if(listView1.Items.Count > 0)
                 listView1.RedrawItems(0, listView1.Items.Count - 1, false);
         }
 

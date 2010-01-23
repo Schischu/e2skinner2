@@ -18,7 +18,7 @@ namespace e2skinner2.Structures
             pName = name; 
             pValue = value;
 
-            int alpha = (int)(pValue >> 24) & 0xff;
+            int alpha = 255-((int)(pValue >> 24) & 0xff);
             int red = (int)(pValue >> 16) & 0xff;
             int green = (int)(pValue >> 8) & 0xff;
             int blue = (int)pValue & 0xff;

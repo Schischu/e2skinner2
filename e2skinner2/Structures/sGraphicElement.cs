@@ -8,18 +8,18 @@ namespace e2skinner2.Structures
 {
     public class sGraphicElement : IComparable
     {
-        private UInt32 _pX;
-        private UInt32 _pY;
+        private Int32 _pX;
+        private Int32 _pY;
 
         [BrowsableAttribute(false)]
-        public UInt32 pX
+        public Int32 pX
         {
             get { return pAttr != null?pAttr.pAbsolutX:_pX; }
             set { _pX = value; }
         }
 
         [BrowsableAttribute(false)]
-        public UInt32 pY
+        public Int32 pY
         {
             get { return pAttr != null ? pAttr.pAbsolutY : _pY; }
             set { _pY = value; }
@@ -27,8 +27,8 @@ namespace e2skinner2.Structures
 
         //public UInt32 pX;
         //public UInt32 pY;
-        public UInt32 pWidth;
-        public UInt32 pHeight;
+        public Int32 pWidth;
+        public Int32 pHeight;
 
         public sAttribute pAttr = null;
 
@@ -37,16 +37,19 @@ namespace e2skinner2.Structures
         public sGraphicElement(sAttribute attr)
         {
             pAttr = attr;
+            if (pAttr != null)
+            {
+                pX = attr.pAbsolutX;
+                pY = attr.pAbsolutY;
+                pWidth = attr.pWidth;
+                pHeight = attr.pHeight;
 
-            pX = attr.pAbsolutX;
-            pY = attr.pAbsolutY;
-            pWidth = attr.pWidth;
-            pHeight = attr.pHeight;
-
-            pZPosition = attr.pZPosition;
+                pZPosition = attr.pZPosition;
+            } else
+                pZPosition = 0;
         }
 
-        public sGraphicElement(UInt32 x, UInt32 y, UInt32 width, UInt32 height)
+        public sGraphicElement(Int32 x, Int32 y, Int32 width, Int32 height)
         {
             pX = x;
             pY = y;

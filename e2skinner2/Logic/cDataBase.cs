@@ -66,7 +66,7 @@ namespace e2skinner2.Logic
                 Hashtable colors = new Hashtable();
                 sFont titlefont = null;
                 float titlesize = (float)0.0;
-                UInt32 xOff = 0, yOff = 0;
+                Int32 xOff = 0, yOff = 0;
                 ArrayList bordersets = new ArrayList();
 
                 string[] path = { "skin", "windowstyle" };
@@ -84,8 +84,8 @@ namespace e2skinner2.Logic
                         titlesize = Convert.ToSingle(font.Substring(font.IndexOf(';') + 1));
                         font = font.Substring(0, font.IndexOf(';'));
                         titlefont = getFont(font);
-                        xOff = Convert.ToUInt32(myXmlNode.Attributes["offset"].Value.Substring(0, myXmlNode.Attributes["offset"].Value.IndexOf(',')));
-                        yOff = Convert.ToUInt32(myXmlNode.Attributes["offset"].Value.Substring(myXmlNode.Attributes["offset"].Value.IndexOf(',') + 1));
+                        xOff = Convert.ToInt32(myXmlNode.Attributes["offset"].Value.Substring(0, myXmlNode.Attributes["offset"].Value.IndexOf(',')));
+                        yOff = Convert.ToInt32(myXmlNode.Attributes["offset"].Value.Substring(myXmlNode.Attributes["offset"].Value.IndexOf(',') + 1));
                     }
                     else if (myXmlNode.Name == "borderset")
                     {
@@ -624,40 +624,13 @@ namespace e2skinner2.Logic
 
                     if (node.Attributes != null)
                     {
-                        if (node.Attributes["position"] != null)
-                        {
-                            {
-                                double dx, dy;
-                                 try
-                                {
-                                    dx = Convert.ToInt32(node.Attributes["position"].Value.Substring(0, node.Attributes["position"].Value.IndexOf(',')));
-                                }
-                                catch (OverflowException e)
-                                {
-                                    dx = 0;
-                                }
-                                 dx *= scale_x;
-                                try
-                                {
-                                    dy = Convert.ToInt32(node.Attributes["position"].Value.Substring(node.Attributes["position"].Value.IndexOf(',') + 1));
-                                }
-                                catch (OverflowException e)
-                                {
-                                    dy = 0;
-                                }
-                                dy *= scale_y;
-
-                                int x = (int)dx;
-                                int y = (int)dy;
-
-                                node.Attributes["position"].Value = x.ToString() + ", " + y.ToString();
-                            }
-                        }
+                        int w = 0;
+                        int h = 0;
                         if (node.Attributes["size"] != null)
                         {
                             {
                                 double dw, dh;
-                                 try
+                                try
                                 {
                                     dw = Convert.ToInt32(node.Attributes["size"].Value.Substring(0, node.Attributes["size"].Value.IndexOf(',')));
                                 }
@@ -676,12 +649,50 @@ namespace e2skinner2.Logic
                                 }
                                 dh *= scale_y;
 
-                                int w = (int)dw;
-                                int h = (int)dh;
+                                w = (int)dw;
+                                h = (int)dh;
 
                                 node.Attributes["size"].Value = w.ToString() + ", " + h.ToString();
                             }
                         }
+                        if (node.Attributes["position"] != null)
+                        {
+                            {
+                                double dx, dy;
+                                 try
+                                {
+                                    String sRelativeX = node.Attributes["position"].Value.Substring(0, node.Attributes["position"].Value.IndexOf(',')).Trim();
+                                    if (sRelativeX.Equals("center"))
+                                        dx = (cDataBase.pResolution.getResolution().Xres - w) >> 1 /*1/2*/;
+                                    else
+                                        dx = Convert.ToUInt32(sRelativeX);
+                                }
+                                catch (OverflowException e)
+                                {
+                                    dx = 0;
+                                }
+                                 dx *= scale_x;
+                                try
+                                {
+                                    String sRelativeY = node.Attributes["position"].Value.Substring(node.Attributes["position"].Value.IndexOf(',') + 1).Trim();
+                                    if (sRelativeY.Equals("center"))
+                                        dy = (cDataBase.pResolution.getResolution().Yres - h) >> 1 /*1/2*/;
+                                    else
+                                        dy = Convert.ToUInt32(sRelativeY);
+                                }
+                                catch (OverflowException e)
+                                {
+                                    dy = 0;
+                                }
+                                dy *= scale_y;
+
+                                int x = (int)dx;
+                                int y = (int)dy;
+
+                                node.Attributes["position"].Value = x.ToString() + ", " + y.ToString();
+                            }
+                        }
+                        
                         if (node.Attributes["font"] != null)
                         { //font="Regular;20"
                             String tmpfont = node.Attributes["font"].Value;

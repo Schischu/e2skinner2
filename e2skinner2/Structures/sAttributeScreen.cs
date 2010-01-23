@@ -16,8 +16,8 @@ namespace e2skinner2.Structures
         public String pTitle;
         public float pTitleSize;
         public sFont pTitleFont;
-        public UInt32 pTitleXOff;
-        public UInt32 pTitleYOff;
+        public Int32 pTitleXOff;
+        public Int32 pTitleYOff;
 
         public sColor pBackgroundColor;
         public enum eFlags { wfBorder, wfNoBorder };

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 //using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Data;
 
 namespace e2skinner2.Logic
 {
@@ -10,8 +11,42 @@ namespace e2skinner2.Logic
     {
         static private Hashtable pDefaultTable = new Hashtable();
         static private Hashtable pTable = new Hashtable();
+        static public DataSet pDataSet;
 
-        static cProperties()
+        static private DataTable createTable(System.Type type) {
+            DataTable dt = new DataTable(type.ToString());
+
+            DataColumn dcName = new DataColumn();
+            dcName.ColumnName = "Name";
+            dcName.Caption = "Name";
+            dcName.DataType = typeof(String);
+            dcName.DefaultValue = "";
+
+            dt.Columns.Add(dcName);
+
+            DataColumn dcValue = new DataColumn();
+            dcValue.ColumnName = "Value";
+            dcValue.Caption = "Value";
+            dcValue.DataType = type;
+
+            dt.Columns.Add(dcValue);
+
+            DataRow dr;
+
+            foreach (DictionaryEntry key in pDefaultTable)
+            {
+                if (key.Value.GetType() == type)
+                {
+                    dr = dt.NewRow();
+                    dr[0] = key.Key.ToString();
+                    dr[1] = key.Value;
+                    dt.Rows.Add(dr);
+                }
+            }
+            return dt;
+        }
+
+        static public void init()
         {
             pDefaultTable.Add("fading", (bool)true);
             pDefaultTable.Add("label_test", (bool)true);
@@ -23,8 +58,16 @@ namespace e2skinner2.Logic
             pDefaultTable.Add("path_skin_xml", (string)"C:\\skin.xml");
             pDefaultTable.Add("path_skin", (string)"C:\\");
             pDefaultTable.Add("path", (string)"C:\\");
-            pDefaultTable.Add("enable_alpha", (bool)false);
+            pDefaultTable.Add("enable_alpha", (bool)true);
             pDefaultTable.Add("path_fonts", (string)"E:\\Visual Studio 2008\\e2skinner2\\fonts");
+            pDefaultTable.Add("path_skins", (string)"./skins/");
+
+            pDataSet = new DataSet();
+            pDataSet.Tables.Add(createTable(typeof(bool)));
+            pDataSet.Tables.Add(createTable(typeof(string)));
+            //pDataSet.Tables.Add(createTable(typeof(int)));
+
+            
         }
 
         static public void saveFile()
@@ -93,6 +136,12 @@ namespace e2skinner2.Logic
         {
             return pTable;
         }
+
+        static public DataSet getPropertiesTable()
+        {
+            return pDataSet;
+        }
+
 
     }
 }

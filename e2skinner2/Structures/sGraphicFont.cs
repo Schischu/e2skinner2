@@ -22,10 +22,10 @@ namespace e2skinner2.Structures
 
         //protected sAttribute pAttr;
 
-        public sGraphicFont(sAttribute attr, UInt32 x, UInt32 y, String text, float size, sFont font, Color color, e2skinner2.Structures.cProperty.eHAlign alignment)
+        public sGraphicFont(sAttribute attr, Int32 x, Int32 y, String text, float size, sFont font, Color color, e2skinner2.Structures.cProperty.eHAlign alignment)
             : base(attr)
         {
-            pAttr = attr;
+            //pAttr = attr;
 
             pX = x;
             pY = y;
@@ -39,10 +39,10 @@ namespace e2skinner2.Structures
             pTranparent = true;
         }
 
-        public sGraphicFont(sAttribute attr, UInt32 x, UInt32 y, String text, float size, sFont font, Color color, Color backcolor, e2skinner2.Structures.cProperty.eHAlign alignment)
+        public sGraphicFont(sAttribute attr, Int32 x, Int32 y, String text, float size, sFont font, Color color, Color backcolor, e2skinner2.Structures.cProperty.eHAlign alignment)
             : base(attr)
         {
-            pAttr = attr;
+            //pAttr = attr;
 
             pX = x;
             pY = y;
@@ -75,10 +75,13 @@ namespace e2skinner2.Structures
                         name = pFont.FontFamily.GetName(0);
 
                         font = new System.Drawing.Font(pFont.FontFamily, pSize, pFont.FontStyle, GraphicsUnit.Pixel);
-                    }
+                    } else
+                        Console.WriteLine("Font painting failed! (" + pFont.Name + ")");
                 }
                 catch (Exception error)
                 {
+                    Console.WriteLine("Font painting failed! (" + pFont.Name + ")");
+
                     String errormessage = error.Message + ":\n\n";
                     errormessage += error.StackTrace + "\n\n";
                     errormessage += error.Source + "\n\n";

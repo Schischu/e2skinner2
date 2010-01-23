@@ -41,30 +41,7 @@ namespace e2skinner2.Structures
                 return (bool)base.ConvertTo(context, destinationType);
             }
 
-            /*public override object ConvertFrom(ITypeDescriptorContext context,
-                            CultureInfo culture,
-                            object value)
-            {
-                if (culture == null)
-                    culture = CultureInfo.CurrentCulture;
-                string s = value as string;
-                if (s == null)
-                    return base.ConvertFrom(context, culture, value);
-
-                string[] subs = s.Split(culture.TextInfo.ListSeparator.ToCharArray());
-
-                Int32Converter converter = new Int32Converter();
-                int[] numSubs = new int[subs.Length];
-                for (int i = 0; i < numSubs.Length; i++)
-                {
-                    numSubs[i] = (int)converter.ConvertFromString(context, culture, subs[i]);
-                }
-
-                if (subs.Length != 2)
-                    throw new ArgumentException("Failed to parse Text(" + s + ") expected text in the format \"x, y.\"");
-
-                return new Position(numSubs[0], numSubs[1]);
-            }*/
+            
 
             public override object ConvertFrom(ITypeDescriptorContext context,
                               CultureInfo culture, 
@@ -189,26 +166,26 @@ namespace e2skinner2.Structures
         private const String entryName = "1 Global";
 
         private sAttribute _pParent = null;
-        private UInt32 _pAbsolutX;
-        private UInt32 _pAbsolutY;
+        private Int32 _pAbsolutX;
+        private Int32 _pAbsolutY;
 
         [BrowsableAttribute(false)]
-        public UInt32 pAbsolutX
+        public Int32 pAbsolutX
         {
             get { return pRelativX + (_pParent != null ? _pParent.pAbsolutX : 0); }
             set { _pAbsolutX = value; }
         }
 
         [BrowsableAttribute(false)]
-        public UInt32 pAbsolutY
+        public Int32 pAbsolutY
         {
             get { return pRelativY + (_pParent != null ? _pParent.pAbsolutY : 0); }
             set { _pAbsolutY = value; }
         }
-        public UInt32 pRelativX;
-        public UInt32 pRelativY;
-        public UInt32 pWidth;
-        public UInt32 pHeight;
+        public Int32 pRelativX;
+        public Int32 pRelativY;
+        public Int32 pWidth;
+        public Int32 pHeight;
 
         public String pName;
 
@@ -256,21 +233,21 @@ namespace e2skinner2.Structures
                 return new Position(x, y); }
             set {
 
-                UInt32 vX = 0;
-                UInt32 vY = 0;
+                Int32 vX = 0;
+                Int32 vY = 0;
                 if (value.X.Equals("center"))
-                    vX = (cDataBase.pResolution.getResolution().Xres - pWidth) >> 1 /*1/2*/;
+                    vX = (Int32)(cDataBase.pResolution.getResolution().Xres - pWidth) >> 1 /*1/2*/;
                 else
-                    vX = (UInt32)value.iX();
+                    vX = (Int32)value.iX();
                 if (value.Y.Equals("center"))
-                    vY = (cDataBase.pResolution.getResolution().Yres - pHeight) >> 1 /*1/2*/;
+                    vY = (Int32)(cDataBase.pResolution.getResolution().Yres - pHeight) >> 1 /*1/2*/;
                 else
-                    vY = (UInt32)value.iY();
+                    vY = (Int32)value.iY();
 
-                pAbsolutX = pAbsolutX + ((UInt32)vX - pRelativX); 
-                pRelativX = (UInt32)vX;
-                pAbsolutY = pAbsolutY + ((UInt32)vY - pRelativY); 
-                pRelativY = (UInt32)vY;
+                pAbsolutX = pAbsolutX + ((Int32)vX - pRelativX);
+                pRelativX = (Int32)vX;
+                pAbsolutY = pAbsolutY + ((Int32)vY - pRelativY);
+                pRelativY = (Int32)vY;
 
 
 
@@ -297,8 +274,8 @@ namespace e2skinner2.Structures
         {
             get { return new Size((int)pWidth, (int)pHeight); }
             set { 
-                pWidth = (UInt32)value.Width; 
-                pHeight = (UInt32)value.Height;
+                pWidth = (Int32)value.Width; 
+                pHeight = (Int32)value.Height;
 
                 if (myNode.Attributes["size"] != null)
                     myNode.Attributes["size"].Value = pWidth + ", " + pHeight;
@@ -447,16 +424,16 @@ namespace e2skinner2.Structures
 
             _pParent = parent;
 
-            pWidth = Convert.ToUInt32(node.Attributes["size"].Value.Substring(0, node.Attributes["size"].Value.IndexOf(',')).Trim());
-            pHeight = Convert.ToUInt32(node.Attributes["size"].Value.Substring(node.Attributes["size"].Value.IndexOf(',') + 1).Trim());
+            pWidth = Convert.ToInt32(node.Attributes["size"].Value.Substring(0, node.Attributes["size"].Value.IndexOf(',')).Trim());
+            pHeight = Convert.ToInt32(node.Attributes["size"].Value.Substring(node.Attributes["size"].Value.IndexOf(',') + 1).Trim());
 
             try
             {
                 String sRelativeX = node.Attributes["position"].Value.Substring(0, node.Attributes["position"].Value.IndexOf(',')).Trim();
                 if (sRelativeX.Equals("center"))
-                    pRelativX = (cDataBase.pResolution.getResolution().Xres - pWidth) >> 1 /*1/2*/;
+                    pRelativX = (Int32)(cDataBase.pResolution.getResolution().Xres - pWidth) >> 1 /*1/2*/;
                 else
-                    pRelativX = Convert.ToUInt32(sRelativeX);
+                    pRelativX = Convert.ToInt32(sRelativeX);
             } catch(OverflowException e)
             {
                 pRelativX = 0;
@@ -467,9 +444,9 @@ namespace e2skinner2.Structures
             {
                 String sRelativeY = node.Attributes["position"].Value.Substring(node.Attributes["position"].Value.IndexOf(',') + 1).Trim();
                 if (sRelativeY.Equals("center"))
-                    pRelativY = (cDataBase.pResolution.getResolution().Yres - pHeight) >> 1 /*1/2*/;
+                    pRelativY = (Int32)(cDataBase.pResolution.getResolution().Yres - pHeight) >> 1 /*1/2*/;
                 else
-                    pRelativY = Convert.ToUInt32(sRelativeY);
+                    pRelativY = Convert.ToInt32(sRelativeY);
             }
             catch (OverflowException e)
             {
@@ -516,16 +493,16 @@ namespace e2skinner2.Structures
 
             myNode = node;
 
-            pWidth = Convert.ToUInt32(node.Attributes["size"].Value.Substring(0, node.Attributes["size"].Value.IndexOf(',')).Trim());
-            pHeight = Convert.ToUInt32(node.Attributes["size"].Value.Substring(node.Attributes["size"].Value.IndexOf(',') + 1).Trim());
+            pWidth = Convert.ToInt32(node.Attributes["size"].Value.Substring(0, node.Attributes["size"].Value.IndexOf(',')).Trim());
+            pHeight = Convert.ToInt32(node.Attributes["size"].Value.Substring(node.Attributes["size"].Value.IndexOf(',') + 1).Trim());
 
             try
             {
                 String sRelativeX = node.Attributes["position"].Value.Substring(0, node.Attributes["position"].Value.IndexOf(',')).Trim();
                 if (sRelativeX.Equals("center"))
-                    pRelativX = (cDataBase.pResolution.getResolution().Xres - pWidth) >> 1 /*1/2*/;
+                    pRelativX = (Int32)(cDataBase.pResolution.getResolution().Xres - pWidth) >> 1 /*1/2*/;
                 else
-                    pRelativX = Convert.ToUInt32(sRelativeX);
+                    pRelativX = Convert.ToInt32(sRelativeX);
             }
             catch (OverflowException e)
             {
@@ -537,9 +514,9 @@ namespace e2skinner2.Structures
             {
                 String sRelativeY = node.Attributes["position"].Value.Substring(node.Attributes["position"].Value.IndexOf(',') + 1).Trim();
                 if (sRelativeY.Equals("center"))
-                    pRelativY = (cDataBase.pResolution.getResolution().Yres - pHeight) >> 1 /*1/2*/;
+                    pRelativY = (Int32)(cDataBase.pResolution.getResolution().Yres - pHeight) >> 1 /*1/2*/;
                 else
-                    pRelativY = Convert.ToUInt32(sRelativeY);
+                    pRelativY = Convert.ToInt32(sRelativeY);
             }
             catch (OverflowException e)
             {
@@ -577,7 +554,7 @@ namespace e2skinner2.Structures
                 pBorder = false;
         }
 
-        public sAttribute(UInt32 x, UInt32 y, UInt32 width, UInt32 height, String name)
+        public sAttribute(Int32 x, Int32 y, Int32 width, Int32 height, String name)
         {
             pAbsolutX = x;
             pAbsolutY = y;

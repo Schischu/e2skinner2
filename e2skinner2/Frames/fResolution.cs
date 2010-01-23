@@ -26,11 +26,13 @@ namespace e2skinner2.Frames
 
             sResolution resolution = cDataBase.pResolution.getResolution();
 
-            if (resolution.Yres == 576)
+            if (resolution.Xres == 720 && resolution.Yres == 576)
                 radioButton576.Checked = true;
-            else if (resolution.Yres == 720)
+            else if (resolution.Xres == 1024 && resolution.Yres == 576)
+                radioButton1024.Checked = true;
+            else if (resolution.Xres == 1280 && resolution.Yres == 720)
                 radioButton720.Checked = true;
-            else if (resolution.Yres == 1080)
+            else if (resolution.Xres == 1920 && resolution.Yres == 1080)
                 radioButton1080.Checked = true;
 
         }
@@ -42,6 +44,11 @@ namespace e2skinner2.Frames
             if (radioButton576.Checked)
             {
                 nRes.Width = 720;
+                nRes.Height = 576;
+            }
+            else if (radioButton1024.Checked)
+            {
+                nRes.Width = 1024;
                 nRes.Height = 576;
             }
             else if (radioButton720.Checked)

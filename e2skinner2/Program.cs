@@ -17,6 +17,9 @@ namespace e2skinner2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            Logic.cProperties.init();
+
             Application.Run(new fMain());
         }
     }

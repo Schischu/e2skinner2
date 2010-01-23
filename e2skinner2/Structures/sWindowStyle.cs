@@ -115,12 +115,12 @@ namespace e2skinner2.Structures
 
         public sFont pFont;
         public float pTitleSize;
-        public UInt32 pXOff;
-        public UInt32 pYOff;
+        public Int32 pXOff;
+        public Int32 pYOff;
         public Hashtable pColors;
         public Hashtable pBorderSets;
 
-        public sWindowStyle(sFont font, float titlesize, UInt32 xOff, UInt32 yOff, Hashtable colors, sBorderSet[] bordersets)
+        public sWindowStyle(sFont font, float titlesize, Int32 xOff, Int32 yOff, Hashtable colors, sBorderSet[] bordersets)
         {
             pFont = font;
             pTitleSize = titlesize;

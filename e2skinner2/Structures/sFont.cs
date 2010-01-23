@@ -54,9 +54,9 @@ namespace e2skinner2.Structures
 
             String lookupPath = "";
             if (File.Exists(AbsolutPathFont))
-                lookupPath = AbsolutPathFont;
+                lookupPath = new FileInfo(AbsolutPathFont).FullName;
             else if (File.Exists(RelativPathFont))
-                lookupPath = RelativPathFont;
+                lookupPath = new FileInfo(RelativPathFont).FullName;
             else
             {
                 String errorMessage = "";

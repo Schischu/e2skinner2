@@ -15,10 +15,10 @@ namespace e2skinner2.Structures
 
         //protected sAttribute pAttr;
 
-        public sGraphicImage(sAttribute attr, String image, UInt32 x, UInt32 y, UInt32 w, UInt32 h)
+        public sGraphicImage(sAttribute attr, String image, Int32 x, Int32 y, Int32 w, Int32 h)
             : base(attr)
         {
-            pAttr = attr;
+            //Console.WriteLine("sGraphicImage: " + x + ":" + y + " " + w + "x" + h);
 
             try
             {
@@ -26,18 +26,23 @@ namespace e2skinner2.Structures
             }
             catch (FileNotFoundException ex)
             {
+                Console.WriteLine("File not found! (" + cDataBase.getPath(image) + ")");
                 return;
             }
             pX = x;
             pY = y;
-            pWidth = w < (UInt32)pImage.Width ? w : (UInt32)pImage.Width;
-            pHeight = h < (UInt32)pImage.Height ? h : (UInt32)pImage.Height; ;
+
+
+            pWidth = w < (Int32)pImage.Width ? w : (Int32)pImage.Width;
+            pHeight = h < (Int32)pImage.Height ? h : (Int32)pImage.Height; ;
         }
 
-        public sGraphicImage(sAttribute attr, String image, UInt32 x, UInt32 y)
+        public sGraphicImage(sAttribute attr, String image, Int32 x, Int32 y)
             : base(attr)
         {
-            pAttr = attr;
+            //Console.WriteLine("sGraphicImage: " + x + ":" + y);
+
+            //pAttr = attr;
             if (image == null || image.Length == 0)
                 return;
             try
@@ -46,18 +51,23 @@ namespace e2skinner2.Structures
             }
             catch (FileNotFoundException ex)
             {
+                Console.WriteLine("File not found! (" + cDataBase.getPath(image) + ")");
                 return;
             }
+            
             pX = x;
             pY = y;
-            pWidth = (UInt32)pImage.Width;
-            pHeight = (UInt32)pImage.Height;
+
+            pWidth = (Int32)pImage.Width;
+            pHeight = (Int32)pImage.Height;
         }
 
         public sGraphicImage(sAttribute attr, String image)
             : base(attr)
         {
-            pAttr = attr;
+            //Console.WriteLine("sGraphicImage: ");
+
+            //pAttr = attr;
             if (image == null || image.Length == 0)
                 return;
             try
@@ -66,6 +76,7 @@ namespace e2skinner2.Structures
             }
             catch (FileNotFoundException ex)
             {
+                Console.WriteLine("File not found! (" + cDataBase.getPath(image) + ")");
                 return;
             }
         }

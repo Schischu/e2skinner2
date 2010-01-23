@@ -248,6 +248,7 @@
     <None Include="Resources\Lock-icon1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\e2skinner2.Logic.cProperties1.datasource" />
     <None Include="Resources\UnLock-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

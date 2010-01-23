@@ -28,18 +28,18 @@ namespace e2skinner2.Structures
                 if (((sAttributeListbox)pAttr).pBackgroundPixmap != null)
                     new sGraphicImage(pAttr, ((sAttributeListbox)pAttr).pBackgroundPixmapName).paint(sender, e);
                 else
-                    new sGraphicRectangel((UInt32)(tx > 0 ? tx : 0), (UInt32)(ty > 0 ? ty : 0), (UInt32)(tw > 0 ? tw : 0), (UInt32)(th > 0 ? th : 0), true, (float)1.0, ((sAttributeListbox)pAttr).pListboxBackgroundColor.pColor).paint(sender, e);
+                    new sGraphicRectangel((Int32)(tx > 0 ? tx : 0), (Int32)(ty > 0 ? ty : 0), (Int32)(tw > 0 ? tw : 0), (Int32)(th > 0 ? th : 0), true, (float)1.0, ((sAttributeListbox)pAttr).pListboxBackgroundColor.pColor).paint(sender, e);
             }
 
             //BorderLayout
-            UInt32 x = pAttr.pAbsolutX, xm = pAttr.pAbsolutX + pAttr.pWidth;
+            Int32 x = pAttr.pAbsolutX, xm = pAttr.pAbsolutX + pAttr.pWidth;
 
             if (((sAttributeListbox)pAttr).pbpTopLeftName != null)
             {
                 new sGraphicImage(pAttr,
                     ((sAttributeListbox)pAttr).pbpTopLeftName,
-                    x - (UInt32)(((sAttributeListbox)pAttr).pbpLeft != null ? ((sAttributeListbox)pAttr).pbpLeft.Width : 0),
-                    pAttr.pAbsolutY - (UInt32)((sAttributeListbox)pAttr).pbpTopLeft.Height
+                    x - (Int32)(((sAttributeListbox)pAttr).pbpLeft != null ? ((sAttributeListbox)pAttr).pbpLeft.Width : 0),
+                    pAttr.pAbsolutY - (Int32)((sAttributeListbox)pAttr).pbpTopLeft.Height
                     ).paint(sender, e);
                 //painter.blit(tl, ePoint(x, pos.top()));
                 //x += (UInt32)pAttr.pbpTopLeft.Width;
@@ -50,28 +50,28 @@ namespace e2skinner2.Structures
                 //xm -= (UInt32)pAttr.pbpTopRight.Width;
                 new sGraphicImage(pAttr,
                     ((sAttributeListbox)pAttr).pbpTopRightName,
-                    xm + (UInt32)(((sAttributeListbox)pAttr).pbpRight != null ? ((sAttributeListbox)pAttr).pbpRight.Width : 0) - (UInt32)((sAttributeListbox)pAttr).pbpTopRight.Width,
-                    pAttr.pAbsolutY - (UInt32)((sAttributeListbox)pAttr).pbpTopRight.Height
+                    xm + (Int32)(((sAttributeListbox)pAttr).pbpRight != null ? ((sAttributeListbox)pAttr).pbpRight.Width : 0) - (Int32)((sAttributeListbox)pAttr).pbpTopRight.Width,
+                    pAttr.pAbsolutY - (Int32)((sAttributeListbox)pAttr).pbpTopRight.Height
                     ).paint(sender, e);
                 //painter.blit(tr, ePoint(xm, pos.top()), pos);
             }
 
             if (((sAttributeListbox)pAttr).pbpTopName != null)
             {
-                x += (UInt32)(((sAttributeListbox)pAttr).pbpTopLeft != null ? ((sAttributeListbox)pAttr).pbpTopLeft.Width : 0) - (UInt32)(((sAttributeListbox)pAttr).pbpLeft != null ? ((sAttributeListbox)pAttr).pbpLeft.Width : 0);
+                x += (Int32)(((sAttributeListbox)pAttr).pbpTopLeft != null ? ((sAttributeListbox)pAttr).pbpTopLeft.Width : 0) - (Int32)(((sAttributeListbox)pAttr).pbpLeft != null ? ((sAttributeListbox)pAttr).pbpLeft.Width : 0);
                 int diff = (((sAttributeListbox)pAttr).pbpRight != null ? ((sAttributeListbox)pAttr).pbpRight.Width : 0) - (((sAttributeListbox)pAttr).pbpTopRight != null ? ((sAttributeListbox)pAttr).pbpTopRight.Width : 0);
-                xm -= (UInt32)(diff > 0 ? diff : -diff);
+                xm -= (Int32)(diff > 0 ? diff : -diff);
                 while (x < xm)
                 {
                     new sGraphicImage(pAttr,
                         ((sAttributeListbox)pAttr).pbpTopName,
                         x,
-                        pAttr.pAbsolutY - (UInt32)((sAttributeListbox)pAttr).pbpTop.Height,
+                        pAttr.pAbsolutY - (Int32)((sAttributeListbox)pAttr).pbpTop.Height,
                         xm - x,
-                        (UInt32)((sAttributeListbox)pAttr).pbpTop.Height
+                        (Int32)((sAttributeListbox)pAttr).pbpTop.Height
                         ).paint(sender, e);
                     //painter.blit(t, ePoint(x, pos.top()), eRect(x, pos.top(), xm - x, pos.height()));
-                    x += (UInt32)((sAttributeListbox)pAttr).pbpTop.Width;
+                    x += (Int32)((sAttributeListbox)pAttr).pbpTop.Width;
                 }
             }
 
@@ -82,7 +82,7 @@ namespace e2skinner2.Structures
             {
                 new sGraphicImage(pAttr,
                     ((sAttributeListbox)pAttr).pbpBottomLeftName,
-                    x - (UInt32)(((sAttributeListbox)pAttr).pbpLeft != null ? ((sAttributeListbox)pAttr).pbpLeft.Width : 0),
+                    x - (Int32)(((sAttributeListbox)pAttr).pbpLeft != null ? ((sAttributeListbox)pAttr).pbpLeft.Width : 0),
                     pAttr.pAbsolutY + pAttr.pHeight
                     ).paint(sender, e);
                 //painter.blit(bl, ePoint(pos.left(), pos.bottom()-bl->size().height()));
@@ -94,7 +94,7 @@ namespace e2skinner2.Structures
                 //xm -= (UInt32)pAttr.pbpBottomRight.Width;
                 new sGraphicImage(pAttr,
                     ((sAttributeListbox)pAttr).pbpBottomRightName,
-                    xm + (UInt32)(((sAttributeListbox)pAttr).pbpRight != null ? ((sAttributeListbox)pAttr).pbpRight.Width : 0) - (UInt32)((sAttributeListbox)pAttr).pbpBottomRight.Width,
+                    xm + (Int32)(((sAttributeListbox)pAttr).pbpRight != null ? ((sAttributeListbox)pAttr).pbpRight.Width : 0) - (Int32)((sAttributeListbox)pAttr).pbpBottomRight.Width,
                     pAttr.pAbsolutY + pAttr.pHeight
                     ).paint(sender, e);
                 //painter.blit(br, ePoint(xm, pos.bottom()-br->size().height()), eRect(x, pos.bottom()-br->size().height(), pos.width() - x, bl->size().height()));
@@ -102,9 +102,9 @@ namespace e2skinner2.Structures
 
             if (((sAttributeListbox)pAttr).pbpBottomName != null)
             {
-                x += (UInt32)(((sAttributeListbox)pAttr).pbpBottomLeft != null ? ((sAttributeListbox)pAttr).pbpBottomLeft.Width : 0) - (UInt32)(((sAttributeListbox)pAttr).pbpLeft != null ? ((sAttributeListbox)pAttr).pbpLeft.Width : 0);
+                x += (Int32)(((sAttributeListbox)pAttr).pbpBottomLeft != null ? ((sAttributeListbox)pAttr).pbpBottomLeft.Width : 0) - (Int32)(((sAttributeListbox)pAttr).pbpLeft != null ? ((sAttributeListbox)pAttr).pbpLeft.Width : 0);
                 int diff = (((sAttributeListbox)pAttr).pbpRight != null ? ((sAttributeListbox)pAttr).pbpRight.Width : 0) - (((sAttributeListbox)pAttr).pbpBottomRight != null ? ((sAttributeListbox)pAttr).pbpBottomRight.Width : 0);
-                xm -= (UInt32)(diff > 0 ? diff : -diff);
+                xm -= (Int32)(diff > 0 ? diff : -diff);
                 while (x < xm)
                 {
                     new sGraphicImage(pAttr,
@@ -112,20 +112,20 @@ namespace e2skinner2.Structures
                         x,
                         pAttr.pAbsolutY + pAttr.pHeight,
                         xm - x,
-                        (UInt32)((sAttributeListbox)pAttr).pbpBottom.Height
+                        (Int32)((sAttributeListbox)pAttr).pbpBottom.Height
                         ).paint(sender, e);
                     //painter.blit(b, ePoint(x, pos.bottom()-b->size().height()), eRect(x, pos.bottom()-b->size().height(), xm - x, pos.height()));
-                    x += (UInt32)((sAttributeListbox)pAttr).pbpBottom.Width;
+                    x += (Int32)((sAttributeListbox)pAttr).pbpBottom.Width;
                 }
             }
 
-            UInt32 y = 0;
+            Int32 y = 0;
             //if (pAttr.pbpTopLeft != null)
             //    y = (UInt32)pAttr.pbpTopLeft.Height;
 
             y += pAttr.pAbsolutY;
 
-            UInt32 ym = pAttr.pAbsolutY + pAttr.pHeight;
+            Int32 ym = pAttr.pAbsolutY + pAttr.pHeight;
             //if (pAttr.pbpBottomLeft != null)
             //    ym -= (UInt32)pAttr.pbpBottomLeft.Height;
 
@@ -135,13 +135,13 @@ namespace e2skinner2.Structures
                 {
                     new sGraphicImage(pAttr,
                         ((sAttributeListbox)pAttr).pbpLeftName,
-                        pAttr.pAbsolutX - (UInt32)((sAttributeListbox)pAttr).pbpLeft.Width,
+                        pAttr.pAbsolutX - (Int32)((sAttributeListbox)pAttr).pbpLeft.Width,
                         y,
-                        (UInt32)((sAttributeListbox)pAttr).pbpLeft.Width,
+                        (Int32)((sAttributeListbox)pAttr).pbpLeft.Width,
                         ym - y
                         ).paint(sender, e);
                     //painter.blit(l, ePoint(pos.left(), y), eRect(pos.left(), y, pos.width(), ym - y));
-                    y += (UInt32)((sAttributeListbox)pAttr).pbpLeft.Height;
+                    y += (Int32)((sAttributeListbox)pAttr).pbpLeft.Height;
                 }
             }
 
@@ -164,11 +164,11 @@ namespace e2skinner2.Structures
                         ((sAttributeListbox)pAttr).pbpRightName,
                         pAttr.pAbsolutX + pAttr.pWidth,
                         y,
-                        (UInt32)((sAttributeListbox)pAttr).pbpRight.Width,
+                        (Int32)((sAttributeListbox)pAttr).pbpRight.Width,
                         ym - y
                         ).paint(sender, e);
                     //painter.blit(r, ePoint(pos.right() - r->size().width(), y), eRect(pos.right()-r->size().width(), y, r->size().width(), ym - y));
-                    y += (UInt32)((sAttributeListbox)pAttr).pbpRight.Height;
+                    y += (Int32)((sAttributeListbox)pAttr).pbpRight.Height;
                 }
             }
 

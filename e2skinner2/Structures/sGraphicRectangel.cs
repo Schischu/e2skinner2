@@ -20,9 +20,10 @@ namespace e2skinner2.Structures
             pColor = color;
         }
 
-        public sGraphicRectangel(UInt32 x, UInt32 y, UInt32 width, UInt32 height, bool filled, float linewidth, Color color)
+        public sGraphicRectangel(Int32 x, Int32 y, Int32 width, Int32 height, bool filled, float linewidth, Color color)
             : base(x, y, width, height)
         {
+            //Console.WriteLine("sGraphicRectangel: " + x + ":" + y + " " + width + "x" + height);
             pFilled = filled;
             pLineWidth = linewidth;
             pColor = color;

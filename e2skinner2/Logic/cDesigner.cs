@@ -20,6 +20,18 @@ namespace e2skinner2.Logic
             pGraph = graph;
         }
 
+        public void zoomIn()
+        {
+            //pGraph.PageScale += (pGraph.PageScale/10);
+            pGraph.ScaleTransform((float)2.0, (float)2.0);
+        }
+
+        public void zoomOut()
+        {
+            //pGraph.PageScale -= (pGraph.PageScale/10);
+            pGraph.ScaleTransform((float)0.5, (float)0.5);
+        }
+
         public void sort()
         {
             pDrawList.Sort();
@@ -61,18 +73,26 @@ namespace e2skinner2.Logic
             int Xres = (int)res.Xres;
             int Yres = (int)res.Yres;
 
-            pDrawList.Add(new sGraphicRectangel(0,              0, (uint)Xres, (uint)y, true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
-            pDrawList.Add(new sGraphicRectangel(0, (uint)y, (uint)x, (uint)h, true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
-            pDrawList.Add(new sGraphicRectangel((uint)(x + w), (uint)y, (uint)((Xres - x - w) > 0 ? (Xres - x - w) : 0), (uint)h, true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
-            pDrawList.Add(new sGraphicRectangel(0, (uint)(y + h), (uint)Xres, (uint)((Yres - y - h) > 0 ? (Yres - y - h) : 0), true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
+            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)Xres, (Int32)y, true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
+            pDrawList.Add(new sGraphicRectangel(0, (Int32)y, (Int32)x, (Int32)h, true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
+            pDrawList.Add(new sGraphicRectangel((Int32)(x + w), (Int32)y, (Int32)((Xres - x - w) > 0 ? (Xres - x - w) : 0), (Int32)h, true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
+            pDrawList.Add(new sGraphicRectangel(0, (Int32)(y + h), (Int32)Xres, (Int32)((Yres - y - h) > 0 ? (Yres - y - h) : 0), true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
         }
 
         public void drawFrame()
         {
             sResolution res = cDataBase.pResolution.getResolution();
-            pDrawList.Add(new sGraphicRectangel(0, 0, res.Xres, res.Yres, false, (float)1.0, Color.Black));
-            pDrawList.Add(new sGraphicRectangel(0, 0, res.Xres + 2, res.Yres + 2, false, (float)1.0, Color.Gray));
-            pDrawList.Add(new sGraphicRectangel(0, 0, res.Xres + 4, res.Yres + 4, false, (float)1.0, Color.Black));
+            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)res.Xres, (Int32)res.Yres, false, (float)1.0, Color.Black));
+            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)res.Xres + 2, (Int32)res.Yres + 2, false, (float)1.0, Color.Gray));
+            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)res.Xres + 4, (Int32)res.Yres + 4, false, (float)1.0, Color.Black));
+        }
+
+        public void drawBackground()
+        {
+            sResolution res = cDataBase.pResolution.getResolution();
+            sAttribute attr = new sAttribute(0, 0, (Int32)res.Xres, (Int32)res.Yres, "Background");
+            attr.pZPosition = -1000;
+            pDrawList.Add(new sGraphicImage(attr, "background.jpg"));
         }
 
         public void draw(sAttribute attr)
