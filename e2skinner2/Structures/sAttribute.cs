@@ -7,42 +7,68 @@ using e2skinner2.Logic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Collections;
+using System.Globalization;
+using System.ComponentModel.Design.Serialization;
+using System.Reflection;
 
 namespace e2skinner2.Structures
 {
     public class sAttribute
     {
-        public class PositionConverter : ExpandableObjectConverter
+        public class PositionConverter : TypeConverter
         {
-            public override bool CanConvertTo(ITypeDescriptorContext context, System.Type destinationType)
-            {
-                if (destinationType == typeof(Position))
-                    return true;
-                return base.CanConvertTo(context, destinationType);
-            }
+            public PositionConverter() { }
 
-            public override object ConvertTo(ITypeDescriptorContext context,
-                CultureInfo culture,
-                object value,
-                System.Type destinationType)
-            {
-                if (destinationType == typeof(System.String) && value is Position)
-                {
-                    return value.ToString();
-                }
-                return base.ConvertTo(context, culture, value, destinationType);
-            }
-
-            public override bool CanConvertFrom(ITypeDescriptorContext context,
-                System.Type sourceType)
+            public override bool CanConvertFrom(  ITypeDescriptorContext context,
+                                                Type sourceType)
             {
                 if (sourceType == typeof(string))
                     return true;
-                return base.CanConvertFrom(context, sourceType);
+
+                return base.CanConvertTo(context, sourceType);
             }
 
+            public override bool CanConvertTo(   ITypeDescriptorContext context,
+                                                Type destinationType)
+            {
+                if (destinationType == typeof(string))
+                    return true;
+
+                if (destinationType == typeof(InstanceDescriptor))
+                    return true;
+
+                return (bool)base.ConvertTo(context, destinationType);
+            }
+
+            /*public override object ConvertFrom(ITypeDescriptorContext context,
+                            CultureInfo culture,
+                            object value)
+            {
+                if (culture == null)
+                    culture = CultureInfo.CurrentCulture;
+                string s = value as string;
+                if (s == null)
+                    return base.ConvertFrom(context, culture, value);
+
+                string[] subs = s.Split(culture.TextInfo.ListSeparator.ToCharArray());
+
+                Int32Converter converter = new Int32Converter();
+                int[] numSubs = new int[subs.Length];
+                for (int i = 0; i < numSubs.Length; i++)
+                {
+                    numSubs[i] = (int)converter.ConvertFromString(context, culture, subs[i]);
+                }
+
+                if (subs.Length != 2)
+                    throw new ArgumentException("Failed to parse Text(" + s + ") expected text in the format \"x, y.\"");
+
+                return new Position(numSubs[0], numSubs[1]);
+            }*/
+
             public override object ConvertFrom(ITypeDescriptorContext context,
-                              CultureInfo culture, object value) 
+                              CultureInfo culture, 
+                              object value) 
             {
                 if (value is string) {
                     try {
@@ -71,6 +97,76 @@ namespace e2skinner2.Structures
                 }  
                 return base.ConvertFrom(context, culture, value);
             }
+
+            public override object ConvertTo(ITypeDescriptorContext context,
+                          CultureInfo culture,
+                          object value,
+                          Type destinationType)
+            {
+                if (culture == null)
+                    culture = CultureInfo.CurrentCulture;
+                // LAMESPEC: "The default implementation calls the object's
+                // ToString method if the object is valid and if the destination
+                // type is string." MS does not behave as per the specs.
+                // Oh well, we have to be compatible with MS.
+                if (value is Point)
+                {
+                    Position point = (Position)value;
+                    if (destinationType == typeof(string))
+                    {
+                        return point.X.ToString(culture) + culture.TextInfo.ListSeparator
+                            + " " + point.Y.ToString(culture);
+                    }
+                    else if (destinationType == typeof(InstanceDescriptor))
+                    {
+                        ConstructorInfo ctor = typeof(Position).GetConstructor(new Type[] { typeof(int), typeof(int) });
+                        return new InstanceDescriptor(ctor, new object[] { point.X, point.Y });
+                    }
+                }
+
+                return base.ConvertTo(context, culture, value, destinationType);
+            }
+
+            public override object CreateInstance(ITypeDescriptorContext context,
+                               IDictionary propertyValues)
+            {
+                Object _x = propertyValues["X"];
+                Object _y = propertyValues["Y"];
+                String X = _x.ToString();
+                String Y = _y.ToString();
+
+                //Test if valid input
+                if (!X.Equals("center"))
+                    Int32.Parse(X);
+                if (!Y.Equals("center"))
+                    Int32.Parse(Y);
+
+                Position po = new Position();
+                po.X = X;
+                po.Y = Y;
+                return po;
+            }
+
+            public override bool GetCreateInstanceSupported(ITypeDescriptorContext context)
+            {
+                return true;
+            }
+
+            public override PropertyDescriptorCollection GetProperties(
+                                ITypeDescriptorContext context,
+                                object value, Attribute[] attributes)
+            {
+                if (value is Position)
+                    return TypeDescriptor.GetProperties(value, attributes);
+
+                return base.GetProperties(context, value, attributes);
+            }
+
+            public override bool GetPropertiesSupported(ITypeDescriptorContext context)
+            {
+                return true;
+            }
+
         }
 
         [TypeConverterAttribute(typeof(PositionConverter/*ExpandableObjectConverter*/))]
@@ -92,8 +188,23 @@ namespace e2skinner2.Structures
 
         private const String entryName = "1 Global";
 
-        public UInt32 pAbsolutX;
-        public UInt32 pAbsolutY;
+        private sAttribute _pParent = null;
+        private UInt32 _pAbsolutX;
+        private UInt32 _pAbsolutY;
+
+        [BrowsableAttribute(false)]
+        public UInt32 pAbsolutX
+        {
+            get { return pRelativX + (_pParent != null ? _pParent.pAbsolutX : 0); }
+            set { _pAbsolutX = value; }
+        }
+
+        [BrowsableAttribute(false)]
+        public UInt32 pAbsolutY
+        {
+            get { return pRelativY + (_pParent != null ? _pParent.pAbsolutY : 0); }
+            set { _pAbsolutY = value; }
+        }
         public UInt32 pRelativX;
         public UInt32 pRelativY;
         public UInt32 pWidth;
@@ -334,21 +445,31 @@ namespace e2skinner2.Structures
 
             myNode = node;
 
+            _pParent = parent;
+
             pWidth = Convert.ToUInt32(node.Attributes["size"].Value.Substring(0, node.Attributes["size"].Value.IndexOf(',')).Trim());
             pHeight = Convert.ToUInt32(node.Attributes["size"].Value.Substring(node.Attributes["size"].Value.IndexOf(',') + 1).Trim());
 
             try
             {
-                pRelativX = Convert.ToUInt32(node.Attributes["position"].Value.Substring(0, node.Attributes["position"].Value.IndexOf(',')).Trim());
+                String sRelativeX = node.Attributes["position"].Value.Substring(0, node.Attributes["position"].Value.IndexOf(',')).Trim();
+                if (sRelativeX.Equals("center"))
+                    pRelativX = (cDataBase.pResolution.getResolution().Xres - pWidth) >> 1 /*1/2*/;
+                else
+                    pRelativX = Convert.ToUInt32(sRelativeX);
             } catch(OverflowException e)
             {
                 pRelativX = 0;
             }
-            pAbsolutX = parent.pAbsolutX+ pRelativX;
+            pAbsolutX = parent.pAbsolutX + pRelativX;
 
             try
             {
-                pRelativY = Convert.ToUInt32(node.Attributes["position"].Value.Substring(node.Attributes["position"].Value.IndexOf(',') + 1).Trim());
+                String sRelativeY = node.Attributes["position"].Value.Substring(node.Attributes["position"].Value.IndexOf(',') + 1).Trim();
+                if (sRelativeY.Equals("center"))
+                    pRelativY = (cDataBase.pResolution.getResolution().Yres - pHeight) >> 1 /*1/2*/;
+                else
+                    pRelativY = Convert.ToUInt32(sRelativeY);
             }
             catch (OverflowException e)
             {

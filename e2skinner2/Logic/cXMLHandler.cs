@@ -115,6 +115,7 @@ namespace e2skinner2.Logic
             }
         }
 
+        //syncs the name
         public void XmlSyncTreeChilds(int hash, TreeNode elem)
         {
             foreach (sElementList temp in ElementList)

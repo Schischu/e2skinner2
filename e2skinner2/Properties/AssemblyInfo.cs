@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Schischu")]
 [assembly: AssemblyProduct("e2skinner - The Second Edition Public Preview")]
-[assembly: AssemblyCopyright("Copyright ©  2009")]
+[assembly: AssemblyCopyright("Copyright ©  2009-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +33,6 @@ using System.Resources;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.1.9")]
-[assembly: AssemblyFileVersion("2.0.1.9")]
+[assembly: AssemblyVersion("2.0.2.5")]
+[assembly: AssemblyFileVersion("2.0.2.5")]
 [assembly: NeutralResourcesLanguageAttribute("en")]

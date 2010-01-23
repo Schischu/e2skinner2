@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fMain));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -66,8 +67,12 @@
             this.btnSkinnedWidget = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.btnFading = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.keyCaptureNotifyButton = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelEditor = new System.Windows.Forms.Panel();
+            this.textBoxEditor2 = new ScintillaNet.Scintilla();
             this.toolStripEditor = new System.Windows.Forms.ToolStrip();
             this.btnSaveEditor = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -78,8 +83,8 @@
             this.btnOpen = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.textBoxEditor2 = new ScintillaNet.Scintilla();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -89,12 +94,13 @@
             this.toolStripDesigner.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panelEditor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).BeginInit();
             this.toolStripEditor.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView1
@@ -309,6 +315,9 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(972, 712);
             this.tabControl1.TabIndex = 2;
+            this.tabControl1.Leave += new System.EventHandler(this.tabControl1_Leave);
+            this.tabControl1.Enter += new System.EventHandler(this.tabControl1_Enter);
+            this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
             // 
             // tabPage1
             // 
@@ -358,9 +367,11 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
             // toolStripDesigner
             // 
@@ -371,7 +382,10 @@
             this.btnSkinnedPixmap,
             this.btnSkinnedWidget,
             this.toolStripSeparator4,
-            this.btnFading});
+            this.btnFading,
+            this.toolStripSeparator5,
+            this.toolStripSeparator6,
+            this.keyCaptureNotifyButton});
             this.toolStripDesigner.Location = new System.Drawing.Point(0, 0);
             this.toolStripDesigner.Name = "toolStripDesigner";
             this.toolStripDesigner.Size = new System.Drawing.Size(954, 25);
@@ -461,6 +475,26 @@
             this.btnFading.Text = "Fading";
             this.btnFading.Click += new System.EventHandler(this.btnFading_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // keyCaptureNotifyButton
+            // 
+            this.keyCaptureNotifyButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.keyCaptureNotifyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.UnLock_icon;
+            this.keyCaptureNotifyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.keyCaptureNotifyButton.Name = "keyCaptureNotifyButton";
+            this.keyCaptureNotifyButton.Size = new System.Drawing.Size(23, 22);
+            this.keyCaptureNotifyButton.Text = "toolStripButton2";
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.panelEditor);
@@ -483,6 +517,24 @@
             this.panelEditor.Name = "panelEditor";
             this.panelEditor.Size = new System.Drawing.Size(958, 680);
             this.panelEditor.TabIndex = 2;
+            // 
+            // textBoxEditor2
+            // 
+            this.textBoxEditor2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxEditor2.Location = new System.Drawing.Point(0, 25);
+            this.textBoxEditor2.Margins.Margin0.Width = 30;
+            this.textBoxEditor2.Margins.Margin1.Width = 2;
+            this.textBoxEditor2.Name = "textBoxEditor2";
+            this.textBoxEditor2.Size = new System.Drawing.Size(958, 655);
+            this.textBoxEditor2.Styles.BraceBad.FontName = "Verdana";
+            this.textBoxEditor2.Styles.BraceLight.FontName = "Verdana";
+            this.textBoxEditor2.Styles.ControlChar.FontName = "Verdana";
+            this.textBoxEditor2.Styles.Default.FontName = "Verdana";
+            this.textBoxEditor2.Styles.IndentGuide.FontName = "Verdana";
+            this.textBoxEditor2.Styles.LastPredefined.FontName = "Verdana";
+            this.textBoxEditor2.Styles.LineNumber.FontName = "Verdana";
+            this.textBoxEditor2.Styles.Max.FontName = "Verdana";
+            this.textBoxEditor2.TabIndex = 2;
             // 
             // toolStripEditor
             // 
@@ -594,6 +646,10 @@
             this.saveFileDialog1.DefaultExt = "xml";
             this.saveFileDialog1.Filter = "*.xml|";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // toolStripButton1
             // 
             this.toolStripButton1.BackColor = System.Drawing.Color.Transparent;
@@ -604,24 +660,6 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(36, 36);
             this.toolStripButton1.Text = "toolStripButton1";
-            // 
-            // textBoxEditor2
-            // 
-            this.textBoxEditor2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxEditor2.Location = new System.Drawing.Point(0, 25);
-            this.textBoxEditor2.Margins.Margin0.Width = 30;
-            this.textBoxEditor2.Margins.Margin1.Width = 2;
-            this.textBoxEditor2.Name = "textBoxEditor2";
-            this.textBoxEditor2.Size = new System.Drawing.Size(958, 655);
-            this.textBoxEditor2.Styles.BraceBad.FontName = "Verdana";
-            this.textBoxEditor2.Styles.BraceLight.FontName = "Verdana";
-            this.textBoxEditor2.Styles.ControlChar.FontName = "Verdana";
-            this.textBoxEditor2.Styles.Default.FontName = "Verdana";
-            this.textBoxEditor2.Styles.IndentGuide.FontName = "Verdana";
-            this.textBoxEditor2.Styles.LastPredefined.FontName = "Verdana";
-            this.textBoxEditor2.Styles.LineNumber.FontName = "Verdana";
-            this.textBoxEditor2.Styles.Max.FontName = "Verdana";
-            this.textBoxEditor2.TabIndex = 2;
             // 
             // fMain
             // 
@@ -649,6 +687,7 @@
             this.toolStripDesigner.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panelEditor.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).EndInit();
             this.toolStripEditor.ResumeLayout(false);
             this.toolStripEditor.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -656,7 +695,7 @@
             this.splitContainer1.ResumeLayout(false);
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -715,6 +754,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton btnFading;
         private ScintillaNet.Scintilla textBoxEditor2;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton keyCaptureNotifyButton;
     }
 }
 

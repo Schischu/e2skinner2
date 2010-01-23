@@ -2,13 +2,31 @@
 using System.Collections.Generic;
 //using System.Linq;
 using System.Text;
+using System.ComponentModel;
 
 namespace e2skinner2.Structures
 {
     public class sGraphicElement : IComparable
     {
-        public UInt32 pX;
-        public UInt32 pY;
+        private UInt32 _pX;
+        private UInt32 _pY;
+
+        [BrowsableAttribute(false)]
+        public UInt32 pX
+        {
+            get { return pAttr != null?pAttr.pAbsolutX:_pX; }
+            set { _pX = value; }
+        }
+
+        [BrowsableAttribute(false)]
+        public UInt32 pY
+        {
+            get { return pAttr != null ? pAttr.pAbsolutY : _pY; }
+            set { _pY = value; }
+        }
+
+        //public UInt32 pX;
+        //public UInt32 pY;
         public UInt32 pWidth;
         public UInt32 pHeight;
 
@@ -18,6 +36,8 @@ namespace e2skinner2.Structures
 
         public sGraphicElement(sAttribute attr)
         {
+            pAttr = attr;
+
             pX = attr.pAbsolutX;
             pY = attr.pAbsolutY;
             pWidth = attr.pWidth;

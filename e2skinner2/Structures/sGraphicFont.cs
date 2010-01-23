@@ -65,14 +65,17 @@ namespace e2skinner2.Structures
         public override void paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
                 Graphics g = e.Graphics;
-                System.Drawing.Font font;
+                System.Drawing.Font font = null;
                 String name = "";
                 try
                 {
                     //this crashes, but why?
-                   name = pFont.FontFamily.GetName(0);
+                    if (pFont.FontFamily != null) //Only do this if the font is valid
+                    {
+                        name = pFont.FontFamily.GetName(0);
 
-                   font = new System.Drawing.Font(pFont.FontFamily, pSize, pFont.FontStyle, GraphicsUnit.Pixel);
+                        font = new System.Drawing.Font(pFont.FontFamily, pSize, pFont.FontStyle, GraphicsUnit.Pixel);
+                    }
                 }
                 catch (Exception error)
                 {
@@ -104,10 +107,12 @@ namespace e2skinner2.Structures
                 else
                     format.Alignment = StringAlignment.Far;
 
-                SizeF StringSize = g.MeasureString(pText, font);
+                if (font != null)
+                {
+                    SizeF StringSize = g.MeasureString(pText, font);
 
-                g.DrawString(pText, font, new SolidBrush(pColor), new RectangleF(pX, pY, pWidth, StringSize.Height < pHeight ? StringSize.Height : pHeight), format);
-                
+                    g.DrawString(pText, font, new SolidBrush(pColor), new RectangleF(pX, pY, pWidth, StringSize.Height < pHeight ? StringSize.Height : pHeight), format);
+                }
         }
     }
 }

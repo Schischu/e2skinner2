@@ -305,14 +305,18 @@ namespace e2skinner2.Frames
 
         private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            //Property changed, so save it to xml, and repaint screen
+            if (treeView1.SelectedNode != null)
+            {
+                //Property changed, so save it to xml, and repaint screen
 
-            pXmlHandler.XmlSyncTreeChilds(treeView1.SelectedNode.GetHashCode(), treeView1.SelectedNode);
-            //treeView1.Invalidate();
+                //Actually, this only syncs the name of the element with treeview, no saveing is done here
+                pXmlHandler.XmlSyncTreeChilds(treeView1.SelectedNode.GetHashCode(), treeView1.SelectedNode);
 
-            pDesigner.sort();
-            pictureBox1.Invalidate();
-            refreshEditor();
+                pDesigner.sort();
+                pictureBox1.Invalidate();
+
+                refreshEditor();
+            }
         }
 
         private void btnSkinned_Click(object sender, EventArgs e)
@@ -513,37 +517,160 @@ namespace e2skinner2.Frames
             close();
         }
 
-        int x = 0;
-        int y = 0;
+        private Int32 _StartX = 0;
+        private Int32 _StartY = 0;
+        private Boolean mouseDown = false;
+        //sAttribute _Attr = null;
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            System.Console.WriteLine("pictureBox1_Click");
-            sGraphicElement pele = pDesigner.getElement((uint)x, (uint)y);
-            if (pele != null)
-            {
-                pele.pX += (uint)(((MouseEventArgs)e).X - x);
-                pele.pY += (uint)(((MouseEventArgs)e).Y - y);
-                refresh();
-            }
+            
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             System.Console.WriteLine("pictureBox1_MouseDown");
 
-            x = ((MouseEventArgs)e).X;
-            y = ((MouseEventArgs)e).Y;
+            _StartX = ((MouseEventArgs)e).X;
+            _StartY = ((MouseEventArgs)e).Y;
 
-            sGraphicElement ele = pDesigner.getElement((uint)((MouseEventArgs)e).X, (uint)((MouseEventArgs)e).Y);
-            if (ele != null)
+            sGraphicElement elem = pDesigner.getElement((uint)_StartX, (uint)_StartY);
+            if (elem != null)
             {
-                //toolStripLabel2.Text = ele.ToString();
-                if (ele.pAttr != null)
-                    treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(ele.pAttr.myNode);
+                sAttribute _Attr = elem.pAttr;
+                if (_Attr != null)
+                {
+                    treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(_Attr.myNode);
+                }
             }
 
+            tabControl1.Focus();
+            
 
+            mouseDown = true;
+            this.Cursor = Cursors.SizeAll;
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            //System.Console.WriteLine("pictureBox1_MouseMove");
+            Int32 curX = ((MouseEventArgs)e).X;
+            Int32 curY = ((MouseEventArgs)e).Y;
+            if (mouseDown)
+            {
+                if (propertyGrid1.SelectedObject != null)
+                {
+                    //Console.WriteLine(_Attr.pRelativX + "+(" + curX + "-" + _StartX + ")");
+                    if (curX != _StartX || curY != _StartY)
+                    {
+                        sAttribute _Attr = (sAttribute)propertyGrid1.SelectedObject;
+                        Int32 posX = (Int32)(_Attr.pRelativX + (curX - _StartX));
+                        Int32 posY = (Int32)(_Attr.pRelativY + (curY - _StartY));
+                        if (posX < 0) posX = 0;
+                        if (posY < 0) posY = 0;
+                        sAttribute.Position pos = new sAttribute.Position();
+
+                        pos.X = ((UInt32)posX).ToString();
+                        pos.Y = ((UInt32)posY).ToString();
+
+                        _Attr.Relativ = pos;
+
+                        propertyGrid1.Refresh();
+                        pictureBox1.Invalidate();
+                    }
+                }
+            }
+            _StartX = curX;
+            _StartY = curY;
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            System.Console.WriteLine("pictureBox1_MouseUp");
+            if (mouseDown)
+            {
+                //propertyGrid1_PropertyValueChanged(null, null);
+            }
+            mouseDown = false;
+            this.Cursor = Cursors.Default;
+        }
+
+        private bool isCTRL(KeyEventArgs e)
+        {
+            return e.Control;
+        }
+
+        private bool isUP(KeyEventArgs e)
+        {
+            return e.KeyCode == Keys.Up;
+        }
+
+        private bool isDOWN(KeyEventArgs e)
+        {
+            return e.KeyCode == Keys.Down;
+        }
+
+        private bool isLEFT(KeyEventArgs e)
+        {
+            return e.KeyCode == Keys.Left;
+        }
+
+        private bool isRIGHT(KeyEventArgs e)
+        {
+            return e.KeyCode == Keys.Right;
+        }
+
+        private bool isCURSOR(KeyEventArgs e)
+        {
+            return (isUP(e) || isDOWN(e) || isLEFT(e) || isRIGHT(e));
+        }
+
+        private void tabControl1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // If CTRL pressed, use margin 1, else margin 5
+            //Console.WriteLine(e.Control.ToString());
+            if (isCURSOR(e))
+            {
+                int marging = 5;
+
+                if (isCTRL(e))
+                    marging = 1;
+
+                if (propertyGrid1.SelectedObject != null)
+                {
+                    int x = isLEFT(e) ? -marging : (isRIGHT(e) ? +marging : 0);
+                    int y = isUP(e)   ? -marging : (isDOWN(e)  ? +marging : 0);
+
+                    sAttribute _Attr = (sAttribute)propertyGrid1.SelectedObject;
+                    Int32 posX = (Int32)(_Attr.pRelativX + x);
+                    Int32 posY = (Int32)(_Attr.pRelativY + y);
+                    if (posX < 0) posX = 0;
+                    if (posY < 0) posY = 0;
+
+                    sAttribute.Position pos = new sAttribute.Position();
+
+                    pos.X = ((UInt32)posX).ToString();
+                    pos.Y = ((UInt32)posY).ToString();
+
+                    _Attr.Relativ = pos;
+
+                    propertyGrid1.Refresh();
+                    pictureBox1.Invalidate();
+                }
+
+
+                e.Handled = true;
+            }
+        }
+
+        private void tabControl1_Enter(object sender, EventArgs e)
+        {
+            this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.Lock_icon;
+        }
+
+        private void tabControl1_Leave(object sender, EventArgs e)
+        {
+            this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.UnLock_icon;
         }
     }
 }

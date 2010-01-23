@@ -121,8 +121,26 @@ namespace e2skinner2.Structures
                 if (value == eFlags.wfBorder.ToString()) pFlags = eFlags.wfBorder;
                 else pFlags = eFlags.wfNoBorder;
 
-                if (pFlags == eFlags.wfBorder) myNode.Attributes["flags"].Value = "wfBorder";
-                else myNode.Attributes["flags"].Value = "wfNoBorder";
+                if (pFlags == eFlags.wfBorder)
+                {
+                    if (myNode.Attributes["flags"] != null)
+                        myNode.Attributes["flags"].Value = "wfBorder";
+                    else
+                    {
+                        myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("flags"));
+                        myNode.Attributes["flags"].Value = "wfBorder";
+                    }
+                }
+                else
+                {
+                    if (myNode.Attributes["flags"] != null)
+                        myNode.Attributes["flags"].Value = "wfNoBorder";
+                    else
+                    {
+                        myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("flags"));
+                        myNode.Attributes["flags"].Value = "wfNoBorder";
+                    }
+                }
             }
         }
 

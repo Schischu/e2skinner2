@@ -30,56 +30,88 @@ namespace e2skinner2.Structures
         public sFont(String name, String path, int scale, bool replacement)
         {
             String fontPath = cProperties.getProperty("path_fonts");
+
+            pfc = new PrivateFontCollection();
+
             Name = name; 
             Path = path;
-            //This way we have only the file name, but what happens if the fonts are in the skin directory ?
-            //Lets check all posibilities
-            Filename = Path.Substring(Path.LastIndexOf('/')>0?Path.LastIndexOf('/')+1:0);
-            if (!File.Exists(fontPath + "/" + Filename))
-            {
-                Filename = Path;
-                Filename = Filename.Replace("enigma2", "");
-                Filename = Filename.Replace("usr", "");
-                Filename = Filename.Replace("local", "");
-                Filename = Filename.Replace("share", "");
-                Filename = Filename.Replace("var", "");
-                fontPath = fontPath.Replace("fonts", "");
-            }
+
             Scale = scale;
             Replacement = replacement;
 
-            pfc = new PrivateFontCollection();
-                try
-                {
-                    pfc.AddFontFile(fontPath + "/" + Filename);
-                }
-                catch (FileNotFoundException error)
-                {
-                    String errormessage = error.Message + ":\n\n";
-                    errormessage += fontPath + "/" + Filename + "\n";
-                    errormessage += error.Message;
+            //This way we have only the file name, but what happens if the fonts are in the skin directory ?
+            //Lets check all posibilities
+            Filename = Path.Substring(Path.LastIndexOf('/')>0?Path.LastIndexOf('/')+1:0);
+            String AbsolutPathFont = fontPath + "/" + Filename;
+            String RelativPathFont = Path;
+            RelativPathFont = Path;
+            RelativPathFont = RelativPathFont.Replace("enigma2", "");
+            RelativPathFont = RelativPathFont.Replace("usr", "");
+            RelativPathFont = RelativPathFont.Replace("local", "");
+            RelativPathFont = RelativPathFont.Replace("share", "");
+            RelativPathFont = RelativPathFont.Replace("var", "");
+            RelativPathFont = fontPath.Replace("fonts", "") + RelativPathFont;
 
-                    MessageBox.Show(errormessage,
-                        error.Message,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information,
-                        MessageBoxDefaultButton.Button1);
+            String lookupPath = "";
+            if (File.Exists(AbsolutPathFont))
+                lookupPath = AbsolutPathFont;
+            else if (File.Exists(RelativPathFont))
+                lookupPath = RelativPathFont;
+            else
+            {
+                String errorMessage = "";
+                errorMessage += "e2skinner2 has searched in several places for the font \"" + Filename + ".\"\n";
+                errorMessage += "Unfortunatly the search was not successful.\n";
+                errorMessage += "\n";
+                errorMessage += "Search Locations:\n";
+                errorMessage += "\t" + new FileInfo(AbsolutPathFont).FullName + "\n";
+                errorMessage += "\t" + new FileInfo(RelativPathFont).FullName + "\n";
 
-                    return;
-                }
+                MessageBox.Show(errorMessage,
+                    "Error while loading fonts",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information,
+                    MessageBoxDefaultButton.Button1);
 
-                FontFamily = pfc.Families[0];
-                String name2 = FontFamily.GetName(0);
+                return;
+            }
+
+            try
+            {
+                pfc.AddFontFile(lookupPath);
+            }
+            catch (FileNotFoundException error)
+            {
+                String errorMessage = "";
+                errorMessage += "e2skinner2 has tried to open the font \"" + Filename + "\".\n";
+                errorMessage += "Unfortunatly this was not successful.\n";
+                errorMessage += "Either the font type is not supported by e2kinner2,\n";
+                errorMessage += "or it is not a vaild font.\n";
+                errorMessage += "\n";
+                errorMessage += "Location:\n";
+                errorMessage += "\t" + new FileInfo(lookupPath).FullName + "\n";
+
+                MessageBox.Show(errorMessage,
+                    "Error while loading fonts",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information,
+                    MessageBoxDefaultButton.Button1);
+
+                return;
+            }
+
+            FontFamily = pfc.Families[0];
+            String name2 = FontFamily.GetName(0);
+            FontStyle = System.Drawing.FontStyle.Regular;
+            if (FontFamily.IsStyleAvailable(System.Drawing.FontStyle.Regular))
                 FontStyle = System.Drawing.FontStyle.Regular;
-                if (FontFamily.IsStyleAvailable(System.Drawing.FontStyle.Regular))
-                    FontStyle = System.Drawing.FontStyle.Regular;
-                else
-                    FontStyle = System.Drawing.FontStyle.Bold;
+            else
+                FontStyle = System.Drawing.FontStyle.Bold;
 
-                int t1 = FontFamily.GetCellAscent(FontStyle);
-                int t2 = FontFamily.GetCellDescent(FontStyle);
-                int t3 = FontFamily.GetEmHeight(FontStyle);
-                int t4 = FontFamily.GetLineSpacing(FontStyle);
+            int t1 = FontFamily.GetCellAscent(FontStyle);
+            int t2 = FontFamily.GetCellDescent(FontStyle);
+            int t3 = FontFamily.GetEmHeight(FontStyle);
+            int t4 = FontFamily.GetLineSpacing(FontStyle);
         }
     }
 }
