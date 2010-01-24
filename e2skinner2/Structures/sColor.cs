@@ -12,20 +12,37 @@ namespace e2skinner2.Structures
         public String pName;
         public UInt32 pValue;
         public Color pColor;
+        public Color pColorAlpha;
+
+        public sColor(Color value)
+        {
+            pName = value.Name;
+            pValue = (uint)value.ToArgb();
+            pColorAlpha = value;
+            pColor      = value;
+        }
+
+        public sColor(int alpha, Color value)
+        {
+            pName = value.Name;
+            pValue = (uint)value.ToArgb();
+            pColorAlpha = Color.FromArgb(255 - alpha, value);
+            pColor = value;
+        }
+
 
         public sColor(String name, UInt32 value)
         {
             pName = name; 
             pValue = value;
 
-            int alpha = 255-((int)(pValue >> 24) & 0xff);
+            int alpha = 255 - ((int)(pValue >> 24) & 0xff);
             int red = (int)(pValue >> 16) & 0xff;
             int green = (int)(pValue >> 8) & 0xff;
             int blue = (int)pValue & 0xff;
-            if (cProperties.getPropertyBool("enable_alpha"))
-                pColor = Color.FromArgb((int)alpha, (int)red, (int)green, (int)blue);
-            else
-                pColor = Color.FromArgb((int)red, (int)green, (int)blue);
+           
+            pColorAlpha = Color.FromArgb((int)alpha, (int)red, (int)green, (int)blue);
+            pColor = Color.FromArgb((int)red, (int)green, (int)blue);
         }
 
         public int CompareTo(object obj)

@@ -23,7 +23,7 @@ namespace e2skinner2.Structures
             
             if (!cProperties.getPropertyBool("skinned_widget"))
             {
-                new sGraphicRectangel(pAttr, false, (float)1.0, Color.Yellow).paint(sender, e);
+                new sGraphicRectangel(pAttr, false, (float)1.0, new sColor(Color.Yellow)).paint(sender, e);
             }
             else
             {

@@ -22,7 +22,7 @@ namespace e2skinner2.Structures
         {
             if (!cProperties.getPropertyBool("skinned"))
             {
-                new sGraphicRectangel(pAttr, false, (float)1.0, Color.Green).paint(sender, e);
+                new sGraphicRectangel(pAttr, false, (float)1.0, new sColor(Color.Green)).paint(sender, e);
             }
             else
             {
@@ -31,10 +31,10 @@ namespace e2skinner2.Structures
                     //new sGraphicRectangel().paint(sender, e);
                 }
                 else
-                    new sGraphicRectangel(pAttr, true, 1.0F, ((sAttributeProgress)pAttr).pBackgroundColor.pColor).paint(sender, e);
+                    new sGraphicRectangel(pAttr, true, 1.0F, ((sAttributeProgress)pAttr).pBackgroundColor).paint(sender, e);
 
                 if(pAttr.pBorder)
-                    new sGraphicRectangel(pAttr, false, (float)pAttr.pBorderWidth, pAttr.pBorderColor.pColor).paint(sender, e);
+                    new sGraphicRectangel(pAttr, false, (float)pAttr.pBorderWidth, pAttr.pBorderColor).paint(sender, e);
 
             }
         }

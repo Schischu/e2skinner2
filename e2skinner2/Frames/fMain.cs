@@ -24,6 +24,8 @@ namespace e2skinner2.Frames
         {
             InitializeComponent();
 
+            toolStripButton2.Checked = cProperties.getPropertyBool("enable_alpha"); ;
+
             textBoxEditor2.ConfigurationManager.Language = "xml";
 
             this.Text = String.Format("{0} v{1}", ((AssemblyProductAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product, Assembly.GetExecutingAssembly().GetName().Version.ToString());
@@ -523,6 +525,7 @@ namespace e2skinner2.Frames
         private Int32 _StartX = 0;
         private Int32 _StartY = 0;
         private Boolean mouseDown = false;
+        private Boolean isResize = false;
         //sAttribute _Attr = null;
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -544,14 +547,32 @@ namespace e2skinner2.Frames
                 if (_Attr != null)
                 {
                     treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(_Attr.myNode);
+                    if (inBounds(((MouseEventArgs)e).Location, _Attr.Rectangle, -2))
+                    {
+                        mouseDown = true;
+                        this.Cursor = Cursors.SizeAll;
+                    }
                 }
             }
 
             tabControl1.Focus();
-            
+        }
 
-            mouseDown = true;
-            this.Cursor = Cursors.SizeAll;
+        private bool inRange(int myx, int targetX, int margin)
+        {
+            int targetXMax = targetX + margin;
+            int targetXMin = targetX - margin;
+            if (myx > targetXMin && myx < targetXMax)
+                return true;
+            return false;
+        }
+
+        private bool inBounds(Point myx, Rectangle target, int margin)
+        {
+            Rectangle targetMax = new Rectangle(target.X - margin, target.Y - margin, target.Width + 2*margin, target.Height + 2*margin);
+            //targetMin = new Rectangle(target.X - margin, target.Y - margin, target.Width - margin, target.Height - margin);
+
+            return targetMax.Contains(myx);
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -566,22 +587,74 @@ namespace e2skinner2.Frames
                     //Console.WriteLine(_Attr.pRelativX + "+(" + curX + "-" + _StartX + ")");
                     if (curX != _StartX || curY != _StartY)
                     {
-                        sAttribute _Attr = (sAttribute)propertyGrid1.SelectedObject;
-                        Int32 posX = (Int32)(_Attr.pRelativX + (curX - _StartX));
-                        Int32 posY = (Int32)(_Attr.pRelativY + (curY - _StartY));
-                        if (posX < 0) posX = 0;
-                        if (posY < 0) posY = 0;
-                        sAttribute.Position pos = new sAttribute.Position();
+                        if (isResize)
+                        {
+                        }
+                        else
+                        {
+                            sAttribute _Attr = (sAttribute)propertyGrid1.SelectedObject;
+                            Int32 posX = (Int32)(_Attr.pRelativX + (curX - _StartX));
+                            Int32 posY = (Int32)(_Attr.pRelativY + (curY - _StartY));
+                            sAttribute.Position pos = new sAttribute.Position();
 
-                        pos.X = ((UInt32)posX).ToString();
-                        pos.Y = ((UInt32)posY).ToString();
+                            pos.X = ((Int32)posX).ToString();
+                            pos.Y = ((Int32)posY).ToString();
 
-                        _Attr.Relativ = pos;
+
+                            /* TODO: If we would not set it here directly to Relative but to X and Y the value would only be
+                             * temprarly saved, and so we could set it finaly in mouse up, this has an advantage cause we 
+                             * could easier implement a UNDO functionality.
+                             */
+                            _Attr.Relativ = pos;
+                        }
 
                         propertyGrid1.Refresh();
                         pictureBox1.Invalidate();
                     }
                 }
+            }
+            else
+            {
+                sAttribute _Attr = (sAttribute)propertyGrid1.SelectedObject;
+                if (_Attr != null)
+                {
+                    if (inBounds(((MouseEventArgs)e).Location, _Attr.Rectangle, 2))
+                    {
+                        isResize = true;
+                        if (inRange(curX, _Attr.Absolut.X, 2))
+                        {
+                            this.Cursor = Cursors.SizeWE;
+                        }
+                        else if (inRange(curX, _Attr.Absolut.X + _Attr.Size.Width, 2))
+                        {
+                            this.Cursor = Cursors.SizeWE;
+                        }
+                        else if (inRange(curY, _Attr.Absolut.Y, 2))
+                        {
+                            this.Cursor = Cursors.SizeNS;
+                        }
+                        else if (inRange(curY, _Attr.Absolut.Y + _Attr.Size.Height, 2))
+                        {
+                            this.Cursor = Cursors.SizeNS;
+                        }
+                        else
+                        {
+                            this.Cursor = Cursors.Default;
+                            isResize = false;
+                        }
+                    }
+                    else
+                    {
+                        this.Cursor = Cursors.Default;
+                        isResize = false;
+                    }
+                }
+                else
+                {
+                    this.Cursor = Cursors.Default;
+                    isResize = false;
+                }
+                    
             }
             _StartX = curX;
             _StartY = curY;
@@ -595,6 +668,7 @@ namespace e2skinner2.Frames
                 //propertyGrid1_PropertyValueChanged(null, null);
             }
             mouseDown = false;
+            isResize = false;
             this.Cursor = Cursors.Default;
         }
 
@@ -641,6 +715,10 @@ namespace e2skinner2.Frames
         private bool isF11(KeyEventArgs e)
         {
             return e.KeyCode == Keys.F11;
+        }
+        private bool isF10(KeyEventArgs e)
+        {
+            return e.KeyCode == Keys.F10;
         }
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
@@ -702,10 +780,12 @@ namespace e2skinner2.Frames
         private void tabControl1_Leave(object sender, EventArgs e)
         {
             this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.UnLock_icon;
+            this.Cursor = Cursors.Default;
         }
 
-        private bool _bFullScreenMode = false;
-        private int x, y, w, h, h_ms1;
+        private bool _bFullScreenMode = false, _bPreviewFullScreenMode = false;
+        private Form previewForm = null;
+        private int x, y, w, h;
 
         private void toggleFullscreen()
         {
@@ -715,46 +795,59 @@ namespace e2skinner2.Frames
                 y = this.Top;
                 w = this.Width;
                 h = this.Height;
-                h_ms1 = menuStrip1.Height;
-
                 this.FormBorderStyle = FormBorderStyle.None;
-                //menuStrip1.Hide();
-                //toolStripMain.Hide();
-
                 menuStrip1.Visible = false;
                 toolStripMain.Visible = false;
-
-                //menuStrip1.Height = 0;
-                //menuStrip1.Size = new Size(menuStrip1.Width, 0);
                 this.Left = 0;
                 this.Top = 0;
                 this.Width = Screen.PrimaryScreen.Bounds.Width;
                 this.Height = Screen.PrimaryScreen.Bounds.Height;
-                
                 _bFullScreenMode = true;
             }
             else
             {
                 this.FormBorderStyle = FormBorderStyle.Sizable;
-                
                 toolStripMain.Visible = true;
                 menuStrip1.Visible = true;
-
-                //menuStrip1.Height = h_ms1;
-
                 this.Left = x;
                 this.Top = y;
                 this.Width = w;
                 this.Height = h;
-
                 _bFullScreenMode = false;
+            }
+        }
+
+        private void togglePreviewFullscreen()
+        {
+            if (previewForm == null)
+            {
+                previewForm = new Form();
+                previewForm.FormBorderStyle = FormBorderStyle.None;
+                previewForm.TopMost = true;
+                previewForm.Left = 0;
+                previewForm.Top = 0;
+                previewForm.Width = Screen.PrimaryScreen.Bounds.Width;
+                previewForm.Height = Screen.PrimaryScreen.Bounds.Height;
+                previewForm.BackColor = Color.Black;
+                previewForm.Controls.Add(pictureBox1);
+                pictureBox1.Size = new Size(1280, 720);
+                previewForm.KeyUp += fMain_KeyUp;
+                previewForm.Visible = true;
+            }
+            else
+            {
+                panelDesignerInner.Controls.Add(pictureBox1);
+                previewForm.Visible = false;
+                previewForm = null;
             }
         }
 
         private void fMain_KeyUp(object sender, KeyEventArgs e)
         {
-            if(isF11(e))
+            if (isF11(e))
                 toggleFullscreen();
+            else if (isF10(e))
+                togglePreviewFullscreen();
         }
 
         private void fMain_KeyDown(object sender, KeyEventArgs e)
@@ -763,7 +856,7 @@ namespace e2skinner2.Frames
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            cProperties.setProperty("enable_alpha", btnFading.Checked);
+            cProperties.setProperty("enable_alpha", toolStripButton2.Checked);
 
             pictureBox1.Invalidate();
         }

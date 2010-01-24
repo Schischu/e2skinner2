@@ -22,7 +22,7 @@ namespace e2skinner2.Structures
         {
             if (!cProperties.getPropertyBool("skinned_screen"))
             {
-                new sGraphicRectangel(pAttr, false, (float)1.0, Color.Blue).paint(sender, e);
+                new sGraphicRectangel(pAttr, false, (float)1.0, new sColor(Color.Blue)).paint(sender, e);
             }
             else
             {
@@ -31,8 +31,8 @@ namespace e2skinner2.Structures
                 {
                     case sAttributeScreen.eFlags.wfNoBorder:
 
-                        new sGraphicRectangel(pAttr, true, (float)1.0, ((sAttributeScreen)pAttr).pBackgroundColor.pColor).paint(sender, e);
-                        //new sGraphicFont(pAttr, pAttr.pTitle, (float)16, "Arial", pAttr.pLabelForegroundColor.pColor).paint(sender, e);
+                        new sGraphicRectangel(pAttr, true, (float)1.0, ((sAttributeScreen)pAttr).pBackgroundColor).paint(sender, e);
+                        //new sGraphicFont(pAttr, pAttr.pTitle, (float)16, "Arial", pAttr.pLabelForegroundColor).paint(sender, e);
                         break;
 
                     case sAttributeScreen.eFlags.wfBorder:
@@ -54,7 +54,7 @@ namespace e2skinner2.Structures
                         if (pAttr.pbpRight != null)
                             tw -= (Int32)pAttr.pbpRight.Width;*/
 
-                        new sGraphicRectangel((Int32)(tx > 0 ? tx : 0), (Int32)(ty > 0 ? ty : 0), (Int32)(tw > 0 ? tw : 0), (Int32)(th > 0 ? th : 0), true, (float)1.0, ((sAttributeScreen)pAttr).pBackgroundColor.pColor).paint(sender, e);
+                        new sGraphicRectangel((Int32)(tx > 0 ? tx : 0), (Int32)(ty > 0 ? ty : 0), (Int32)(tw > 0 ? tw : 0), (Int32)(th > 0 ? th : 0), true, (float)1.0, ((sAttributeScreen)pAttr).pBackgroundColor).paint(sender, e);
 
                         //BorderLayout
 
@@ -204,7 +204,7 @@ namespace e2skinner2.Structures
                             Int32 Xoff = pAttr.pAbsolutX + ((sAttributeScreen)pAttr).pTitleXOff - (Int32)(((sAttributeScreen)pAttr).pbpLeft != null ? ((sAttributeScreen)pAttr).pbpLeft.Width : 0);
                             Int32 Yoff = pAttr.pAbsolutY + ((sAttributeScreen)pAttr).pTitleYOff - (Int32)(((sAttributeScreen)pAttr).pbpTop != null ? ((sAttributeScreen)pAttr).pbpTop.Height : 0);
 
-                            new sGraphicFont(/*pAttr*/null, Xoff, Yoff, ((sAttributeScreen)pAttr).pTitle, ((sAttributeScreen)pAttr).pTitleSize, ((sAttributeScreen)pAttr).pTitleFont, ((sAttributeScreen)pAttr).pLabelForegroundColor.pColor, cProperty.eHAlign.Left).paint(sender, e);
+                            new sGraphicFont(/*pAttr*/null, Xoff, Yoff, ((sAttributeScreen)pAttr).pTitle, ((sAttributeScreen)pAttr).pTitleSize, ((sAttributeScreen)pAttr).pTitleFont, ((sAttributeScreen)pAttr).pLabelForegroundColor, cProperty.eHAlign.Left, cProperty.eVAlign.Center).paint(sender, e);
                         }
                         break;
                 }

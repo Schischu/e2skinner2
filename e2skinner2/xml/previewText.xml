@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Known Datatypes: 'string', 'bool', 'int' -->
+<screens>
+	<screen>
+		<name>MediaPlayer</name>
+		<entries>
+			<title value='Title' type='string'/>
+			<artist value='Artist' type='string'/>
+		</entries>
+	</screen>
+</screens>

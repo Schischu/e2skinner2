@@ -10,9 +10,9 @@ namespace e2skinner2.Structures
     {
         protected bool pFilled;
         protected float pLineWidth;
-        protected Color pColor;
+        protected sColor pColor;
 
-        public sGraphicRectangel(sAttribute attr, bool filled, float linewidth, Color color)
+        public sGraphicRectangel(sAttribute attr, bool filled, float linewidth, sColor color)
             : base(attr)
         {
             pFilled = filled;
@@ -20,7 +20,7 @@ namespace e2skinner2.Structures
             pColor = color;
         }
 
-        public sGraphicRectangel(Int32 x, Int32 y, Int32 width, Int32 height, bool filled, float linewidth, Color color)
+        public sGraphicRectangel(Int32 x, Int32 y, Int32 width, Int32 height, bool filled, float linewidth, sColor color)
             : base(x, y, width, height)
         {
             //Console.WriteLine("sGraphicRectangel: " + x + ":" + y + " " + width + "x" + height);
@@ -34,10 +34,16 @@ namespace e2skinner2.Structures
         public override void paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             Graphics g = e.Graphics;
+
+
+            Color penColor = pColor.pColor;
+            if (Logic.cProperties.getPropertyBool("enable_alpha"))
+                penColor = pColor.pColorAlpha;
+
             if (pFilled)
-                g.FillRectangle(new SolidBrush(pColor), pX, pY, pWidth, pHeight);
+                g.FillRectangle(new SolidBrush(penColor), pX, pY, pWidth, pHeight);
             else
-                g.DrawRectangle(new Pen(pColor, pLineWidth), pX, pY, pWidth, pHeight);
+                g.DrawRectangle(new Pen(penColor, pLineWidth), pX, pY, pWidth, pHeight);
         }
     }
 }

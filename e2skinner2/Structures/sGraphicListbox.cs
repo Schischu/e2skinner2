@@ -28,7 +28,7 @@ namespace e2skinner2.Structures
                 if (((sAttributeListbox)pAttr).pBackgroundPixmap != null)
                     new sGraphicImage(pAttr, ((sAttributeListbox)pAttr).pBackgroundPixmapName).paint(sender, e);
                 else
-                    new sGraphicRectangel((Int32)(tx > 0 ? tx : 0), (Int32)(ty > 0 ? ty : 0), (Int32)(tw > 0 ? tw : 0), (Int32)(th > 0 ? th : 0), true, (float)1.0, ((sAttributeListbox)pAttr).pListboxBackgroundColor.pColor).paint(sender, e);
+                    new sGraphicRectangel((Int32)(tx > 0 ? tx : 0), (Int32)(ty > 0 ? ty : 0), (Int32)(tw > 0 ? tw : 0), (Int32)(th > 0 ? th : 0), true, (float)1.0, ((sAttributeListbox)pAttr).pListboxBackgroundColor).paint(sender, e);
             }
 
             //BorderLayout
@@ -175,7 +175,7 @@ namespace e2skinner2.Structures
             if (((sAttributeListbox)pAttr).pSelectionPixmapName != null)
                 new sGraphicImage(pAttr, ((sAttributeListbox)pAttr).pSelectionPixmapName).paint(sender, e);
             else
-                new sGraphicRectangel(pAttr.pAbsolutX, pAttr.pAbsolutY, pAttr.pWidth, 20, true, 1.0F, ((sAttributeListbox)pAttr).pListboxSelectedBackgroundColor.pColor).paint(sender, e);
+                new sGraphicRectangel(pAttr.pAbsolutX, pAttr.pAbsolutY, pAttr.pWidth, 20, true, 1.0F, ((sAttributeListbox)pAttr).pListboxSelectedBackgroundColor).paint(sender, e);
         }
     }
 }

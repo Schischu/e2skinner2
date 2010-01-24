@@ -66,6 +66,8 @@ namespace e2skinner2.Logic
             return null;
         }
 
+        private sGraphicRectangel f1, f2, f3, f4;
+
         public void drawFog(int x, int y, int w, int h)
         {
             sResolution res = cDataBase.pResolution.getResolution();
@@ -73,18 +75,39 @@ namespace e2skinner2.Logic
             int Xres = (int)res.Xres;
             int Yres = (int)res.Yres;
 
-            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)Xres, (Int32)y, true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
-            pDrawList.Add(new sGraphicRectangel(0, (Int32)y, (Int32)x, (Int32)h, true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
-            pDrawList.Add(new sGraphicRectangel((Int32)(x + w), (Int32)y, (Int32)((Xres - x - w) > 0 ? (Xres - x - w) : 0), (Int32)h, true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
-            pDrawList.Add(new sGraphicRectangel(0, (Int32)(y + h), (Int32)Xres, (Int32)((Yres - y - h) > 0 ? (Yres - y - h) : 0), true, (float)1.0, Color.FromArgb(200, Color.LightGray)));
+
+
+            //if (f1 == null)
+            {
+                f1 = new sGraphicRectangel(0, 0, (Int32)Xres, (Int32)y, true, (float)1.0, new sColor(200, Color.LightGray));
+                f2 = new sGraphicRectangel(0, (Int32)y, (Int32)x, (Int32)h, true, (float)1.0, new sColor(200, Color.LightGray));
+                f3 = new sGraphicRectangel((Int32)(x + w), (Int32)y, (Int32)((Xres - x - w) > 0 ? (Xres - x - w) : 0), (Int32)h, true, (float)1.0, new sColor(200, Color.LightGray));
+                f4 = new sGraphicRectangel(0, (Int32)(y + h), (Int32)Xres, (Int32)((Yres - y - h) > 0 ? (Yres - y - h) : 0), true, (float)1.0, new sColor(200, Color.LightGray));
+                pDrawList.Add(f1);
+                pDrawList.Add(f2);
+                pDrawList.Add(f3);
+                pDrawList.Add(f4);
+            }
+            /*else
+            {
+                f1.pAttr.Relativ = new sAttribute.Position(0, 0);
+                f1.pAttr.Size = new Size((Int32)Xres, (Int32)y);
+                f2.pAttr.Relativ = new sAttribute.Position(0, (Int32)y);
+                f2.pAttr.Size = new Size((Int32)x, (Int32)h);
+                f3.pAttr.Relativ = new sAttribute.Position((Int32)(x + w), (Int32)y);
+                f3.pAttr.Size = new Size((Int32)((Xres - x - w) > 0 ? (Xres - x - w) : 0), (Int32)h);
+                f4.pAttr.Relativ = new sAttribute.Position(0, (Int32)(y + h));
+                f4.pAttr.Size = new Size((Int32)Xres, (Int32)((Yres - y - h) > 0 ? (Yres - y - h) : 0));
+            }*/
+
         }
 
         public void drawFrame()
         {
             sResolution res = cDataBase.pResolution.getResolution();
-            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)res.Xres, (Int32)res.Yres, false, (float)1.0, Color.Black));
-            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)res.Xres + 2, (Int32)res.Yres + 2, false, (float)1.0, Color.Gray));
-            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)res.Xres + 4, (Int32)res.Yres + 4, false, (float)1.0, Color.Black));
+            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)res.Xres, (Int32)res.Yres, false, (float)1.0, new sColor(Color.Black)));
+            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)res.Xres + 2, (Int32)res.Yres + 2, false, (float)1.0, new sColor(Color.Gray)));
+            pDrawList.Add(new sGraphicRectangel(0, 0, (Int32)res.Xres + 4, (Int32)res.Yres + 4, false, (float)1.0, new sColor(Color.Black)));
         }
 
         public void drawBackground()

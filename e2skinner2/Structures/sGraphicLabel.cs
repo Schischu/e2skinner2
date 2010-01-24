@@ -21,7 +21,7 @@ namespace e2skinner2.Structures
         {
             if (!cProperties.getPropertyBool("skinned_label") || cProperties.getPropertyBool("label_test"))
             {
-                new sGraphicRectangel(pAttr, false, (float)1.0, Color.Green).paint(sender, e);
+                new sGraphicRectangel(pAttr, false, (float)1.0, new sColor(Color.Green)).paint(sender, e);
             }
 
             if (cProperties.getPropertyBool("skinned_label"))
@@ -41,18 +41,18 @@ namespace e2skinner2.Structures
                         text = "";
 
                     if (pAttr.pTransparent)
-                        new sGraphicFont(pAttr, pAttr.pAbsolutX, pAttr.pAbsolutY, text, ((sAttributeLabel)pAttr).pFontSize * (((float)((sAttributeLabel)pAttr).pFont.Scale) / 100.0F), ((sAttributeLabel)pAttr).pFont, ((sAttributeLabel)pAttr).pForegroundColor.pColor, ((sAttributeLabel)pAttr).pHalign).paint(sender, e);
+                        new sGraphicFont(pAttr, pAttr.pAbsolutX, pAttr.pAbsolutY, text, ((sAttributeLabel)pAttr).pFontSize * (((float)((sAttributeLabel)pAttr).pFont.Scale) / 100.0F), ((sAttributeLabel)pAttr).pFont, ((sAttributeLabel)pAttr).pForegroundColor, ((sAttributeLabel)pAttr).pHalign, ((sAttributeLabel)pAttr).pValign).paint(sender, e);
                     else
-                        new sGraphicFont(pAttr, pAttr.pAbsolutX, pAttr.pAbsolutY, text, ((sAttributeLabel)pAttr).pFontSize * (((float)((sAttributeLabel)pAttr).pFont.Scale) / 100.0F), ((sAttributeLabel)pAttr).pFont, ((sAttributeLabel)pAttr).pForegroundColor.pColor, ((sAttributeLabel)pAttr).pBackgroundColor == null ? Color.Black : ((sAttributeLabel)pAttr).pBackgroundColor.pColor, ((sAttributeLabel)pAttr).pHalign).paint(sender, e);
+                        new sGraphicFont(pAttr, pAttr.pAbsolutX, pAttr.pAbsolutY, text, ((sAttributeLabel)pAttr).pFontSize * (((float)((sAttributeLabel)pAttr).pFont.Scale) / 100.0F), ((sAttributeLabel)pAttr).pFont, ((sAttributeLabel)pAttr).pForegroundColor, ((sAttributeLabel)pAttr).pBackgroundColor == null ? new sColor(Color.Black) : ((sAttributeLabel)pAttr).pBackgroundColor, ((sAttributeLabel)pAttr).pHalign, ((sAttributeLabel)pAttr).pValign).paint(sender, e);
                 }
                 else
                 {
                     if (!pAttr.pTransparent)
-                        new sGraphicRectangel(pAttr, true, 1.0F, ((sAttributeLabel)pAttr).pBackgroundColor.pColor).paint(sender, e);
+                        new sGraphicRectangel(pAttr, true, 1.0F, ((sAttributeLabel)pAttr).pBackgroundColor).paint(sender, e);
                 }
 
                 if(pAttr.pBorder)
-                    new sGraphicRectangel(pAttr, false, (float)pAttr.pBorderWidth, pAttr.pBorderColor.pColor).paint(sender, e);
+                    new sGraphicRectangel(pAttr, false, (float)pAttr.pBorderWidth, pAttr.pBorderColor).paint(sender, e);
 
             }
         }

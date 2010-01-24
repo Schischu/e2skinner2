@@ -431,6 +431,12 @@ namespace e2skinner2.Structures
                 pListbox = new sAttributeListbox(parent, node);
             }
 
+            if (pLabel != null)
+            {
+                if (pLabel.pText == null || pLabel.pText.Length > 0)
+                    pLabel.pPreviewText = cPreviewText.getText(parent.Name, Name);
+            }
+
             if (node.HasChildNodes)
             {
                 foreach (XmlNode nodeConverter in node.ChildNodes)

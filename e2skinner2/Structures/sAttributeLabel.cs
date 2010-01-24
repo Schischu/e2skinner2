@@ -28,7 +28,7 @@ namespace e2skinner2.Structures
         public cProperty.eVAlign pValign = cProperty.eVAlign.Center;
         public cProperty.eHAlign pHalign = cProperty.eHAlign.Left;
 
-        public bool pNoWrap = true;
+        public bool pNoWrap = false; /* DONT KNOW IF THIS IS HE CORRECT DEFAULT VALUE */
 
         [CategoryAttribute(entryName),
         DefaultValueAttribute("")]
@@ -71,6 +71,12 @@ namespace e2skinner2.Structures
             get { return pFontSize; }
             set { 
                 pFontSize = value;
+
+                if (myNode.Attributes["font"] == null)
+                {
+                    myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("font"));
+                    //myNode.Attributes["font"].Value = "1";
+                }
 
                 if (myNode.Attributes["font"] != null)
                     myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
@@ -145,8 +151,14 @@ namespace e2skinner2.Structures
                 else if (value == cProperty.eVAlign.Center.ToString()) pValign = cProperty.eVAlign.Center;
                 else pValign = cProperty.eVAlign.Bottom;
 
-                if (pHalign == cProperty.eHAlign.Left) myNode.Attributes["valign"].Value = "top";
-                else if (pHalign == cProperty.eHAlign.Center) myNode.Attributes["valign"].Value = "center";
+                if (myNode.Attributes["valign"] == null)
+                {
+                    myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("valign"));
+                    myNode.Attributes["valign"].Value = "top";
+                }
+
+                if (pValign == cProperty.eVAlign.Top) myNode.Attributes["valign"].Value = "top";
+                else if (pValign == cProperty.eVAlign.Center) myNode.Attributes["valign"].Value = "center";
                 else myNode.Attributes["valign"].Value = "bottom";
             }
         }
@@ -162,6 +174,12 @@ namespace e2skinner2.Structures
                 else if (value == cProperty.eHAlign.Center.ToString()) pHalign = cProperty.eHAlign.Center;
                 else pHalign = cProperty.eHAlign.Right;
 
+                if (myNode.Attributes["halign"] == null)
+                {
+                    myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("halign"));
+                    myNode.Attributes["halign"].Value = "left";
+                }
+
                 if (pHalign == cProperty.eHAlign.Left) myNode.Attributes["halign"].Value = "left";
                 else if (pHalign == cProperty.eHAlign.Center) myNode.Attributes["halign"].Value = "center";
                 else myNode.Attributes["halign"].Value = "right";
@@ -175,8 +193,15 @@ namespace e2skinner2.Structures
             set { 
                 pNoWrap = value;
 
-                if (!pNoWrap)
+                if (pNoWrap)
                 {
+                    if (myNode.Attributes["noWrap"] == null)
+                    {
+                        myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("noWrap"));
+                        myNode.Attributes["noWrap"].Value = "1";
+                    }
+
+
                     if (myNode.Attributes["noWrap"] != null)
                         myNode.Attributes["noWrap"].Value = pNoWrap ? "1" : "0";
                     else

@@ -269,6 +269,14 @@ namespace e2skinner2.Structures
             //set { pAbsolutX = (UInt32)value.X; pAbsolutY = (UInt32)value.Y; }
         }
 
+        [CategoryAttribute(entryName),
+        ReadOnlyAttribute(true)]
+        public Rectangle Rectangle
+        {
+            get { return new Rectangle((int)pAbsolutX, (int)pAbsolutY, pWidth, pHeight); }
+            //set { pAbsolutX = (UInt32)value.X; pAbsolutY = (UInt32)value.Y; }
+        }
+
         [CategoryAttribute(entryName)]
         public Size Size
         {

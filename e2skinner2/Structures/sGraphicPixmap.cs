@@ -21,7 +21,7 @@ namespace e2skinner2.Structures
         {
             if (!cProperties.getPropertyBool("skinned_pixmap"))
             {
-                new sGraphicRectangel(pAttr, false, (float)1.0, Color.Blue).paint(sender, e);
+                new sGraphicRectangel(pAttr, false, (float)1.0, new sColor(Color.Blue)).paint(sender, e);
             }
             else
             {

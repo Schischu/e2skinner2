@@ -15,14 +15,15 @@ namespace e2skinner2.Structures
         protected String pText;
         protected float pSize;
         protected sFont pFont;
-        protected Color pColor;
+        protected sColor pColor;
         protected bool pTranparent;
-        protected Color pBackColor;
-        protected e2skinner2.Structures.cProperty.eHAlign pAlignment;
+        protected sColor pBackColor;
+        protected cProperty.eHAlign pHAlignment;
+        protected cProperty.eVAlign pVAlignment;
 
         //protected sAttribute pAttr;
 
-        public sGraphicFont(sAttribute attr, Int32 x, Int32 y, String text, float size, sFont font, Color color, e2skinner2.Structures.cProperty.eHAlign alignment)
+        public sGraphicFont(sAttribute attr, Int32 x, Int32 y, String text, float size, sFont font, sColor color, cProperty.eHAlign hAlignment, cProperty.eVAlign vAlignment)
             : base(attr)
         {
             //pAttr = attr;
@@ -34,12 +35,13 @@ namespace e2skinner2.Structures
             pSize = size;
             pFont = font;
             pColor = color;
-            pAlignment = alignment;
+            pHAlignment = hAlignment;
+            pVAlignment = vAlignment;
 
             pTranparent = true;
         }
 
-        public sGraphicFont(sAttribute attr, Int32 x, Int32 y, String text, float size, sFont font, Color color, Color backcolor, e2skinner2.Structures.cProperty.eHAlign alignment)
+        public sGraphicFont(sAttribute attr, Int32 x, Int32 y, String text, float size, sFont font, sColor color, sColor backColor, cProperty.eHAlign hAlignment, cProperty.eVAlign vAlignment)
             : base(attr)
         {
             //pAttr = attr;
@@ -52,70 +54,103 @@ namespace e2skinner2.Structures
             pFont = font;
             pColor = color;
 
-            if (backcolor != null)
+            if (backColor != null)
             {
                 pTranparent = false;
-                pBackColor = backcolor;
+                pBackColor = backColor;
             }
             else pTranparent = true;
 
-            pAlignment = alignment;
+            pHAlignment = hAlignment;
+            pVAlignment = vAlignment;
         }
 
         public override void paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-                Graphics g = e.Graphics;
-                System.Drawing.Font font = null;
-                String name = "";
-                try
+            Graphics g = e.Graphics;
+            System.Drawing.Font font = null;
+            String name = "";
+            try
+            {
+                if (pFont.FontFamily != null) //Only do this if the font is valid
                 {
-                    //this crashes, but why?
-                    if (pFont.FontFamily != null) //Only do this if the font is valid
-                    {
-                        name = pFont.FontFamily.GetName(0);
+                    name = pFont.FontFamily.GetName(0);
 
-                        font = new System.Drawing.Font(pFont.FontFamily, pSize, pFont.FontStyle, GraphicsUnit.Pixel);
-                    } else
-                        Console.WriteLine("Font painting failed! (" + pFont.Name + ")");
-                }
-                catch (Exception error)
-                {
+                    font = new System.Drawing.Font(pFont.FontFamily, pSize, pFont.FontStyle, GraphicsUnit.Pixel);
+                } else
                     Console.WriteLine("Font painting failed! (" + pFont.Name + ")");
+            }
+            catch (Exception error)
+            {
+                Console.WriteLine("Font painting failed! (" + pFont.Name + ")");
 
-                    String errormessage = error.Message + ":\n\n";
-                    errormessage += error.StackTrace + "\n\n";
-                    errormessage += error.Source + "\n\n";
-                    errormessage += error.TargetSite + "\n\n";
-                    errormessage += name + "\n\n";
+                /*String errormessage = error.Message + ":\n\n";
+                errormessage += error.StackTrace + "\n\n";
+                errormessage += error.Source + "\n\n";
+                errormessage += error.TargetSite + "\n\n";
+                errormessage += name + "\n\n";
 
-                    //This message box is annoying
-                    /*MessageBox.Show(errormessage,
-                        error.Message,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information,
-                        MessageBoxDefaultButton.Button1);*/
+                //This message box is annoying
+                MessageBox.Show(errormessage,
+                    error.Message,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information,
+                    MessageBoxDefaultButton.Button1);*/
 
-                    return;
-                }
+                return;
+            }
+        
+            if (!pTranparent)
+                new sGraphicRectangel(pAttr, true, 1.0F, pBackColor).paint(sender,e);
+
+            StringFormat format = new StringFormat();
             
-                if (!pTranparent)
-                    new sGraphicRectangel(pAttr, true, 1.0F, pBackColor).paint(sender,e);
+            // Horizontal
+            if (pHAlignment == cProperty.eHAlign.Left)
+                format.Alignment = StringAlignment.Near;
+            else if (pHAlignment == cProperty.eHAlign.Center)
+                format.Alignment = StringAlignment.Center;
+            else
+                format.Alignment = StringAlignment.Far;
 
-                StringFormat format = new StringFormat();
+            // Vertical
+            //format.LineAlignment = StringAlignment.Center;
+
+            if (pVAlignment == cProperty.eVAlign.Top)
+                format.LineAlignment = StringAlignment.Near;
+            else if (pVAlignment == cProperty.eVAlign.Center)
                 format.LineAlignment = StringAlignment.Center;
-                if (pAlignment == e2skinner2.Structures.cProperty.eHAlign.Left)
-                    format.Alignment = StringAlignment.Near;
-                else if (pAlignment == e2skinner2.Structures.cProperty.eHAlign.Center)
-                    format.Alignment = StringAlignment.Center;
-                else
-                    format.Alignment = StringAlignment.Far;
+            else
+                format.LineAlignment = StringAlignment.Far;
 
-                if (font != null)
+            if (font != null)
+            {
+                SizeF StringSize = g.MeasureString(pText, font);
+
+                Color penColor = pColor.pColor;
+                if (cProperties.getPropertyBool("enable_alpha"))
+                    penColor = pColor.pColorAlpha;
+
+                //int x = pX;
+                int y = pY;
+
+                float height = pHeight;
+
+                if (pAttr != null && pAttr.GetType() == typeof(sAttributeLabel) && ((sAttributeLabel)pAttr).noWrap)
                 {
-                    SizeF StringSize = g.MeasureString(pText, font);
-
-                    g.DrawString(pText, font, new SolidBrush(pColor), new RectangleF(pX, pY, pWidth, StringSize.Height < pHeight ? StringSize.Height : pHeight), format);
+                    height = StringSize.Height < pHeight ? StringSize.Height : pHeight;
+                    if (pVAlignment == cProperty.eVAlign.Center)
+                        y += (pHeight - (Int32)StringSize.Height) / 2;
+                    else if (pVAlignment == cProperty.eVAlign.Bottom)
+                        y += (pHeight - (Int32)StringSize.Height);
                 }
+
+                g.DrawString(pText, 
+                    font, 
+                    new SolidBrush(penColor),
+                    new RectangleF(pX, y, pWidth, height), 
+                    format);
+            }
         }
     }
 }

@@ -19,6 +19,8 @@ namespace e2skinner2
             Application.SetCompatibleTextRenderingDefault(false);
 
             Logic.cProperties.init();
+            Structures.cPreviewText.init();
+            Structures.cConverter.init();
 
             Application.Run(new fMain());
         }
