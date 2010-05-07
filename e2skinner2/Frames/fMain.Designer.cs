@@ -73,7 +73,10 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelEditor = new System.Windows.Forms.Panel();
-            this.textBoxEditor2 = new ScintillaNet.Scintilla();
+            if (Platform.sysPlatform == Platform.ePlatform.MONO)
+                this.textBoxEditor = new System.Windows.Forms.TextBox();
+            else
+                this.textBoxEditor2 = new ScintillaNet.Scintilla();
             this.toolStripEditor = new System.Windows.Forms.ToolStrip();
             this.btnSaveEditor = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -96,7 +99,10 @@
             this.toolStripDesigner.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panelEditor.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).BeginInit();
+            if (Platform.sysPlatform == Platform.ePlatform.MONO)
+                ; //((System.ComponentModel.ISupportInitialize)(this.textBoxEditor)).BeginInit();
+            else
+                ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).BeginInit();
             this.toolStripEditor.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -528,31 +534,52 @@
             this.panelEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelEditor.Controls.Add(this.textBoxEditor2);
+            if (Platform.sysPlatform == Platform.ePlatform.MONO)
+                this.panelEditor.Controls.Add(this.textBoxEditor);
+            else
+                this.panelEditor.Controls.Add(this.textBoxEditor2);
             this.panelEditor.Controls.Add(this.toolStripEditor);
             this.panelEditor.Location = new System.Drawing.Point(3, 3);
             this.panelEditor.Name = "panelEditor";
             this.panelEditor.Size = new System.Drawing.Size(958, 688);
             this.panelEditor.TabIndex = 2;
-            // 
-            // textBoxEditor2
-            // 
-            this.textBoxEditor2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxEditor2.Location = new System.Drawing.Point(0, 25);
-            this.textBoxEditor2.Margins.Margin0.Width = 30;
-            this.textBoxEditor2.Margins.Margin1.Width = 2;
-            this.textBoxEditor2.Name = "textBoxEditor2";
-            this.textBoxEditor2.Size = new System.Drawing.Size(958, 663);
-            this.textBoxEditor2.Styles.BraceBad.FontName = "Verdana";
-            this.textBoxEditor2.Styles.BraceLight.FontName = "Verdana";
-            this.textBoxEditor2.Styles.ControlChar.FontName = "Verdana";
-            this.textBoxEditor2.Styles.Default.FontName = "Verdana";
-            this.textBoxEditor2.Styles.IndentGuide.FontName = "Verdana";
-            this.textBoxEditor2.Styles.LastPredefined.FontName = "Verdana";
-            this.textBoxEditor2.Styles.LineNumber.FontName = "Verdana";
-            this.textBoxEditor2.Styles.Max.FontName = "Verdana";
-            this.textBoxEditor2.TabIndex = 2;
-            this.textBoxEditor2.UndoRedo.IsUndoEnabled = false;
+            if (Platform.sysPlatform == Platform.ePlatform.MONO)
+            {
+                // 
+                // textBoxEditor
+                // 
+                this.textBoxEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                            | System.Windows.Forms.AnchorStyles.Left)
+                            | System.Windows.Forms.AnchorStyles.Right)));
+                this.textBoxEditor.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.textBoxEditor.Location = new System.Drawing.Point(3, 28);
+                this.textBoxEditor.Multiline = true;
+                this.textBoxEditor.Name = "textBoxEditor";
+                this.textBoxEditor.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+                this.textBoxEditor.Size = new System.Drawing.Size(952, 649);
+                this.textBoxEditor.TabIndex = 0;
+            } else
+            {
+                // 
+                // textBoxEditor2
+                // 
+                this.textBoxEditor2.Dock = System.Windows.Forms.DockStyle.Fill;
+                this.textBoxEditor2.Location = new System.Drawing.Point(0, 25);
+                this.textBoxEditor2.Margins.Margin0.Width = 30;
+                this.textBoxEditor2.Margins.Margin1.Width = 2;
+                this.textBoxEditor2.Name = "textBoxEditor2";
+                this.textBoxEditor2.Size = new System.Drawing.Size(958, 663);
+                this.textBoxEditor2.Styles.BraceBad.FontName = "Verdana";
+                this.textBoxEditor2.Styles.BraceLight.FontName = "Verdana";
+                this.textBoxEditor2.Styles.ControlChar.FontName = "Verdana";
+                this.textBoxEditor2.Styles.Default.FontName = "Verdana";
+                this.textBoxEditor2.Styles.IndentGuide.FontName = "Verdana";
+                this.textBoxEditor2.Styles.LastPredefined.FontName = "Verdana";
+                this.textBoxEditor2.Styles.LineNumber.FontName = "Verdana";
+                this.textBoxEditor2.Styles.Max.FontName = "Verdana";
+                this.textBoxEditor2.TabIndex = 2;
+                this.textBoxEditor2.UndoRedo.IsUndoEnabled = false;
+            }
             // 
             // toolStripEditor
             // 
@@ -729,7 +756,10 @@
             this.toolStripDesigner.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panelEditor.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).EndInit();
+            if (Platform.sysPlatform == Platform.ePlatform.MONO)
+                ; //((System.ComponentModel.ISupportInitialize)(this.textBoxEditor)).EndInit();
+            else
+                ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).EndInit();
             this.toolStripEditor.ResumeLayout(false);
             this.toolStripEditor.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -799,6 +829,7 @@
         private System.Windows.Forms.Panel panelDesignerInner;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton btnFading;
+        private System.Windows.Forms.TextBox textBoxEditor;
         private ScintillaNet.Scintilla textBoxEditor2;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;

@@ -433,8 +433,8 @@ namespace e2skinner2.Structures
 
             if (pLabel != null)
             {
-                if (pLabel.pText == null || pLabel.pText.Length > 0)
-                    pLabel.pPreviewText = cPreviewText.getText(parent.Name, Name);
+                //if (pLabel.pText == null || pLabel.pText.Length > 0)
+                //    pLabel.pPreviewText = cPreviewText.getText(parent.Name, Name);
             }
 
             if (node.HasChildNodes)

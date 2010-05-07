@@ -18,8 +18,12 @@ namespace e2skinner2
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            Platform.detectPlatform();
+            //For Debugging
+            //Platform.sysPlatform = Platform.ePlatform.MONO;
+
             Logic.cProperties.init();
-            Structures.cPreviewText.init();
+            //Structures.cPreviewText.init();
             Structures.cConverter.init();
 
             Application.Run(new fMain());

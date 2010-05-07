@@ -26,7 +26,8 @@ namespace e2skinner2.Frames
 
             toolStripButton2.Checked = cProperties.getPropertyBool("enable_alpha"); ;
 
-            textBoxEditor2.ConfigurationManager.Language = "xml";
+            if (Platform.sysPlatform != Platform.ePlatform.MONO)
+                textBoxEditor2.ConfigurationManager.Language = "xml";
 
             this.Text = String.Format("{0} v{1}", ((AssemblyProductAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product, Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
@@ -99,8 +100,11 @@ namespace e2skinner2.Frames
             cDataBase.clear();
             treeView1.Nodes.Clear();
             treeView1.Invalidate();
-            //textBoxEditor.Clear();
-            textBoxEditor2.Text = "";
+
+            if (Platform.sysPlatform == Platform.ePlatform.MONO)
+                textBoxEditor.Clear();
+            else
+                textBoxEditor2.Text = "";
             propertyGrid1.SelectedObject = null;
 
             pictureBox1.Invalidate();
@@ -148,19 +152,18 @@ namespace e2skinner2.Frames
                 int hash = selectedNode.GetHashCode();
                 XmlNode node = pXmlHandler.XmlGetNode(hash);
                 {
-                    //textBoxEditor.Clear();
                     String text = node.OuterXml;
                     text = FormatXml(node);
-                    //textBoxEditor.AppendText(text);
 
-                    //textBoxEditor.SelectionStart = 0;
-                    //textBoxEditor.ScrollToCaret();
+                    if (Platform.sysPlatform == Platform.ePlatform.MONO)
+                    {
+                        textBoxEditor.Clear();
+                        textBoxEditor.AppendText(text);
 
-                    //textBoxEditor2.Clear();
-                    textBoxEditor2.Text = text;
-
-                    //textBoxEditor2.SelectionStart = 0;
-                    //textBoxEditor2.ScrollToCaret();
+                        textBoxEditor.SelectionStart = 0;
+                        textBoxEditor.ScrollToCaret();
+                    } else
+                        textBoxEditor2.Text = text;
                 }
             }
         }
@@ -494,9 +497,10 @@ namespace e2skinner2.Frames
             int hash = treeView1.SelectedNode.GetHashCode();
             try
             {
-                //pXmlHandler.XmlReplaceNode(hash,textBoxEditor.Text);
-
-                pXmlHandler.XmlReplaceNode(hash, textBoxEditor2.Text); 
+                if (Platform.sysPlatform == Platform.ePlatform.MONO)
+                    pXmlHandler.XmlReplaceNode(hash, textBoxEditor.Text); 
+                else
+                    pXmlHandler.XmlReplaceNode(hash, textBoxEditor2.Text); 
 
                 refresh();
                 propertyGrid1_PropertyValueChanged(null, null);

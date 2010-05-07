@@ -90,12 +90,6 @@
     <Compile Include="Frames\fWindowstyle.Designer.cs">
       <DependentUpon>fWindowstyle.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frames\UserControls\CodeBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Frames\UserControls\CodeBox.Designer.cs">
-      <DependentUpon>CodeBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Logic\cDataBase.cs" />
     <Compile Include="Logic\cDesigner.cs" />
     <Compile Include="Logic\cProperties.cs" />
@@ -118,6 +112,7 @@
     <Compile Include="Frames\fResolution.Designer.cs">
       <DependentUpon>fResolution.cs</DependentUpon>
     </Compile>
+    <Compile Include="Plattform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Frames\fAbout.resx">
@@ -169,7 +164,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Structures\cConverter.cs" />
-    <Compile Include="Structures\cPreviewText.cs" />
     <Compile Include="Structures\sAttributeListbox.cs" />
     <Compile Include="Structures\cProperty.cs" />
     <Compile Include="Structures\sAttribute.cs" />
@@ -246,11 +240,11 @@
     <None Include="Resources\Lock-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Lock-icon1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\DataSources\e2skinner2.Logic.cProperties1.datasource" />
     <None Include="Resources\UnLock-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Frames\UserControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
