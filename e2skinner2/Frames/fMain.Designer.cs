@@ -602,7 +602,7 @@
             this.btnSaveEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSaveEditor.Name = "btnSaveEditor";
             this.btnSaveEditor.Size = new System.Drawing.Size(23, 22);
-            this.btnSaveEditor.Text = "Save";
+            this.btnSaveEditor.Text = "Sync";
             this.btnSaveEditor.Click += new System.EventHandler(this.btnSaveEditor_Click);
             // 
             // toolStripLabel1

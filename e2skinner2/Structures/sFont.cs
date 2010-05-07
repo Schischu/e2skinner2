@@ -50,7 +50,8 @@ namespace e2skinner2.Structures
             RelativPathFont = RelativPathFont.Replace("local", "");
             RelativPathFont = RelativPathFont.Replace("share", "");
             RelativPathFont = RelativPathFont.Replace("var", "");
-            RelativPathFont = fontPath.Replace("fonts", "") + RelativPathFont;
+            RelativPathFont = cProperties.getProperty("path") + "/" + RelativPathFont;
+            //RelativPathFont = fontPath.Replace("fonts", "") + RelativPathFont;
 
             String lookupPath = "";
             if (File.Exists(AbsolutPathFont))

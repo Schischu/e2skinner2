@@ -36,6 +36,15 @@ namespace e2skinner2.Frames
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            fOpen ftmp = new fOpen();
+            //ftmp.setup(pXmlHandler);
+            ftmp.ShowDialog();
+            if (ftmp.Status == fOpen.eStatus.OK)
+            {
+                cProperties.setProperty("path_skin_xml", ftmp.SkinName + "/skin.xml");
+                open(ftmp.SkinName);
+            }
+            /*
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 cProperties.setProperty("path_skin_xml", openFileDialog1.FileName);
@@ -44,29 +53,18 @@ namespace e2skinner2.Frames
                 String path = openFileDialog1.FileName;
                 
                 open(path);
-             }
+             }*/
         }
 
         public void open(String path)
         {
-            if (path.LastIndexOf("/") > 0) //linux
-                path = path.Substring(0, path.LastIndexOf("/"));
-            else
-                path = path.Substring(0, path.LastIndexOf("\\"));
-
             cProperties.setProperty("path_skin", path);
-
-            if (path.LastIndexOf("/") > 0) //linux
-                path = path.Substring(0, path.LastIndexOf("/"));
-            else
-                path = path.Substring(0, path.LastIndexOf("\\"));
-
-            cProperties.setProperty("path", path);
-            cProperties.setProperty("path_fonts", path + "/fonts");
+            cProperties.setProperty("path", "./skins");
+            cProperties.setProperty("path_fonts", "./fonts");
 
             pXmlHandler = new cXMLHandler();
             //treeview TO Xml
-            pXmlHandler.XmlToTreeView(openFileDialog1.FileName, treeView1);
+            pXmlHandler.XmlToTreeView(cProperties.getProperty("path") + "/" + cProperties.getProperty("path_skin_xml"), treeView1);
             cDataBase.init(pXmlHandler);
 
             treeView1.GetNodeAt(0, 0).Expand();
@@ -389,6 +387,7 @@ namespace e2skinner2.Frames
         private void btnOpen_Click(object sender, EventArgs e)
         {
             openToolStripMenuItem_Click(sender, e);
+            
         }
 
         private void windowStylesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -530,6 +529,10 @@ namespace e2skinner2.Frames
         private Int32 _StartY = 0;
         private Boolean mouseDown = false;
         private Boolean isResize = false;
+        private Boolean isResizeW = false;
+        private Boolean isResizeE = false;
+        private Boolean isResizeN = false;
+        private Boolean isResizeS = false;
         //sAttribute _Attr = null;
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -550,12 +553,22 @@ namespace e2skinner2.Frames
                 sAttribute _Attr = elem.pAttr;
                 if (_Attr != null)
                 {
-                    treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(_Attr.myNode);
-                    if (inBounds(((MouseEventArgs)e).Location, _Attr.Rectangle, -2))
+                    if (isResize)
                     {
+                        mouseDown = true;
+                    }
+                    else if (inBounds(((MouseEventArgs)e).Location, _Attr.Rectangle, -2))
+                    {
+                        treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(_Attr.myNode);
+
                         mouseDown = true;
                         this.Cursor = Cursors.SizeAll;
                     }
+                    else if (inBounds(((MouseEventArgs)e).Location, _Attr.Rectangle, +2))
+                    {
+                        mouseDown = true;
+                        //this.Cursor = Cursors.SizeAll;
+                    }                       
                 }
             }
 
@@ -593,6 +606,55 @@ namespace e2skinner2.Frames
                     {
                         if (isResize)
                         {
+                            sAttribute _Attr = (sAttribute)propertyGrid1.SelectedObject;
+                            Size size = new Size();
+                            size.Width = _Attr.pWidth;
+                            size.Height = _Attr.pHeight;
+
+                            if (isResizeW || isResizeE)
+                            {
+                                Int32 sizeX = (Int32)(_Attr.pWidth + (curX - _StartX));
+                                if (isResizeE)
+                                    size.Width = (Int32)sizeX;
+                                else
+                                {
+                                    Int32 posX = (Int32)(_Attr.pRelativX + (curX - _StartX));
+                                    Int32 posY = (Int32)_Attr.pRelativY;
+                                    sAttribute.Position pos = new sAttribute.Position();
+                                    pos.X = ((Int32)posX).ToString();
+                                    pos.Y = ((Int32)posY).ToString();
+                                    _Attr.Relativ = pos;
+
+                                    sizeX = (Int32)(_Attr.pWidth + (_StartX - curX));
+                                    size.Width = (Int32)sizeX;
+                                }
+                            }
+                            if (isResizeN || isResizeS)
+                            {
+                                Int32 sizeY = (Int32)(_Attr.pHeight + (curY - _StartY));
+                                if (isResizeS)
+                                    size.Height = (Int32)sizeY;
+                                else
+                                {
+                                    Int32 posX = (Int32)_Attr.pRelativX;
+                                    Int32 posY = (Int32)(_Attr.pRelativY + (curY - _StartY));
+                                    sAttribute.Position pos = new sAttribute.Position();
+                                    pos.X = ((Int32)posX).ToString();
+                                    pos.Y = ((Int32)posY).ToString();
+                                    _Attr.Relativ = pos;
+
+                                    sizeY = (Int32)(_Attr.pHeight + (_StartY - curY));
+                                    size.Height = (Int32)sizeY;
+                                }
+                                
+                            }
+
+
+                            /* TODO: If we would not set it here directly to Relative but to X and Y the value would only be
+                             * temprarly saved, and so we could set it finaly in mouse up, this has an advantage cause we 
+                             * could easier implement a UNDO functionality.
+                             */
+                            _Attr.Size = size;
                         }
                         else
                         {
@@ -628,23 +690,31 @@ namespace e2skinner2.Frames
                         if (inRange(curX, _Attr.Absolut.X, 2))
                         {
                             this.Cursor = Cursors.SizeWE;
+                            isResizeW = true;
                         }
                         else if (inRange(curX, _Attr.Absolut.X + _Attr.Size.Width, 2))
                         {
                             this.Cursor = Cursors.SizeWE;
+                            isResizeE = true;
                         }
                         else if (inRange(curY, _Attr.Absolut.Y, 2))
                         {
                             this.Cursor = Cursors.SizeNS;
+                            isResizeN = true;
                         }
                         else if (inRange(curY, _Attr.Absolut.Y + _Attr.Size.Height, 2))
                         {
                             this.Cursor = Cursors.SizeNS;
+                            isResizeS = true;
                         }
                         else
                         {
                             this.Cursor = Cursors.Default;
                             isResize = false;
+                            isResizeW = false;
+                            isResizeE = false;
+                            isResizeN = false;
+                            isResizeS = false;
                         }
                     }
                     else

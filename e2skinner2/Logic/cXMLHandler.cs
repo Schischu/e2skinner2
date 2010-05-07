@@ -51,7 +51,7 @@ namespace e2skinner2.Logic
 
         public void XmlToFile(String path)
         {
-            xmlDocument.Save(path);
+            xmlDocument.Save(cProperties.getProperty("path") + "/" + cProperties.getProperty("path_skin_xml"));
         }
 
         private String XmlElementStringLookup(String element)
