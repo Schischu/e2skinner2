@@ -72,8 +72,7 @@ namespace e2skinner2.Frames
             pDesigner.drawFrame();
             pictureBox1.Invalidate();
 
-            panelDesignerInner.AutoScrollMinSize = new Size((int)cDataBase.pResolution.getResolution().Xres + 100, (int)cDataBase.pResolution.getResolution().Yres + 100);
-
+            panelDesignerInner.AutoScrollMinSize = new Size((int)(cDataBase.pResolution.getResolution().Xres / pDesigner.zoomLevel()) + 100, (int)(cDataBase.pResolution.getResolution().Yres / pDesigner.zoomLevel()) + 100);
             MiOpen.Enabled = false;
 
             MiSave.Enabled = true;
@@ -843,11 +842,17 @@ namespace e2skinner2.Frames
                 //pictureBox1.Scale(new SizeF((float)0.5, (float)0.5));
                 //
                 //pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+                panelDesignerInner.AutoScrollMinSize = new Size((int)(cDataBase.pResolution.getResolution().Xres * pDesigner.zoomLevel()) + 100, (int)(cDataBase.pResolution.getResolution().Yres * pDesigner.zoomLevel()) + 100);
+                trackBarZoom.Value = (int)((pDesigner.zoomLevel() - 1.0f)*100.0f);
+                numericUpDownZoom.Value = (int)((pDesigner.zoomLevel() - 1.0f) * 100.0f);
                 pictureBox1.Invalidate();
             }
             else if (isMINUS(e))
             {
                 pDesigner.zoomOut();
+                panelDesignerInner.AutoScrollMinSize = new Size((int)(cDataBase.pResolution.getResolution().Xres * pDesigner.zoomLevel()) + 100, (int)(cDataBase.pResolution.getResolution().Yres * pDesigner.zoomLevel()) + 100);
+                trackBarZoom.Value = (int)((pDesigner.zoomLevel() - 1.0f) * 100.0f);
+                numericUpDownZoom.Value = (int)((pDesigner.zoomLevel() - 1.0f) * 100.0f);
                 pictureBox1.Invalidate();
             }
         }
@@ -910,7 +915,7 @@ namespace e2skinner2.Frames
                 previewForm.Height = Screen.PrimaryScreen.Bounds.Height;
                 previewForm.BackColor = Color.Black;
                 previewForm.Controls.Add(pictureBox1);
-                pictureBox1.Size = new Size(1280, 720);
+                pictureBox1.Size = new Size((int)cDataBase.pResolution.getResolution().Xres,(int)cDataBase.pResolution.getResolution().Yres);// new Size(1280, 720);
                 previewForm.KeyUp += fMain_KeyUp;
                 previewForm.Visible = true;
             }
@@ -939,6 +944,26 @@ namespace e2skinner2.Frames
             cProperties.setProperty("enable_alpha", toolStripButton2.Checked);
 
             pictureBox1.Invalidate();
+        }
+
+        private void setZoom(float zoom)
+        {
+            pDesigner.setZoomLevel(zoom);
+            pictureBox1.Invalidate();
+
+            panelDesignerInner.AutoScrollMinSize = new Size((int)(cDataBase.pResolution.getResolution().Xres * pDesigner.zoomLevel()) + 100, (int)(cDataBase.pResolution.getResolution().Yres * pDesigner.zoomLevel()) + 100);
+        }
+
+        private void trackBarZoom_ValueChanged(object sender, EventArgs e)
+        {
+            setZoom(((System.Windows.Forms.TrackBar)sender).Value / 100.0f + 1.0f);
+
+            numericUpDownZoom.Value = ((System.Windows.Forms.TrackBar)sender).Value;
+        }
+
+        private void numericUpDownZoom_ValueChanged(object sender, EventArgs e)
+        {
+            trackBarZoom.Value = (int)((System.Windows.Forms.NumericUpDown)sender).Value;
         }
     }
 }

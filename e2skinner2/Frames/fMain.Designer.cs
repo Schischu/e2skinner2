@@ -1,4 +1,4 @@
-﻿#define DESIGNER
+﻿//#define DESIGNER
 
 namespace e2skinner2.Frames
 {
@@ -60,6 +60,7 @@ namespace e2skinner2.Frames
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panelDesigner = new System.Windows.Forms.Panel();
             this.panelDesignerInner = new System.Windows.Forms.Panel();
+            this.trackBarZoom = new System.Windows.Forms.TrackBar();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolStripDesigner = new System.Windows.Forms.ToolStrip();
             this.btnSkinned = new System.Windows.Forms.ToolStripButton();
@@ -94,11 +95,13 @@ namespace e2skinner2.Frames
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.numericUpDownZoom = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelDesigner.SuspendLayout();
             this.panelDesignerInner.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStripDesigner.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -118,6 +121,7 @@ namespace e2skinner2.Frames
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoom)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView1
@@ -358,7 +362,9 @@ namespace e2skinner2.Frames
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.panelDesigner.AutoScroll = true;
             this.panelDesigner.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelDesigner.Controls.Add(this.numericUpDownZoom);
             this.panelDesigner.Controls.Add(this.panelDesignerInner);
+            this.panelDesigner.Controls.Add(this.trackBarZoom);
             this.panelDesigner.Controls.Add(this.toolStripDesigner);
             this.panelDesigner.Location = new System.Drawing.Point(3, 3);
             this.panelDesigner.Name = "panelDesigner";
@@ -374,6 +380,20 @@ namespace e2skinner2.Frames
             this.panelDesignerInner.Name = "panelDesignerInner";
             this.panelDesignerInner.Size = new System.Drawing.Size(954, 659);
             this.panelDesignerInner.TabIndex = 2;
+            // 
+            // trackBarZoom
+            // 
+            this.trackBarZoom.BackColor = System.Drawing.SystemColors.Control;
+            this.errorProvider1.SetIconAlignment(this.trackBarZoom, System.Windows.Forms.ErrorIconAlignment.TopLeft);
+            this.trackBarZoom.Location = new System.Drawing.Point(497, 3);
+            this.trackBarZoom.Maximum = 100;
+            this.trackBarZoom.Minimum = -60;
+            this.trackBarZoom.Name = "trackBarZoom";
+            this.trackBarZoom.Size = new System.Drawing.Size(104, 45);
+            this.trackBarZoom.TabIndex = 1;
+            this.trackBarZoom.TickFrequency = 20;
+            this.trackBarZoom.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBarZoom.ValueChanged += new System.EventHandler(this.trackBarZoom_ValueChanged);
             // 
             // pictureBox1
             // 
@@ -511,7 +531,7 @@ namespace e2skinner2.Frames
             this.keyCaptureNotifyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.keyCaptureNotifyButton.Name = "keyCaptureNotifyButton";
             this.keyCaptureNotifyButton.Size = new System.Drawing.Size(23, 22);
-            this.keyCaptureNotifyButton.Text = "toolStripButton2";
+            this.keyCaptureNotifyButton.Text = "Capturing Keyboard Events";
             // 
             // toolStripButton2
             // 
@@ -740,6 +760,16 @@ namespace e2skinner2.Frames
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStripMain);
             // 
+            // numericUpDownZoom
+            // 
+            this.numericUpDownZoom.Location = new System.Drawing.Point(608, 4);
+            this.numericUpDownZoom.Maximum = 100;
+            this.numericUpDownZoom.Minimum = -60;
+            this.numericUpDownZoom.Name = "numericUpDownZoom";
+            this.numericUpDownZoom.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDownZoom.TabIndex = 3;
+            this.numericUpDownZoom.ValueChanged += new System.EventHandler(this.numericUpDownZoom_ValueChanged);
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -761,6 +791,7 @@ namespace e2skinner2.Frames
             this.panelDesigner.ResumeLayout(false);
             this.panelDesigner.PerformLayout();
             this.panelDesignerInner.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.toolStripDesigner.ResumeLayout(false);
             this.toolStripDesigner.PerformLayout();
@@ -785,6 +816,7 @@ namespace e2skinner2.Frames
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoom)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -849,6 +881,8 @@ namespace e2skinner2.Frames
         private System.Windows.Forms.ToolStripButton keyCaptureNotifyButton;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.TrackBar trackBarZoom;
+        private System.Windows.Forms.NumericUpDown numericUpDownZoom;
     }
 }
 

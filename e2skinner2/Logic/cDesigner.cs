@@ -26,16 +26,27 @@ namespace e2skinner2.Logic
         public void zoomIn()
         {
             pScale *= pLevel;
+            if (pScale < 0.4f) pScale = 0.4f;
+            else if (pScale > 2.0f) pScale = 2.0f;
         }
 
         public void zoomOut()
         {
             pScale /= pLevel;
+            if (pScale < 0.4f) pScale = 0.4f;
+            else if (pScale > 2.0f) pScale = 2.0f;
         }
 
         public float zoomLevel()
         {
             return pScale;
+        }
+
+        public void setZoomLevel(float level)
+        {
+            pScale = level;
+            if (pScale < 0.4f) pScale = 0.4f;
+            else if (pScale > 2.0f) pScale = 2.0f;
         }
 
         public void sort()
