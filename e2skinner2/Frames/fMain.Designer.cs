@@ -551,6 +551,7 @@ namespace e2skinner2.Frames
             this.panelEditor.Name = "panelEditor";
             this.panelEditor.Size = new System.Drawing.Size(958, 688);
             this.panelEditor.TabIndex = 2;
+#if !DESIGNER
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
             {
                 // 
@@ -567,6 +568,7 @@ namespace e2skinner2.Frames
                 this.textBoxEditor.Size = new System.Drawing.Size(952, 649);
                 this.textBoxEditor.TabIndex = 0;
             } else
+#endif
             {
                 // 
                 // textBoxEditor2
