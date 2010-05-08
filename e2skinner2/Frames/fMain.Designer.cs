@@ -1,4 +1,6 @@
-﻿namespace e2skinner2.Frames
+﻿#define DESIGNER
+
+namespace e2skinner2.Frames
 {
     partial class fMain
     {
@@ -73,9 +75,11 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelEditor = new System.Windows.Forms.Panel();
+#if !DESIGNER
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
                 this.textBoxEditor = new System.Windows.Forms.TextBox();
             else
+#endif
                 this.textBoxEditor2 = new ScintillaNet.Scintilla();
             this.toolStripEditor = new System.Windows.Forms.ToolStrip();
             this.btnSaveEditor = new System.Windows.Forms.ToolStripButton();
@@ -99,9 +103,11 @@
             this.toolStripDesigner.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panelEditor.SuspendLayout();
+#if !DESIGNER
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
                 ; //((System.ComponentModel.ISupportInitialize)(this.textBoxEditor)).BeginInit();
             else
+#endif
                 ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).BeginInit();
             this.toolStripEditor.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -534,9 +540,11 @@
             this.panelEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+#if !DESIGNER
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
                 this.panelEditor.Controls.Add(this.textBoxEditor);
             else
+#endif
                 this.panelEditor.Controls.Add(this.textBoxEditor2);
             this.panelEditor.Controls.Add(this.toolStripEditor);
             this.panelEditor.Location = new System.Drawing.Point(3, 3);
@@ -756,9 +764,11 @@
             this.toolStripDesigner.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panelEditor.ResumeLayout(false);
+#if !DESIGNER
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
                 ; //((System.ComponentModel.ISupportInitialize)(this.textBoxEditor)).EndInit();
             else
+#endif
                 ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).EndInit();
             this.toolStripEditor.ResumeLayout(false);
             this.toolStripEditor.PerformLayout();

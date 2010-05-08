@@ -13,6 +13,9 @@ namespace e2skinner2.Logic
         protected ArrayList pDrawList = null;
         protected Graphics pGraph = null;
 
+        protected float pScale = 1.0F;
+        protected float pLevel = 1.1F;
+
         public cDesigner(Graphics graph)
         {
             pDrawList = new ArrayList();
@@ -22,14 +25,17 @@ namespace e2skinner2.Logic
 
         public void zoomIn()
         {
-            //pGraph.PageScale += (pGraph.PageScale/10);
-            pGraph.ScaleTransform((float)2.0, (float)2.0);
+            pScale *= pLevel;
         }
 
         public void zoomOut()
         {
-            //pGraph.PageScale -= (pGraph.PageScale/10);
-            pGraph.ScaleTransform((float)0.5, (float)0.5);
+            pScale /= pLevel;
+        }
+
+        public float zoomLevel()
+        {
+            return pScale;
         }
 
         public void sort()
@@ -44,6 +50,7 @@ namespace e2skinner2.Logic
 
         public void paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
+            e.Graphics.ScaleTransform(pScale, pScale);
             //the array should be sorrted regarding zposition !!!
             foreach (sGraphicElement ele in pDrawList)
             {
@@ -53,6 +60,9 @@ namespace e2skinner2.Logic
 
         public sGraphicElement getElement(uint x, uint y)
         {
+            //x = (uint)((float)x * pScale);
+            //y = (uint)((float)y * pScale);
+
             //the array should be sorrted regarding zposition !!!
             for (int i = 0; i < pDrawList.Count; i++)
             {
@@ -68,6 +78,15 @@ namespace e2skinner2.Logic
 
         private sGraphicRectangel f1, f2, f3, f4;
 
+        public void redrawFog(int x, int y, int w, int h)
+        {
+            pDrawList.Remove(f1);
+            pDrawList.Remove(f2);
+            pDrawList.Remove(f3);
+            pDrawList.Remove(f4);
+            drawFog(x, y, w, h);
+        }
+
         public void drawFog(int x, int y, int w, int h)
         {
             sResolution res = cDataBase.pResolution.getResolution();
@@ -75,31 +94,14 @@ namespace e2skinner2.Logic
             int Xres = (int)res.Xres;
             int Yres = (int)res.Yres;
 
-
-
-            //if (f1 == null)
-            {
-                f1 = new sGraphicRectangel(0, 0, (Int32)Xres, (Int32)y, true, (float)1.0, new sColor(200, Color.LightGray));
-                f2 = new sGraphicRectangel(0, (Int32)y, (Int32)x, (Int32)h, true, (float)1.0, new sColor(200, Color.LightGray));
-                f3 = new sGraphicRectangel((Int32)(x + w), (Int32)y, (Int32)((Xres - x - w) > 0 ? (Xres - x - w) : 0), (Int32)h, true, (float)1.0, new sColor(200, Color.LightGray));
-                f4 = new sGraphicRectangel(0, (Int32)(y + h), (Int32)Xres, (Int32)((Yres - y - h) > 0 ? (Yres - y - h) : 0), true, (float)1.0, new sColor(200, Color.LightGray));
-                pDrawList.Add(f1);
-                pDrawList.Add(f2);
-                pDrawList.Add(f3);
-                pDrawList.Add(f4);
-            }
-            /*else
-            {
-                f1.pAttr.Relativ = new sAttribute.Position(0, 0);
-                f1.pAttr.Size = new Size((Int32)Xres, (Int32)y);
-                f2.pAttr.Relativ = new sAttribute.Position(0, (Int32)y);
-                f2.pAttr.Size = new Size((Int32)x, (Int32)h);
-                f3.pAttr.Relativ = new sAttribute.Position((Int32)(x + w), (Int32)y);
-                f3.pAttr.Size = new Size((Int32)((Xres - x - w) > 0 ? (Xres - x - w) : 0), (Int32)h);
-                f4.pAttr.Relativ = new sAttribute.Position(0, (Int32)(y + h));
-                f4.pAttr.Size = new Size((Int32)Xres, (Int32)((Yres - y - h) > 0 ? (Yres - y - h) : 0));
-            }*/
-
+            f1 = new sGraphicRectangel(0, 0, (Int32)Xres, (Int32)y, true, (float)1.0, new sColor(200, Color.LightGray));
+            f2 = new sGraphicRectangel(0, (Int32)y, (Int32)x, (Int32)h, true, (float)1.0, new sColor(200, Color.LightGray));
+            f3 = new sGraphicRectangel((Int32)(x + w), (Int32)y, (Int32)((Xres - x - w) > 0 ? (Xres - x - w) : 0), (Int32)h, true, (float)1.0, new sColor(200, Color.LightGray));
+            f4 = new sGraphicRectangel(0, (Int32)(y + h), (Int32)Xres, (Int32)((Yres - y - h) > 0 ? (Yres - y - h) : 0), true, (float)1.0, new sColor(200, Color.LightGray));
+            pDrawList.Add(f1);
+            pDrawList.Add(f2);
+            pDrawList.Add(f3);
+            pDrawList.Add(f4);
         }
 
         public void drawFrame()

@@ -544,8 +544,8 @@ namespace e2skinner2.Frames
         {
             System.Console.WriteLine("pictureBox1_MouseDown");
 
-            _StartX = ((MouseEventArgs)e).X;
-            _StartY = ((MouseEventArgs)e).Y;
+            _StartX = (int)(((MouseEventArgs)e).X / pDesigner.zoomLevel());
+            _StartY = (int)(((MouseEventArgs)e).Y / pDesigner.zoomLevel());
 
             sGraphicElement elem = pDesigner.getElement((uint)_StartX, (uint)_StartY);
             if (elem != null)
@@ -557,14 +557,14 @@ namespace e2skinner2.Frames
                     {
                         mouseDown = true;
                     }
-                    else if (inBounds(((MouseEventArgs)e).Location, _Attr.Rectangle, -2))
+                    else if (inBounds(new PointF(_StartX, _StartY), _Attr.Rectangle, -2 / pDesigner.zoomLevel()))
                     {
                         treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(_Attr.myNode);
 
                         mouseDown = true;
                         this.Cursor = Cursors.SizeAll;
                     }
-                    else if (inBounds(((MouseEventArgs)e).Location, _Attr.Rectangle, +2))
+                    else if (inBounds(new PointF(_StartX, _StartY), _Attr.Rectangle, +2 / pDesigner.zoomLevel()))
                     {
                         mouseDown = true;
                         //this.Cursor = Cursors.SizeAll;
@@ -575,18 +575,19 @@ namespace e2skinner2.Frames
             tabControl1.Focus();
         }
 
-        private bool inRange(int myx, int targetX, int margin)
+        private bool inRange(float myx, float targetX, float margin)
         {
-            int targetXMax = targetX + margin;
-            int targetXMin = targetX - margin;
-            if (myx > targetXMin && myx < targetXMax)
+            float targetXMax = targetX + margin;
+            float targetXMin = targetX - margin;
+            if (myx > targetXMin&& myx < targetXMax)
                 return true;
             return false;
         }
 
-        private bool inBounds(Point myx, Rectangle target, int margin)
+        private bool inBounds(PointF myx, RectangleF target, float margin)
         {
-            Rectangle targetMax = new Rectangle(target.X - margin, target.Y - margin, target.Width + 2*margin, target.Height + 2*margin);
+            //System.Console.WriteLine("{0} {1} {2}", myx, target, margin);
+            RectangleF targetMax = new RectangleF(target.X - margin, target.Y - margin, target.Width + 2 * margin, target.Height + 2 * margin);
             //targetMin = new Rectangle(target.X - margin, target.Y - margin, target.Width - margin, target.Height - margin);
 
             return targetMax.Contains(myx);
@@ -594,9 +595,10 @@ namespace e2skinner2.Frames
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            //System.Console.WriteLine("pictureBox1_MouseMove");
-            Int32 curX = ((MouseEventArgs)e).X;
-            Int32 curY = ((MouseEventArgs)e).Y;
+            //System.Console.WriteLine("pictureBox1_MouseMove {0} {1}", ((MouseEventArgs)e).X, ((MouseEventArgs)e).Y);
+            Int32 curX = (int)(((MouseEventArgs)e).X / pDesigner.zoomLevel());
+            Int32 curY = (int)(((MouseEventArgs)e).Y / pDesigner.zoomLevel());
+            System.Console.WriteLine("{0} {1}", curX, curY);
             if (mouseDown)
             {
                 if (propertyGrid1.SelectedObject != null)
@@ -675,6 +677,8 @@ namespace e2skinner2.Frames
                         }
 
                         propertyGrid1.Refresh();
+                        sAttribute subattr = (sAttribute)propertyGrid1.SelectedObject;
+                        pDesigner.redrawFog((int)subattr.pAbsolutX, (int)subattr.pAbsolutY, (int)subattr.pWidth, (int)subattr.pHeight);
                         pictureBox1.Invalidate();
                     }
                 }
@@ -684,7 +688,7 @@ namespace e2skinner2.Frames
                 sAttribute _Attr = (sAttribute)propertyGrid1.SelectedObject;
                 if (_Attr != null)
                 {
-                    if (inBounds(((MouseEventArgs)e).Location, _Attr.Rectangle, 2))
+                    if (inBounds(new PointF(curX, curY), _Attr.Rectangle, 2 / pDesigner.zoomLevel()))
                     {
                         isResize = true;
                         if (inRange(curX, _Attr.Absolut.X, 2))
@@ -692,24 +696,24 @@ namespace e2skinner2.Frames
                             this.Cursor = Cursors.SizeWE;
                             isResizeW = true;
                         }
-                        else if (inRange(curX, _Attr.Absolut.X + _Attr.Size.Width, 2))
+                        else if (inRange(curX, _Attr.Absolut.X + _Attr.Size.Width, 2 / pDesigner.zoomLevel()))
                         {
                             this.Cursor = Cursors.SizeWE;
                             isResizeE = true;
                         }
-                        else if (inRange(curY, _Attr.Absolut.Y, 2))
+                        else if (inRange(curY, _Attr.Absolut.Y, 2 / pDesigner.zoomLevel()))
                         {
                             this.Cursor = Cursors.SizeNS;
                             isResizeN = true;
                         }
-                        else if (inRange(curY, _Attr.Absolut.Y + _Attr.Size.Height, 2))
+                        else if (inRange(curY, _Attr.Absolut.Y + _Attr.Size.Height, 2 / pDesigner.zoomLevel()))
                         {
                             this.Cursor = Cursors.SizeNS;
                             isResizeS = true;
                         }
                         else
                         {
-                            this.Cursor = Cursors.Default;
+                            this.Cursor = Cursors.Help;
                             isResize = false;
                             isResizeW = false;
                             isResizeE = false;
@@ -825,6 +829,8 @@ namespace e2skinner2.Frames
                     _Attr.Relativ = pos;
 
                     propertyGrid1.Refresh();
+                    sAttribute subattr = (sAttribute)propertyGrid1.SelectedObject;
+                    pDesigner.redrawFog((int)subattr.pAbsolutX, (int)subattr.pAbsolutY, (int)subattr.pWidth, (int)subattr.pHeight);
                     pictureBox1.Invalidate();
                 }
 
@@ -833,10 +839,10 @@ namespace e2skinner2.Frames
             }
             else if (isPLUS(e))
             {
-                //pDesigner.zoomIn();
+                pDesigner.zoomIn();
                 //pictureBox1.Scale(new SizeF((float)0.5, (float)0.5));
                 //
-                pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+                //pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
                 pictureBox1.Invalidate();
             }
             else if (isMINUS(e))

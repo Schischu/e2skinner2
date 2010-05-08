@@ -18,6 +18,7 @@ namespace e2skinner2.Structures
 
         public String pPixmapName;
         public Size pPixmap;
+        public bool pHide = false;
         //public Image pPixmap = null;
 
 
@@ -104,6 +105,7 @@ namespace e2skinner2.Structures
                 catch (FileNotFoundException e)
                 {
                     pPixmap = new Size(0,0);
+                    pHide = true;
                 }
             }
 

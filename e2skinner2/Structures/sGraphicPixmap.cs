@@ -21,12 +21,16 @@ namespace e2skinner2.Structures
         {
             if (!cProperties.getPropertyBool("skinned_pixmap"))
             {
-                new sGraphicRectangel(pAttr, false, (float)1.0, new sColor(Color.Blue)).paint(sender, e);
+                if (!((sAttributePixmap)pAttr).pHide) 
+                    new sGraphicRectangel(pAttr, false, (float)1.0, new sColor(Color.Blue)).paint(sender, e);
             }
             else
             {
                 if (((sAttributePixmap)pAttr).pPixmapName != null)
-                    new sGraphicImage(pAttr, ((sAttributePixmap)pAttr).pPixmapName).paint(sender, e);
+                {
+                    if (!((sAttributePixmap)pAttr).pHide)
+                        new sGraphicImage(pAttr, ((sAttributePixmap)pAttr).pPixmapName).paint(sender, e);
+                }
                 /*else
                  * 
                  * Show missing icon ?

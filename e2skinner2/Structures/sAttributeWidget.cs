@@ -455,17 +455,26 @@ namespace e2skinner2.Structures
                             if (pLabel.pText == null || pLabel.pText.Length > 0)
                                 pLabel.pPreviewText = text;
 
-                            if (text == "MAGIC#TRUE") { }
+                            if (text == "MAGIC#TRUE") 
+                            {
                                 //pLabel.pText = "";
-                            else if (text == "MAGIC#FALSE") { }
-                                //pLabel.pPreviewText = "";
+                            }
+                            else if (text == "MAGIC#FALSE") 
+                            {
+                                pLabel.pPreviewText = "";
+                            }
                         }
                         else if (pPixmap != null)
                         {
-                            if (text == "MAGIC#TRUE") { }
+                            if (text == "MAGIC#TRUE") 
+                            {
                             //pLabel.pText = "";
+                            }
                             else if (text == "MAGIC#FALSE")
-                                pPixmap.pPixmap = new Size(0,0);
+                            {
+                                pPixmap.pPixmap = new Size(0, 0);
+                                pPixmap.pHide = true;
+                            }
                         }
                     }
                 }
