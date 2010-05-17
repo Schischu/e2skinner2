@@ -127,14 +127,33 @@ namespace e2skinner2.Structures
             }
         }
 
-        [CategoryAttribute(entryNameLabel),
-        ReadOnlyAttribute(true)]
+        //[CategoryAttribute(entryName),
+        //ReadOnlyAttribute(true)]
+
+        [TypeConverter(typeof(e2skinner2.Structures.cProperty.sFontConverter)),
+        CategoryAttribute(entryNameLabel)]
         public String Font
         {
             get
             {
                 if (pRender.ToLower() == "label" || pRender.ToLower() == "fixedlabel") return pLabel.Font;
                 else return "(none)";
+            }
+            set
+            {
+                if (pRender.ToLower() == "label" || pRender.ToLower() == "fixedlabel")
+                {
+                    pLabel.Font = value;
+                    
+
+                    /*if (myNode.Attributes["font"] != null)
+                        myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
+                    else
+                    {
+                        myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("font"));
+                        myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
+                    }*/
+                }
             }
         }
 

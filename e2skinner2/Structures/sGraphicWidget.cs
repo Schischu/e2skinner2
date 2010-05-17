@@ -49,6 +49,9 @@ namespace e2skinner2.Structures
                     updateObject(pAttr, ((sAttributeWidget)pAttr).pListbox);
                     new sGraphicListbox((sAttributeListbox)((sAttributeWidget)pAttr).pListbox).paint(sender, e);
                 }
+
+                if (pAttr.pBorder)
+                    new sGraphicRectangel(pAttr, false, (float)pAttr.pBorderWidth, pAttr.pBorderColor).paint(sender, e);
             }
         }
 

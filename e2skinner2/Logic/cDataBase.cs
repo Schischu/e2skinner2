@@ -69,7 +69,7 @@ namespace e2skinner2.Logic
                 Int32 xOff = 0, yOff = 0;
                 ArrayList bordersets = new ArrayList();
 
-                string[] path = { "skin", "windowstyle" };
+                string[] path = { /*"skin", */"windowstyle" };
                 XmlNode fontNode = XmlHandler.XmlGetRootNodeElement(path);
                 foreach (XmlNode myXmlNode in fontNode.ChildNodes)
                 {
@@ -179,7 +179,7 @@ namespace e2skinner2.Logic
             public cDataBaseImage(cXMLHandler XmlHandler)
             {
                 string[] path2 = { "skin" };
-                XmlNode Node = XmlHandler.XmlGetRootNodeElement(path2);
+                XmlNode Node = XmlHandler.XmlGetRootNodeElement(null/*path2*/);
 
                 pImages = new ArrayList();
 
@@ -258,7 +258,7 @@ namespace e2skinner2.Logic
             {
                 pColors = new Hashtable();
 
-                string[] path = { "skin", "colors" };
+                string[] path = { /*"skin", */"colors" };
                 XmlNode colorNode = XmlHandler.XmlGetRootNodeElement(path);
                 foreach (XmlNode myXmlNode in colorNode.ChildNodes)
                 {
@@ -286,7 +286,7 @@ namespace e2skinner2.Logic
                 }
 
                 string[] path2 = { "skin" };
-                XmlNode Node = XmlHandler.XmlGetRootNodeElement(path2);
+                XmlNode Node = XmlHandler.XmlGetRootNodeElement(null/*path2*/);
                 checkColor(Node.ChildNodes);
 
                 sync(XmlHandler);
@@ -486,7 +486,7 @@ namespace e2skinner2.Logic
 
             public override bool sync(cXMLHandler XmlHandler)
             {
-                string[] path = { "skin", "colors" };
+                string[] path = { /*"skin", */"colors" };
                 XmlNode colorNode = XmlHandler.XmlGetRootNodeElement(path);
 
                 colorNode.RemoveAll();
@@ -522,7 +522,7 @@ namespace e2skinner2.Logic
 
             public cDataBaseResolution(cXMLHandler XmlHandler)
             {
-                string[] path = { "skin", "output" };
+                string[] path = { /*"skin", */"output" };
                 resolutionNode = XmlHandler.XmlGetRootNodeElement(path);
                 foreach (XmlNode myXmlNode in resolutionNode.ChildNodes)
                 {
@@ -544,7 +544,7 @@ namespace e2skinner2.Logic
                 pResolution.Xres = x;
                 pResolution.Yres = y;
 
-                string[] path = { "skin", "output" };
+                string[] path = { /*"skin", */"output" };
                 foreach (XmlNode myXmlNode in resolutionNode.ChildNodes)
                 {
                     myXmlNode.Attributes["xres"].Value = x.ToString();
@@ -560,7 +560,7 @@ namespace e2skinner2.Logic
         {
             pFonts = new Hashtable();
 
-            string[] path = { "skin", "fonts" };
+            string[] path = { /*"skin", */"fonts" };
             XmlNode fontNode = XmlHandler.XmlGetRootNodeElement(path);
             foreach (XmlNode myXmlNode in fontNode.ChildNodes)
             {

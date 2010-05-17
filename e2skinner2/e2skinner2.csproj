@@ -96,6 +96,7 @@
     <Compile Include="Frames\fWindowstyle.Designer.cs">
       <DependentUpon>fWindowstyle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\cCommandQueue.cs" />
     <Compile Include="Logic\cDataBase.cs" />
     <Compile Include="Logic\cDesigner.cs" />
     <Compile Include="Logic\cProperties.cs" />

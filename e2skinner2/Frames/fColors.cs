@@ -23,22 +23,29 @@ namespace e2skinner2.Frames
 
         private void refresh()
         {
-            sColor[] colors = (sColor[])cDataBase.pColors.getArray();
-
             listView1.Items.Clear();
+
+            sColor[] colors = (sColor[])cDataBase.pColors.getArray();
 
             foreach (sColor color in colors)
             {
+                Int32 colName = 0;
+                Int32 colValue = 1;
+                Int32 colColor = 2;
+
                 System.Windows.Forms.ListViewItem.ListViewSubItem[] subtitems = new System.Windows.Forms.ListViewItem.ListViewSubItem[3];
-                subtitems[0] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
-                subtitems[0].Text = color.pName;
-                subtitems[1] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
-                subtitems[1].Text = Convert.ToString(color.pValue, 16);
-                while (subtitems[1].Text.Length < 8)
-                    subtitems[1].Text = "0" + subtitems[1].Text;
-                subtitems[2] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
-                subtitems[2].Text = "0";
+                subtitems[colName] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
+                subtitems[colName].Text = color.pName;
+
+                subtitems[colValue] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
+                subtitems[colValue].Text = Convert.ToString(color.pValue, 16);
+
+                subtitems[colColor] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
+                subtitems[colColor].BackColor = Color.FromArgb(255, color.pColor);
+                subtitems[colColor].Text = "    ";
+
                 ListViewItem item = new ListViewItem(subtitems, 0);
+                item.UseItemStyleForSubItems = false;
                 listView1.Items.Add(item);
             }
             listView1.RedrawItems(0, listView1.Items.Count - 1, false);
@@ -51,65 +58,47 @@ namespace e2skinner2.Frames
             refresh();
         }
 
+
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 textBoxName.Text = listView1.SelectedItems[0].SubItems[0].Text;
+                Color color = Color.FromArgb(Convert.ToInt32(listView1.SelectedItems[0].SubItems[1].Text, 16));
+                textBoxValue.Text = Convert.ToString(color.ToArgb(), 16);
+                textBoxAlpha.Text = color.A.ToString();
+                textBoxRed.Text = color.R.ToString();
+                textBoxGreen.Text = color.G.ToString();
+                textBoxBlue.Text = color.B.ToString();
 
-                String colorString = listView1.SelectedItems[0].SubItems[1].Text;
-                if (colorString.Length == 0)
-                    colorString = "0";
-                UInt32 color = Convert.ToUInt32(colorString, 16);
-                textBoxValue.Text = Convert.ToString(color, 16);
-
-                int alpha = (int)(color >> 24) & 0xff;
-                textBoxAlpha.Text = alpha.ToString();
-
-                int red = (int)(color >> 16) & 0xff;
-                textBoxRed.Text = red.ToString();
-
-                int green = (int)(color >> 8) & 0xff;
-                textBoxGreen.Text = green.ToString();
-
-                int blue = (int)color & 0xff;
-                textBoxBlue.Text = blue.ToString();
-
-                pictureBoxColor.BackColor = Color.FromArgb(/*alpha, */(int)red, (int)green, (int)blue);
+                pictureBoxColor.BackColor = Color.FromArgb(255, color);
             }
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void buttonOK_Click(object sender, EventArgs e)
         {
-            if(textBoxName.Text.Length == 0)
+            foreach (ListViewItem item in listView1.Items)
             {
-            }
-            else if (textBoxValue.Text.Length == 0)
-            {
-                cDataBase.pColors.remove((Object)new sColor(textBoxName.Text, 0));
-            }
-            else if(textBoxName.Text != listView1.SelectedItems[0].SubItems[1].Text)
-            {
-                cDataBase.pColors.rename(pXmlHandler, listView1.SelectedItems[0].SubItems[0].Text, textBoxName.Text);
-            }
-            else
-            {
-                //cDataBase.pColors.add((Object)new sColor(textBoxName.Text, Convert.ToUInt32(maskedTextBoxColor.Text, 16)));
+                String itmName = item.SubItems[0].Text;
+                UInt32 itmColor = Convert.ToUInt32(item.SubItems[1].Text, 16);
+
+                cDataBase.pColors.add((Object)new sColor(itmName, itmColor));
             }
 
             refresh();
-        }
 
-        private void fColors_FormClosing(object sender, FormClosingEventArgs e)
-        {
             cDataBase.pColors.sync(pXmlHandler);
+            Hide();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             if (textBoxName.Text.Length > 0 && textBoxValue.Text.Length > 0)
             {
-                cDataBase.pColors.add((Object)new sColor(textBoxName.Text, Convert.ToUInt32(textBoxValue.Text, 16)));
+                String itmName = textBoxName.Text;
+                UInt32 itmColor = Convert.ToUInt32(textBoxValue.Text, 16);
+
+                cDataBase.pColors.add((Object)new sColor(itmName, itmColor));
             }
         }
 
@@ -147,6 +136,9 @@ namespace e2skinner2.Frames
             int blue = (int)color & 0xff;
             textBoxBlue.Text = blue.ToString();
             pictureBoxColor.BackColor = Color.FromArgb(/*alpha, */(int)red, (int)green, (int)blue);
+
+            listView1.SelectedItems[0].SubItems[1].Text = textBoxValue.Text;
+            listView1.SelectedItems[0].SubItems[2].BackColor = pictureBoxColor.BackColor;
         }
 
         private void textBoxAlpha_TextChanged(object sender, EventArgs e)
@@ -244,6 +236,48 @@ namespace e2skinner2.Frames
             textBoxValue.Text = Convert.ToString(value, 16);
 
             pictureBoxColor.BackColor = Color.FromArgb(/*alpha, */(int)red, (int)green, (int)blue);
+        }
+
+        private void buttonPallete_Click(object sender, EventArgs e)
+        {
+            colorDialog.AllowFullOpen = true;
+            colorDialog.AnyColor = true;
+            colorDialog.FullOpen = true;
+            UInt32 color = (Convert.ToUInt32(textBoxValue.Text,16)&0x00FFFFFF);
+            UInt32 colorSwap = color;
+            colorSwap |= (((colorSwap >> 16) & 0xFF) << 24);
+            colorSwap &= 0xFF00FFFF;
+            colorSwap |= (((colorSwap >> 0) & 0xFF) << 16);
+            colorSwap &= 0xFFFFFF00;
+            colorSwap |= (((colorSwap >> 24) & 0xFF) << 0);
+            colorSwap &= 0x00FFFFFF;
+            colorDialog.CustomColors = new int[] { (Int32)colorSwap, };
+            colorDialog.Color = Color.FromArgb((Int32)color );
+            DialogResult rst = colorDialog.ShowDialog();
+            if (rst == DialogResult.OK)
+            {
+                textBoxRed.Text = Convert.ToString(colorDialog.Color.R);
+                textBoxGreen.Text = Convert.ToString(colorDialog.Color.G);
+                textBoxBlue.Text = Convert.ToString(colorDialog.Color.B);
+            }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            Hide();
+        }
+
+        private void buttonRemove_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Colors will be automatically removed if no screens are using it anylonger.");
+        }
+
+
+        private void buttonRename_Click(object sender, EventArgs e)
+        {
+            cDataBase.pColors.rename(pXmlHandler, listView1.SelectedItems[0].SubItems[0].Text, textBoxName.Text);
+            listView1.SelectedItems[0].SubItems[0].Text = textBoxName.Text;
+            Refresh();
         }
 
     }

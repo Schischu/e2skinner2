@@ -60,31 +60,34 @@ namespace e2skinner2.Frames
                 textBoxScale.Text = listView1.SelectedItems[0].SubItems[3].Text;
                 checkBoxReplacement.Checked = Convert.ToBoolean(listView1.SelectedItems[0].SubItems[4].Text);
 
-                PrivateFontCollection pfc = new PrivateFontCollection();
+                float pSize = 20.25F;
+                sFont pFont = cDataBase.getFont(textBoxName.Text);
+
+                System.Drawing.Font font = null;
+                String name = "";
                 try
                 {
-                    pfc.AddFontFile(cProperties.getProperty("path_fonts") + "/" + textBoxPath.Text);
+                    if (pFont.FontFamily != null) //Only do this if the font is valid
+                    {
+                        name = pFont.FontFamily.GetName(0);
+
+                        font = new System.Drawing.Font(pFont.FontFamily, pSize, pFont.FontStyle, GraphicsUnit.Pixel);
+                        textBoxPreview.Font = font;
+                        textBoxPreview.Text = "Test String 1234567890 !#?";
+                    } else
+                    {
+                        Console.WriteLine("Font painting failed! (" + pFont.Name + ")");
+                        textBoxPreview.Text ="Font failed !";
+                    }
                 }
-                catch (FileNotFoundException error)
+                catch (Exception error)
                 {
-                    String errormessage = error.Message + ":\n\n";
-                    errormessage += cProperties.getProperty("path_fonts") + "/" + textBoxPath.Text + "\n";
-                    errormessage += error.Message;
-
-                    MessageBox.Show(errormessage,
-                        error.Message,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information,
-                        MessageBoxDefaultButton.Button1);
-
+                    Console.WriteLine("Font painting failed! (" + pFont.Name + ")");
+                    textBoxPreview.Text = "Font failed !";
                     return;
                 }
-                //pfc.Families.GetValue(0);
 
-                FontFamily pff = (FontFamily)pfc.Families[0];
-                System.Drawing.Font font = new System.Drawing.Font(pff, 20.25F, FontStyle.Bold);
-
-                textBoxPreview.Font = font;
+                
             }
         }
     }

@@ -170,6 +170,12 @@ namespace e2skinner2.Structures
         private Int32 _pAbsolutY;
 
         [BrowsableAttribute(false)]
+        public sAttribute Parent
+        {
+            get { return _pParent; }
+        }
+
+        [BrowsableAttribute(false)]
         public Int32 pAbsolutX
         {
             get { return pRelativX + (_pParent != null ? _pParent.pAbsolutX : 0); }
@@ -382,7 +388,7 @@ namespace e2skinner2.Structures
                 if (value != "(none)")
                 {
                     pBorderColor = (sColor)cDataBase.pColors.get(value);
-                    if (pBorderWidth > 0 && pBorderColor != null)
+                    if (/*pBorderWidth > 0 && */pBorderColor != null) //First set the color, asecond set the width
                         pBorder = true;
                     else
                         pBorder = false;

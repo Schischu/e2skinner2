@@ -19,6 +19,7 @@ namespace e2skinner2.Frames
     {
         private cXMLHandler pXmlHandler = null;
         private cDesigner pDesigner = null;
+        private cCommandQueue pQueue = null;
 
         public fMain()
         {
@@ -32,6 +33,8 @@ namespace e2skinner2.Frames
             this.Text = String.Format("{0} v{1}", ((AssemblyProductAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product, Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             pDesigner = new cDesigner(pictureBox1.CreateGraphics());
+
+            pQueue = new cCommandQueue();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -44,20 +47,15 @@ namespace e2skinner2.Frames
                 cProperties.setProperty("path_skin_xml", ftmp.SkinName + "/skin.xml");
                 open(ftmp.SkinName);
             }
-            /*
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                cProperties.setProperty("path_skin_xml", openFileDialog1.FileName);
-                System.Console.Write("{0}\n", openFileDialog1.FileName);
 
-                String path = openFileDialog1.FileName;
-                
-                open(path);
-             }*/
+            pQueue.clear();
         }
 
         public void open(String path)
         {
+            // Close all open
+            close();
+
             cProperties.setProperty("path_skin", path);
             cProperties.setProperty("path", "./skins");
             cProperties.setProperty("path_fonts", "./fonts");
@@ -121,6 +119,8 @@ namespace e2skinner2.Frames
             MiAddLabel.Enabled = false;
             MiAddPixmap.Enabled = false;
             MiAddWidget.Enabled = false;
+
+            pQueue.clear();
         }
 
         public void reload()
@@ -169,6 +169,8 @@ namespace e2skinner2.Frames
         {
             refreshEditor();
 
+            propertyGrid1.SelectedObject = null;
+
             TreeNode selectedNode = treeView1.SelectedNode;
             if (selectedNode != null)
             {
@@ -202,7 +204,11 @@ namespace e2skinner2.Frames
                             }
                             pDesigner.draw(attr);
 
-                            XmlNode[] nodes = pXmlHandler.XmlGetChildNode(hash);
+                            XmlNode[] nodes = pXmlHandler.XmlGetChildNodes(hash);
+
+                            if (nodes.Length > 0 && screenNode != node)
+                                propertyGrid1.SelectedObject = null;
+
                             foreach (XmlNode tmpnode in nodes)
                             {
                                  if (tmpnode.Name == "eLabel")
@@ -221,12 +227,12 @@ namespace e2skinner2.Frames
                                     pDesigner.draw(subattr);
                                 }
 
-                                if (tmpnode == node)
-                                {
-                                    propertyGrid1.SelectedObject = subattr;
-                                    if(cProperties.getPropertyBool("fading"))
-                                        pDesigner.drawFog((int)subattr.pAbsolutX, (int)subattr.pAbsolutY, (int)subattr.pWidth, (int)subattr.pHeight);
-                                }
+                                 if (tmpnode == node)
+                                 {
+                                     propertyGrid1.SelectedObject = subattr;
+                                     if (cProperties.getPropertyBool("fading"))
+                                         pDesigner.drawFog((int)subattr.pAbsolutX, (int)subattr.pAbsolutY, (int)subattr.pWidth, (int)subattr.pHeight);
+                                 }
                             }
                         }
                           
@@ -246,11 +252,18 @@ namespace e2skinner2.Frames
 
         private void resolutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            reload();
-            fResolution ftmp = new fResolution();
-            ftmp.setup(pXmlHandler);
-            ftmp.ShowDialog();
-            reload();
+            DialogResult rst = MessageBox.Show("Note: The skin will be automatically saved if you want to continue!\nIt is recommented to create a backup of your skin first!\n\nPress Cancel to abort.", 
+                "", MessageBoxButtons.OKCancel);
+
+            if(rst == DialogResult.OK)
+            {
+                pQueue.clear();
+                reload();
+                fResolution ftmp = new fResolution();
+                ftmp.setup(pXmlHandler);
+                ftmp.ShowDialog();
+                reload();
+            }
         }
 
         private string FormatXml(XmlNode sUnformattedXml)
@@ -289,6 +302,8 @@ namespace e2skinner2.Frames
 
         private void colorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            pQueue.clear(); //Has to be done as colors could have been renamed
+
             fColors ftmp = new fColors();
             ftmp.setup(pXmlHandler);
             ftmp.ShowDialog();
@@ -298,6 +313,8 @@ namespace e2skinner2.Frames
 
         private void fontsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            pQueue.clear();
+
             fFonts ftmp = new fFonts();
             ftmp.setup(pXmlHandler);
             ftmp.ShowDialog();
@@ -308,19 +325,88 @@ namespace e2skinner2.Frames
             pDesigner.paint(sender, e);
         }
 
-        private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            if (treeView1.SelectedNode != null)
-            {
-                //Property changed, so save it to xml, and repaint screen
+        private bool pSemaphorePropertyGrid = false;
 
+        private void eventDoPropertyGrid(cCommandQueue.cCommand sender, EventArgs e)
+        {
+            pSemaphorePropertyGrid = true;
+
+            Array objFrom = sender.To as Array;
+
+            treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode((sender.Helper as sAttribute).myNode);
+
+            propertyGrid1.Refresh();
+
+            PropertyInfo pi = (sender.Helper as sAttribute).GetType().GetProperty(objFrom.GetValue(0).ToString());
+            pi.SetValue((sender.Helper as sAttribute), objFrom.GetValue(1), null);
+
+            refreshPropertyGrid();
+
+            pSemaphorePropertyGrid = false;
+
+            // This is a workaround, if a Do was made, an undo is possible, so activate it.
+            undoToolStripMenuItem.Enabled = pQueue.isUndoPossible();
+            btnUndo.Enabled = pQueue.isUndoPossible();
+        }
+
+        private void eventUndoPropertyGrid(cCommandQueue.cCommand sender, EventArgs e)
+        {
+            pSemaphorePropertyGrid = true;
+
+            Array objFrom = sender.From as Array;
+
+            treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode((sender.Helper as sAttribute).myNode);
+
+            propertyGrid1.Refresh();
+
+            PropertyInfo pi = (sender.Helper as sAttribute).GetType().GetProperty(objFrom.GetValue(0).ToString());
+            pi.SetValue((sender.Helper as sAttribute), objFrom.GetValue(1), null);
+
+            refreshPropertyGrid();
+
+            pSemaphorePropertyGrid = false;
+        }
+
+        private void refreshPropertyGrid()
+        {
+            //Property changed, so save it to xml, and repaint screen
+            //if (treeView1.SelectedNode != null)
+            {
                 //Actually, this only syncs the name of the element with treeview, no saveing is done here
                 pXmlHandler.XmlSyncTreeChilds(treeView1.SelectedNode.GetHashCode(), treeView1.SelectedNode);
+            }
 
-                pDesigner.sort();
-                pictureBox1.Invalidate();
+            refresh();
+            //pDesigner.sort();
+            //refreshEditor();
+            propertyGrid1.Refresh();
+            pictureBox1.Invalidate();
+        }
 
-                refreshEditor();
+        private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (e == null)
+                return;
+
+            if (pSemaphorePropertyGrid)
+                return;
+
+            //if (treeView1.SelectedNode != null)
+            {
+                cCommandQueue.cCommand cmd = new cCommandQueue.cCommand();
+                
+                cmd.Helper = (s as PropertyGrid).SelectedObject;
+
+                PropertyInfo pi = ((s as PropertyGrid).SelectedObject as sAttribute).GetType().GetProperty(e.ChangedItem.Label);
+                Object obj = pi.GetValue(((s as PropertyGrid).SelectedObject as sAttribute), null);
+
+                cmd.From = new Object[] {e.ChangedItem.Label, e.OldValue};
+                cmd.To = new Object[] { e.ChangedItem.Label, obj };
+
+                cmd.DoEvent += new cCommandQueue.EventHandler(eventDoPropertyGrid);
+                cmd.UndoEvent += new cCommandQueue.EventHandler(eventUndoPropertyGrid);
+
+                pQueue.addCmd(cmd);
             }
         }
 
@@ -492,21 +578,48 @@ namespace e2skinner2.Frames
 
         private void btnSaveEditor_Click(object sender, EventArgs e)
         {
+            // Currently only the selected note is synced.
+            // This is wrong, the childs should also be synced !!!!!
+
             int hash = treeView1.SelectedNode.GetHashCode();
             try
             {
+                Point p = new Point(0, 0);
+
                 if (Platform.sysPlatform == Platform.ePlatform.MONO)
-                    pXmlHandler.XmlReplaceNode(hash, textBoxEditor.Text); 
+                {
+                    p = textBoxEditor.AutoScrollOffset;
+                    //pXmlHandler.XmlReplaceNode(hash, textBoxEditor.Text);
+                    pXmlHandler.XmlReplaceNodeAndChilds(hash, textBoxEditor.Text);
+                }
                 else
-                    pXmlHandler.XmlReplaceNode(hash, textBoxEditor2.Text); 
+                {
+                    p = textBoxEditor2.AutoScrollOffset;
+                    //pXmlHandler.XmlReplaceNode(hash, textBoxEditor2.Text);
+                    pXmlHandler.XmlReplaceNodeAndChilds(hash, textBoxEditor2.Text);
+                }
 
                 refresh();
-                propertyGrid1_PropertyValueChanged(null, null);
+
+                refreshPropertyGrid();
+
                 toolStripLabel1.Text = "No Errors.";
+
+
+                if (Platform.sysPlatform == Platform.ePlatform.MONO)
+                {
+                    textBoxEditor.AutoScrollOffset = p;
+                }
+                else
+                {
+                    textBoxEditor2.AutoScrollOffset = p;
+                }
+
+                pXmlHandler.XmlSyncTreeChilds(treeView1.SelectedNode.GetHashCode(), treeView1.SelectedNode);
             }
             catch (Exception ex)
             {
-                toolStripLabel1.Text = ex.Message;
+                toolStripLabel1.Text = "Error: " + ex.Message;
             }
         }
 
@@ -539,39 +652,64 @@ namespace e2skinner2.Frames
             
         }
 
+        private Size remeberAttrSizeForUndo;
+        private sAttribute.Position remeberAttrPositionForUndo;
+
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             System.Console.WriteLine("pictureBox1_MouseDown");
-
-            _StartX = (int)(((MouseEventArgs)e).X / pDesigner.zoomLevel());
-            _StartY = (int)(((MouseEventArgs)e).Y / pDesigner.zoomLevel());
-
-            sGraphicElement elem = pDesigner.getElement((uint)_StartX, (uint)_StartY);
-            if (elem != null)
+            if (e.Button == MouseButtons.Left)
             {
-                sAttribute _Attr = elem.pAttr;
-                if (_Attr != null)
+                _StartX = (int)(((MouseEventArgs)e).X / pDesigner.zoomLevel());
+                _StartY = (int)(((MouseEventArgs)e).Y / pDesigner.zoomLevel());
+
+                sGraphicElement elem = pDesigner.getElement((uint)_StartX, (uint)_StartY);
+                if (elem != null)
                 {
-                    if (isResize)
+                    sAttribute _Attr = elem.pAttr;
+                    if (_Attr != null)
                     {
-                        mouseDown = true;
-                    }
-                    else if (inBounds(new PointF(_StartX, _StartY), _Attr.Rectangle, -2 / pDesigner.zoomLevel()))
-                    {
-                        treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(_Attr.myNode);
+                        if (isResize)
+                        {
+                            mouseDown = true;
+                        }
+                        else if (inBounds(new PointF(_StartX, _StartY), _Attr.Rectangle, -2 / pDesigner.zoomLevel()))
+                        {
+                            treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(_Attr.myNode);
 
-                        mouseDown = true;
-                        this.Cursor = Cursors.SizeAll;
+                            mouseDown = true;
+                            this.Cursor = Cursors.SizeAll;
+                        }
+                        else if (inBounds(new PointF(_StartX, _StartY), _Attr.Rectangle, +2 / pDesigner.zoomLevel()))
+                        {
+                            mouseDown = true;
+                            //this.Cursor = Cursors.SizeAll;
+                        }
+
+                        if (mouseDown)
+                        {
+                            remeberAttrSizeForUndo = _Attr.Size;
+                            remeberAttrPositionForUndo = _Attr.Relativ;
+                        }
                     }
-                    else if (inBounds(new PointF(_StartX, _StartY), _Attr.Rectangle, +2 / pDesigner.zoomLevel()))
-                    {
-                        mouseDown = true;
-                        //this.Cursor = Cursors.SizeAll;
-                    }                       
                 }
-            }
 
-            tabControl1.Focus();
+                tabControl1.Focus();
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if(propertyGrid1.SelectedObject.GetType() != typeof(sAttributeScreen))
+                    if ((propertyGrid1.SelectedObject as sAttribute).Parent != null)
+                    {
+                        //propertyGrid1.SelectedObject = (propertyGrid1.SelectedObject as sAttribute).Parent;
+                        treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode((propertyGrid1.SelectedObject as sAttribute).Parent.myNode);
+                        //refresh();
+                        //pDesigner.sort();
+                        //refreshEditor();
+                        //propertyGrid1.Refresh();
+                        //pictureBox1.Invalidate();
+                    }
+            }
         }
 
         private bool inRange(float myx, float targetX, float margin)
@@ -737,12 +875,30 @@ namespace e2skinner2.Frames
             _StartY = curY;
         }
 
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        private void pictureBox1_MouseUp(object s, MouseEventArgs e)
         {
             System.Console.WriteLine("pictureBox1_MouseUp");
             if (mouseDown)
             {
-                //propertyGrid1_PropertyValueChanged(null, null);
+                cCommandQueue.cCommand cmd = new cCommandQueue.cCommand();
+
+                cmd.Helper = propertyGrid1.SelectedObject;
+
+                cmd.DoEvent += new cCommandQueue.EventHandler(eventDoPropertyGrid);
+                cmd.UndoEvent += new cCommandQueue.EventHandler(eventUndoPropertyGrid);
+
+                if ((propertyGrid1.SelectedObject as sAttribute).Size != remeberAttrSizeForUndo)
+                {
+                    cmd.From = new Object[] {"Size", remeberAttrSizeForUndo};
+                    cmd.To = new Object[] { "Size", (propertyGrid1.SelectedObject as sAttribute).Size };
+                    pQueue.addCmd(cmd);
+                }
+                else if ((propertyGrid1.SelectedObject as sAttribute).Relativ != remeberAttrPositionForUndo)
+                {
+                    cmd.From = new Object[] {"Relativ", remeberAttrPositionForUndo};
+                    cmd.To = new Object[] { "Relativ", (propertyGrid1.SelectedObject as sAttribute).Relativ };
+                    pQueue.addCmd(cmd);
+                }
             }
             mouseDown = false;
             isResize = false;
@@ -800,6 +956,9 @@ namespace e2skinner2.Frames
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
+            if (this.keyCaptureNotifyButton.Image != global::e2skinner2.Properties.Resources.Lock_icon)
+                return;
+
             // If CTRL pressed, use margin 1, else margin 5
             //Console.WriteLine(e.Control.ToString());
             if (isCURSOR(e))
@@ -824,6 +983,17 @@ namespace e2skinner2.Frames
 
                     pos.X = ((UInt32)posX).ToString();
                     pos.Y = ((UInt32)posY).ToString();
+
+                    cCommandQueue.cCommand cmd = new cCommandQueue.cCommand();
+
+                    cmd.Helper = propertyGrid1.SelectedObject;
+
+                    cmd.DoEvent += new cCommandQueue.EventHandler(eventDoPropertyGrid);
+                    cmd.UndoEvent += new cCommandQueue.EventHandler(eventUndoPropertyGrid);
+
+                    cmd.From = new Object[] { "Relativ", _Attr.Relativ };
+                    cmd.To = new Object[] { "Relativ", pos };
+                    pQueue.addCmd(cmd);
 
                     _Attr.Relativ = pos;
 
@@ -855,6 +1025,14 @@ namespace e2skinner2.Frames
                 numericUpDownZoom.Value = (int)((pDesigner.zoomLevel() - 1.0f) * 100.0f);
                 pictureBox1.Invalidate();
             }
+            /*else if (e.KeyCode == Keys.Z) //UNDO
+            {
+                pQueue.undoCmd();
+            }
+            else if (e.KeyCode == Keys.Y) //REDO
+            {
+                pQueue.redoCmd();
+            }*/
         }
 
         private void tabControl1_Enter(object sender, EventArgs e)
@@ -964,6 +1142,33 @@ namespace e2skinner2.Frames
         private void numericUpDownZoom_ValueChanged(object sender, EventArgs e)
         {
             trackBarZoom.Value = (int)((System.Windows.Forms.NumericUpDown)sender).Value;
+        }
+
+        private void reloadConverterxmlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Structures.cConverter.init();
+            propertyGrid1.Refresh();
+            pictureBox1.Invalidate();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pQueue.undoCmd();
+
+            undoToolStripMenuItem.Enabled = pQueue.isUndoPossible();
+            btnUndo.Enabled = pQueue.isUndoPossible();
+            redoToolStripMenuItem.Enabled = pQueue.isRedoPossible();
+            btnRedo.Enabled = pQueue.isRedoPossible();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pQueue.redoCmd();
+
+            undoToolStripMenuItem.Enabled = pQueue.isUndoPossible();
+            btnUndo.Enabled = pQueue.isUndoPossible();
+            redoToolStripMenuItem.Enabled = pQueue.isRedoPossible();
+            btnRedo.Enabled = pQueue.isRedoPossible();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace e2skinner2.Structures
 {
     class cProperty
     {
+        // Color
         public class sColorConverter : StringConverter
         {
             public override bool GetStandardValuesSupported(
@@ -61,6 +62,33 @@ namespace e2skinner2.Structures
             }
         }
 
+        // Font
+        public class sFontConverter : StringConverter
+        {
+            public override bool GetStandardValuesSupported(
+                           ITypeDescriptorContext context)
+            {
+                return true;
+            }
+
+            public override StandardValuesCollection
+                     GetStandardValues(ITypeDescriptorContext context)
+            {
+                sFont[] fonts = cDataBase.getFonts();
+                ArrayList list = new ArrayList();
+                foreach (sFont font in fonts)
+                    list.Add(font.Name);
+                return new StandardValuesCollection(list.ToArray());
+            }
+
+            public override bool GetStandardValuesExclusive(
+                           ITypeDescriptorContext context)
+            {
+                return true;
+            }
+        }
+
+        // Alphatest
         public enum eAlphatest { on, off, blend };
         public class AlphatestConverter : StringConverter
         {
@@ -84,6 +112,8 @@ namespace e2skinner2.Structures
                 return true;
             }
         }
+
+
 
         public enum eVAlign { Top, Center, Bottom };
         public enum eHAlign { Left, Center, Right };

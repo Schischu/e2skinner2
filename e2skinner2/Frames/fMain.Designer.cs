@@ -30,7 +30,6 @@ namespace e2skinner2.Frames
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fMain));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -43,6 +42,8 @@ namespace e2skinner2.Frames
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.MiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.elementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MiAddLabel = new System.Windows.Forms.ToolStripMenuItem();
             this.MiAddPixmap = new System.Windows.Forms.ToolStripMenuItem();
             this.MiAddWidget = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,14 +55,17 @@ namespace e2skinner2.Frames
             this.MiFonts = new System.Windows.Forms.ToolStripMenuItem();
             this.MiWindowStyles = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.reloadConverterxmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.MiPreferences = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panelDesigner = new System.Windows.Forms.Panel();
+            this.numericUpDownZoom = new System.Windows.Forms.NumericUpDown();
             this.panelDesignerInner = new System.Windows.Forms.Panel();
-            this.trackBarZoom = new System.Windows.Forms.TrackBar();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.trackBarZoom = new System.Windows.Forms.TrackBar();
             this.toolStripDesigner = new System.Windows.Forms.ToolStrip();
             this.btnSkinned = new System.Windows.Forms.ToolStripButton();
             this.btnSkinnedScreen = new System.Windows.Forms.ToolStripButton();
@@ -80,8 +84,8 @@ namespace e2skinner2.Frames
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
                 this.textBoxEditor = new System.Windows.Forms.TextBox();
             else
-#endif
                 this.textBoxEditor2 = new ScintillaNet.Scintilla();
+#endif
             this.toolStripEditor = new System.Windows.Forms.ToolStrip();
             this.btnSaveEditor = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -91,18 +95,19 @@ namespace e2skinner2.Frames
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.btnOpen = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
+            this.btnUndo = new System.Windows.Forms.ToolStripButton();
+            this.btnRedo = new System.Windows.Forms.ToolStripButton();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.numericUpDownZoom = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelDesigner.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoom)).BeginInit();
             this.panelDesignerInner.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
             this.toolStripDesigner.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panelEditor.SuspendLayout();
@@ -110,18 +115,16 @@ namespace e2skinner2.Frames
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
                 ; //((System.ComponentModel.ISupportInitialize)(this.textBoxEditor)).BeginInit();
             else
-#endif
                 ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).BeginInit();
+#endif
             this.toolStripEditor.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoom)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView1
@@ -169,13 +172,13 @@ namespace e2skinner2.Frames
             // 
             this.MiNew.Enabled = false;
             this.MiNew.Name = "MiNew";
-            this.MiNew.Size = new System.Drawing.Size(114, 22);
+            this.MiNew.Size = new System.Drawing.Size(152, 22);
             this.MiNew.Text = "New";
             // 
             // MiOpen
             // 
             this.MiOpen.Name = "MiOpen";
-            this.MiOpen.Size = new System.Drawing.Size(114, 22);
+            this.MiOpen.Size = new System.Drawing.Size(152, 22);
             this.MiOpen.Text = "Open";
             this.MiOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -183,7 +186,7 @@ namespace e2skinner2.Frames
             // 
             this.MiSave.Enabled = false;
             this.MiSave.Name = "MiSave";
-            this.MiSave.Size = new System.Drawing.Size(114, 22);
+            this.MiSave.Size = new System.Drawing.Size(152, 22);
             this.MiSave.Text = "Save";
             this.MiSave.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -191,7 +194,7 @@ namespace e2skinner2.Frames
             // 
             this.MiSaveAs.Enabled = false;
             this.MiSaveAs.Name = "MiSaveAs";
-            this.MiSaveAs.Size = new System.Drawing.Size(114, 22);
+            this.MiSaveAs.Size = new System.Drawing.Size(152, 22);
             this.MiSaveAs.Text = "Save As";
             this.MiSaveAs.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -199,39 +202,59 @@ namespace e2skinner2.Frames
             // 
             this.MiClose.Enabled = false;
             this.MiClose.Name = "MiClose";
-            this.MiClose.Size = new System.Drawing.Size(114, 22);
+            this.MiClose.Size = new System.Drawing.Size(152, 22);
             this.MiClose.Text = "Close";
             this.MiClose.Click += new System.EventHandler(this.MiClose_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(111, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // MiExit
             // 
             this.MiExit.Name = "MiExit";
-            this.MiExit.Size = new System.Drawing.Size(114, 22);
+            this.MiExit.Size = new System.Drawing.Size(152, 22);
             this.MiExit.Text = "Exit";
             this.MiExit.Click += new System.EventHandler(this.MiExit_Click);
             // 
             // elementToolStripMenuItem
             // 
             this.elementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem,
             this.MiAddLabel,
             this.MiAddPixmap,
             this.MiAddWidget,
             this.toolStripSeparator3,
             this.MiDelete});
             this.elementToolStripMenuItem.Name = "elementToolStripMenuItem";
-            this.elementToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
-            this.elementToolStripMenuItem.Text = "Element";
+            this.elementToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.elementToolStripMenuItem.Text = "Edit";
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Enabled = false;
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Enabled = false;
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.redoToolStripMenuItem.Text = "Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // MiAddLabel
             // 
             this.MiAddLabel.Enabled = false;
             this.MiAddLabel.Name = "MiAddLabel";
-            this.MiAddLabel.Size = new System.Drawing.Size(138, 22);
+            this.MiAddLabel.Size = new System.Drawing.Size(153, 22);
             this.MiAddLabel.Text = "Add Label";
             this.MiAddLabel.Click += new System.EventHandler(this.addLabelToolStripMenuItem_Click);
             // 
@@ -239,7 +262,7 @@ namespace e2skinner2.Frames
             // 
             this.MiAddPixmap.Enabled = false;
             this.MiAddPixmap.Name = "MiAddPixmap";
-            this.MiAddPixmap.Size = new System.Drawing.Size(138, 22);
+            this.MiAddPixmap.Size = new System.Drawing.Size(153, 22);
             this.MiAddPixmap.Text = "Add Pixmap";
             this.MiAddPixmap.Click += new System.EventHandler(this.addPixmapToolStripMenuItem_Click);
             // 
@@ -247,21 +270,21 @@ namespace e2skinner2.Frames
             // 
             this.MiAddWidget.Enabled = false;
             this.MiAddWidget.Name = "MiAddWidget";
-            this.MiAddWidget.Size = new System.Drawing.Size(138, 22);
+            this.MiAddWidget.Size = new System.Drawing.Size(153, 22);
             this.MiAddWidget.Text = "Add Widget";
             this.MiAddWidget.Click += new System.EventHandler(this.widgetToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(135, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(150, 6);
             // 
             // MiDelete
             // 
             this.MiDelete.Enabled = false;
             this.MiDelete.Name = "MiDelete";
-            this.MiDelete.Size = new System.Drawing.Size(138, 22);
-            this.MiDelete.Text = "Delete";
+            this.MiDelete.Size = new System.Drawing.Size(153, 22);
+            this.MiDelete.Text = "Delete Element";
             this.MiDelete.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
@@ -272,6 +295,8 @@ namespace e2skinner2.Frames
             this.MiFonts,
             this.MiWindowStyles,
             this.toolStripSeparator1,
+            this.reloadConverterxmlToolStripMenuItem,
+            this.toolStripSeparator7,
             this.MiPreferences});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -281,7 +306,7 @@ namespace e2skinner2.Frames
             // 
             this.MiResolution.Enabled = false;
             this.MiResolution.Name = "MiResolution";
-            this.MiResolution.Size = new System.Drawing.Size(148, 22);
+            this.MiResolution.Size = new System.Drawing.Size(185, 22);
             this.MiResolution.Text = "Resolution";
             this.MiResolution.Click += new System.EventHandler(this.resolutionToolStripMenuItem_Click);
             // 
@@ -289,7 +314,7 @@ namespace e2skinner2.Frames
             // 
             this.MiColors.Enabled = false;
             this.MiColors.Name = "MiColors";
-            this.MiColors.Size = new System.Drawing.Size(148, 22);
+            this.MiColors.Size = new System.Drawing.Size(185, 22);
             this.MiColors.Text = "Colors";
             this.MiColors.Click += new System.EventHandler(this.colorsToolStripMenuItem_Click);
             // 
@@ -297,7 +322,7 @@ namespace e2skinner2.Frames
             // 
             this.MiFonts.Enabled = false;
             this.MiFonts.Name = "MiFonts";
-            this.MiFonts.Size = new System.Drawing.Size(148, 22);
+            this.MiFonts.Size = new System.Drawing.Size(185, 22);
             this.MiFonts.Text = "Fonts";
             this.MiFonts.Click += new System.EventHandler(this.fontsToolStripMenuItem_Click);
             // 
@@ -305,19 +330,31 @@ namespace e2skinner2.Frames
             // 
             this.MiWindowStyles.Enabled = false;
             this.MiWindowStyles.Name = "MiWindowStyles";
-            this.MiWindowStyles.Size = new System.Drawing.Size(148, 22);
+            this.MiWindowStyles.Size = new System.Drawing.Size(185, 22);
             this.MiWindowStyles.Text = "WindowStyles";
             this.MiWindowStyles.Click += new System.EventHandler(this.windowStylesToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
+            // 
+            // reloadConverterxmlToolStripMenuItem
+            // 
+            this.reloadConverterxmlToolStripMenuItem.Name = "reloadConverterxmlToolStripMenuItem";
+            this.reloadConverterxmlToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.reloadConverterxmlToolStripMenuItem.Text = "Reload converter.xml";
+            this.reloadConverterxmlToolStripMenuItem.Click += new System.EventHandler(this.reloadConverterxmlToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(182, 6);
             // 
             // MiPreferences
             // 
             this.MiPreferences.Name = "MiPreferences";
-            this.MiPreferences.Size = new System.Drawing.Size(148, 22);
+            this.MiPreferences.Size = new System.Drawing.Size(185, 22);
             this.MiPreferences.Text = "Preferences";
             this.MiPreferences.Click += new System.EventHandler(this.MiPreferences_Click);
             // 
@@ -371,6 +408,19 @@ namespace e2skinner2.Frames
             this.panelDesigner.Size = new System.Drawing.Size(958, 688);
             this.panelDesigner.TabIndex = 1;
             // 
+            // numericUpDownZoom
+            // 
+            this.numericUpDownZoom.Location = new System.Drawing.Point(608, 4);
+            this.numericUpDownZoom.Minimum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownZoom.Name = "numericUpDownZoom";
+            this.numericUpDownZoom.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDownZoom.TabIndex = 3;
+            this.numericUpDownZoom.ValueChanged += new System.EventHandler(this.numericUpDownZoom_ValueChanged);
+            // 
             // panelDesignerInner
             // 
             this.panelDesignerInner.AutoScroll = true;
@@ -380,20 +430,6 @@ namespace e2skinner2.Frames
             this.panelDesignerInner.Name = "panelDesignerInner";
             this.panelDesignerInner.Size = new System.Drawing.Size(954, 659);
             this.panelDesignerInner.TabIndex = 2;
-            // 
-            // trackBarZoom
-            // 
-            this.trackBarZoom.BackColor = System.Drawing.SystemColors.Control;
-            this.errorProvider1.SetIconAlignment(this.trackBarZoom, System.Windows.Forms.ErrorIconAlignment.TopLeft);
-            this.trackBarZoom.Location = new System.Drawing.Point(497, 3);
-            this.trackBarZoom.Maximum = 100;
-            this.trackBarZoom.Minimum = -60;
-            this.trackBarZoom.Name = "trackBarZoom";
-            this.trackBarZoom.Size = new System.Drawing.Size(104, 45);
-            this.trackBarZoom.TabIndex = 1;
-            this.trackBarZoom.TickFrequency = 20;
-            this.trackBarZoom.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBarZoom.ValueChanged += new System.EventHandler(this.trackBarZoom_ValueChanged);
             // 
             // pictureBox1
             // 
@@ -409,6 +445,19 @@ namespace e2skinner2.Frames
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            // 
+            // trackBarZoom
+            // 
+            this.trackBarZoom.BackColor = System.Drawing.SystemColors.Control;
+            this.trackBarZoom.Location = new System.Drawing.Point(497, 3);
+            this.trackBarZoom.Maximum = 100;
+            this.trackBarZoom.Minimum = -60;
+            this.trackBarZoom.Name = "trackBarZoom";
+            this.trackBarZoom.Size = new System.Drawing.Size(104, 45);
+            this.trackBarZoom.TabIndex = 1;
+            this.trackBarZoom.TickFrequency = 20;
+            this.trackBarZoom.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBarZoom.ValueChanged += new System.EventHandler(this.trackBarZoom_ValueChanged);
             // 
             // toolStripDesigner
             // 
@@ -564,8 +613,8 @@ namespace e2skinner2.Frames
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
                 this.panelEditor.Controls.Add(this.textBoxEditor);
             else
-#endif
                 this.panelEditor.Controls.Add(this.textBoxEditor2);
+#endif
             this.panelEditor.Controls.Add(this.toolStripEditor);
             this.panelEditor.Location = new System.Drawing.Point(3, 3);
             this.panelEditor.Name = "panelEditor";
@@ -588,7 +637,6 @@ namespace e2skinner2.Frames
                 this.textBoxEditor.Size = new System.Drawing.Size(952, 649);
                 this.textBoxEditor.TabIndex = 0;
             } else
-#endif
             {
                 // 
                 // textBoxEditor2
@@ -610,6 +658,7 @@ namespace e2skinner2.Frames
                 this.textBoxEditor2.TabIndex = 2;
                 this.textBoxEditor2.UndoRedo.IsUndoEnabled = false;
             }
+#endif
             // 
             // toolStripEditor
             // 
@@ -689,7 +738,9 @@ namespace e2skinner2.Frames
             this.toolStripMain.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnOpen,
-            this.btnSave});
+            this.btnSave,
+            this.btnUndo,
+            this.btnRedo});
             this.toolStripMain.Location = new System.Drawing.Point(0, 24);
             this.toolStripMain.Name = "toolStripMain";
             this.toolStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -719,14 +770,32 @@ namespace e2skinner2.Frames
             this.btnSave.Text = "Save";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // btnUndo
+            // 
+            this.btnUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnUndo.Enabled = false;
+            this.btnUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnUndo.Image")));
+            this.btnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnUndo.Name = "btnUndo";
+            this.btnUndo.Size = new System.Drawing.Size(36, 36);
+            this.btnUndo.Text = "Undo";
+            this.btnUndo.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
+            // btnRedo
+            // 
+            this.btnRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRedo.Enabled = false;
+            this.btnRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnRedo.Image")));
+            this.btnRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRedo.Name = "btnRedo";
+            this.btnRedo.Size = new System.Drawing.Size(36, 36);
+            this.btnRedo.Text = "Redo";
+            this.btnRedo.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
+            // 
             // saveFileDialog1
             // 
             this.saveFileDialog1.DefaultExt = "xml";
             this.saveFileDialog1.Filter = "*.xml|";
-            // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
             // 
             // toolStripButton1
             // 
@@ -760,16 +829,6 @@ namespace e2skinner2.Frames
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStripMain);
             // 
-            // numericUpDownZoom
-            // 
-            this.numericUpDownZoom.Location = new System.Drawing.Point(608, 4);
-            this.numericUpDownZoom.Maximum = 100;
-            this.numericUpDownZoom.Minimum = -60;
-            this.numericUpDownZoom.Name = "numericUpDownZoom";
-            this.numericUpDownZoom.Size = new System.Drawing.Size(50, 20);
-            this.numericUpDownZoom.TabIndex = 3;
-            this.numericUpDownZoom.ValueChanged += new System.EventHandler(this.numericUpDownZoom_ValueChanged);
-            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -790,9 +849,10 @@ namespace e2skinner2.Frames
             this.tabPage1.ResumeLayout(false);
             this.panelDesigner.ResumeLayout(false);
             this.panelDesigner.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoom)).EndInit();
             this.panelDesignerInner.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).EndInit();
             this.toolStripDesigner.ResumeLayout(false);
             this.toolStripDesigner.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -801,8 +861,8 @@ namespace e2skinner2.Frames
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
                 ; //((System.ComponentModel.ISupportInitialize)(this.textBoxEditor)).EndInit();
             else
-#endif
                 ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).EndInit();
+#endif
             this.toolStripEditor.ResumeLayout(false);
             this.toolStripEditor.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -810,13 +870,11 @@ namespace e2skinner2.Frames
             this.splitContainer1.ResumeLayout(false);
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoom)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -883,6 +941,12 @@ namespace e2skinner2.Frames
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.TrackBar trackBarZoom;
         private System.Windows.Forms.NumericUpDown numericUpDownZoom;
+        private System.Windows.Forms.ToolStripMenuItem reloadConverterxmlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripButton btnUndo;
+        private System.Windows.Forms.ToolStripButton btnRedo;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
     }
 }
 

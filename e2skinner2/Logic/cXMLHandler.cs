@@ -38,11 +38,11 @@ namespace e2skinner2.Logic
             ElementList = new ArrayList();
 
             TreeNode treeNode;
-            treeNode = new TreeNode("/");
+            treeNode = new TreeNode("skin");
             treeView.Nodes.Add(treeNode);
 
             rootNode = treeNode.GetHashCode();
-            sElementList element = new sElementList(rootNode, 0, null, xmlDocument.DocumentElement.ParentNode);
+            sElementList element = new sElementList(rootNode, 0, treeNode, xmlDocument.DocumentElement/*.ParentNode*/);
             ElementList.Add(element);
             
 
@@ -87,6 +87,9 @@ namespace e2skinner2.Logic
                 //if (myXmlNode.Attributes != null)
                 {
                     if (myXmlNode.Name == "output" || myXmlNode.Name == "colors" || myXmlNode.Name == "fonts" || myXmlNode.Name == "windowstyle")
+                        continue;
+
+                    if(myXmlNode.Name == "#whitespace")
                         continue;
 
                     String name = myXmlNode.Name;
@@ -207,6 +210,68 @@ namespace e2skinner2.Logic
             return null;
         }
 
+        public void XmlReplaceNodeAndChilds(int hash, String node)
+        {
+            // 3. Remove all Child Nodes
+            // 1. Find the node to replace
+            // 2. Replace it
+            
+            // 4. Import the Child Nodes
+            // 5. Find old Parent and give him new Element
+
+            XmlTextReader xmlReader = new XmlTextReader(new StringReader(node));
+
+            for (int i = 0; i < ElementList.Count; )
+            {
+                sElementList tempChild = (sElementList)ElementList[i];
+                if (tempChild.ParentHandle == hash)
+                {
+                    tempChild.TreeNode.Remove();
+                    ElementList.Remove(tempChild);
+                }
+                else
+                    i++;
+            }
+
+            foreach (sElementList temp in ElementList)
+            {
+                if (temp.Handle == hash)
+                {
+                    if (temp.ParentHandle == 0)
+                    {
+                        //We are the root element
+
+                        xmlDocument.ReplaceChild(xmlDocument.ReadNode(xmlReader), temp.Node);
+                        temp.Node = xmlDocument.DocumentElement/*.ParentNode*/;
+                        XmlRekursivImport(temp.TreeNode.Nodes, temp.Node.ChildNodes);
+                    }
+                    else
+                    {
+                        // Find parent
+                        foreach (sElementList tempParent in ElementList)
+                        {
+                            if (tempParent.Handle == temp.ParentHandle)
+                            {
+                                //Find with the old node, the childnode and replace it
+                                for (int i = 0; i < tempParent.Node.ChildNodes.Count; i++)
+                                    if (tempParent.Node.ChildNodes[i] == temp.Node)
+                                    {
+                                        temp.Node = xmlDocument.ReadNode(xmlReader);
+                                        tempParent.Node.ReplaceChild(temp.Node, tempParent.Node.ChildNodes[i]);
+                                        XmlRekursivImport(temp.TreeNode.Nodes, temp.Node.ChildNodes);
+                                        break;
+                                    }
+                                break;
+                            }
+
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
+
         public void XmlReplaceNode(int hash, String node)
         {
             XmlTextReader xmlReader = new XmlTextReader(new StringReader(node));
@@ -220,7 +285,7 @@ namespace e2skinner2.Logic
             }
         }
 
-        public XmlNode[] XmlGetChildNode(int hash)
+        public XmlNode[] XmlGetChildNodes(int hash)
         {
             ArrayList list = new ArrayList();
             foreach (sElementList temp in ElementList)
@@ -253,7 +318,10 @@ namespace e2skinner2.Logic
                 {
                     if (temp.Node.ChildNodes.Count > 0)
                     {
-                        return XmlGetSearchChilds(temp.Node.ChildNodes, name);
+                        if (name != null && name.Length > 0)
+                            return XmlGetSearchChilds(temp.Node.ChildNodes, name);
+                        else
+                            return temp.Node;
                     }
                 }
             }

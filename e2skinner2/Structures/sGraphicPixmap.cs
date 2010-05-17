@@ -31,6 +31,10 @@ namespace e2skinner2.Structures
                     if (!((sAttributePixmap)pAttr).pHide)
                         new sGraphicImage(pAttr, ((sAttributePixmap)pAttr).pPixmapName).paint(sender, e);
                 }
+
+                if (pAttr.pBorder)
+                    new sGraphicRectangel(pAttr, false, (float)pAttr.pBorderWidth, pAttr.pBorderColor).paint(sender, e);
+
                 /*else
                  * 
                  * Show missing icon ?

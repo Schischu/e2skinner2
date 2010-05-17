@@ -54,14 +54,36 @@ namespace e2skinner2.Structures
             }
         }
 
-        [CategoryAttribute(entryName),
-        ReadOnlyAttribute(true)]
+        //[CategoryAttribute(entryName),
+        //ReadOnlyAttribute(true)]
+
+        [TypeConverter(typeof(e2skinner2.Structures.cProperty.sFontConverter)),
+        CategoryAttribute(entryName)]
         public String Font
         {
             get
             {
                 if (pFont != null) return pFont.Name;
                 else return "(none)";
+            }
+            set
+            {
+                if (value != "(none)")
+                {
+                    pFont = cDataBase.getFont(value);
+                }
+                else
+                {
+                    pFont = null;
+                }
+
+                if (myNode.Attributes["font"] != null)
+                    myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
+                else
+                {
+                    myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("font"));
+                    myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
+                }
             }
         }
 

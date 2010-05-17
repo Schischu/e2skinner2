@@ -179,10 +179,12 @@
             // 
             // textBoxPreview
             // 
+            this.textBoxPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxPreview.Location = new System.Drawing.Point(199, 316);
             this.textBoxPreview.Name = "textBoxPreview";
-            this.textBoxPreview.Size = new System.Drawing.Size(301, 38);
+            this.textBoxPreview.Size = new System.Drawing.Size(485, 38);
             this.textBoxPreview.TabIndex = 18;
             this.textBoxPreview.Text = "Test Text";
             // 
