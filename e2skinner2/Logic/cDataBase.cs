@@ -652,7 +652,7 @@ namespace e2skinner2.Logic
                                 w = (int)dw;
                                 h = (int)dh;
 
-                                node.Attributes["size"].Value = w.ToString() + ", " + h.ToString();
+                                node.Attributes["size"].Value = w.ToString() + "," + h.ToString();
                             }
                         }
                         if (node.Attributes["position"] != null)
@@ -689,7 +689,7 @@ namespace e2skinner2.Logic
                                 int x = (int)dx;
                                 int y = (int)dy;
 
-                                node.Attributes["position"].Value = x.ToString() + ", " + y.ToString();
+                                node.Attributes["position"].Value = x.ToString() + "," + y.ToString();
                             }
                         }
                         

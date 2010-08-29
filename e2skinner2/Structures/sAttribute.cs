@@ -160,7 +160,7 @@ namespace e2skinner2.Structures
             public Int32 iX() { return Int32.Parse(X); }
             public Int32 iY() { return Int32.Parse(Y); }
 
-            public override string ToString() { return X + ", " + Y; }
+            public override string ToString() { return X + "," + Y; }
         }
 
         private const String entryName = "1 Global";
@@ -258,11 +258,11 @@ namespace e2skinner2.Structures
 
 
                 if (myNode.Attributes["position"] != null)
-                    myNode.Attributes["position"].Value = value.X + ", " + value.Y;
+                    myNode.Attributes["position"].Value = value.X + "," + value.Y;
                 else
                 {
                     myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("position"));
-                    myNode.Attributes["position"].Value = pRelativX + ", " + pRelativY;
+                    myNode.Attributes["position"].Value = pRelativX + "," + pRelativY;
                 }
             }
         }
@@ -292,11 +292,11 @@ namespace e2skinner2.Structures
                 pHeight = (Int32)value.Height;
 
                 if (myNode.Attributes["size"] != null)
-                    myNode.Attributes["size"].Value = pWidth + ", " + pHeight;
+                    myNode.Attributes["size"].Value = pWidth + "," + pHeight;
                 else
                 {
                     myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("size"));
-                    myNode.Attributes["size"].Value = pWidth + ", " + pHeight;
+                    myNode.Attributes["size"].Value = pWidth + "," + pHeight;
                 }
             }
         }
