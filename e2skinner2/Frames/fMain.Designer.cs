@@ -172,13 +172,13 @@ namespace e2skinner2.Frames
             // 
             this.MiNew.Enabled = false;
             this.MiNew.Name = "MiNew";
-            this.MiNew.Size = new System.Drawing.Size(152, 22);
+            this.MiNew.Size = new System.Drawing.Size(114, 22);
             this.MiNew.Text = "New";
             // 
             // MiOpen
             // 
             this.MiOpen.Name = "MiOpen";
-            this.MiOpen.Size = new System.Drawing.Size(152, 22);
+            this.MiOpen.Size = new System.Drawing.Size(114, 22);
             this.MiOpen.Text = "Open";
             this.MiOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -186,7 +186,7 @@ namespace e2skinner2.Frames
             // 
             this.MiSave.Enabled = false;
             this.MiSave.Name = "MiSave";
-            this.MiSave.Size = new System.Drawing.Size(152, 22);
+            this.MiSave.Size = new System.Drawing.Size(114, 22);
             this.MiSave.Text = "Save";
             this.MiSave.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -194,7 +194,7 @@ namespace e2skinner2.Frames
             // 
             this.MiSaveAs.Enabled = false;
             this.MiSaveAs.Name = "MiSaveAs";
-            this.MiSaveAs.Size = new System.Drawing.Size(152, 22);
+            this.MiSaveAs.Size = new System.Drawing.Size(114, 22);
             this.MiSaveAs.Text = "Save As";
             this.MiSaveAs.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -202,19 +202,19 @@ namespace e2skinner2.Frames
             // 
             this.MiClose.Enabled = false;
             this.MiClose.Name = "MiClose";
-            this.MiClose.Size = new System.Drawing.Size(152, 22);
+            this.MiClose.Size = new System.Drawing.Size(114, 22);
             this.MiClose.Text = "Close";
             this.MiClose.Click += new System.EventHandler(this.MiClose_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(111, 6);
             // 
             // MiExit
             // 
             this.MiExit.Name = "MiExit";
-            this.MiExit.Size = new System.Drawing.Size(152, 22);
+            this.MiExit.Size = new System.Drawing.Size(114, 22);
             this.MiExit.Text = "Exit";
             this.MiExit.Click += new System.EventHandler(this.MiExit_Click);
             // 
@@ -636,7 +636,8 @@ namespace e2skinner2.Frames
                 this.textBoxEditor.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
                 this.textBoxEditor.Size = new System.Drawing.Size(952, 649);
                 this.textBoxEditor.TabIndex = 0;
-            } else
+            }
+            else
             {
                 // 
                 // textBoxEditor2
