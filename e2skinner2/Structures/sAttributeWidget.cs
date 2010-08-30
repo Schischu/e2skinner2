@@ -460,11 +460,16 @@ namespace e2skinner2.Structures
                 pListbox = new sAttributeListbox(parent, node);
             }
 
-            if (pLabel != null && (pLabel.pText == null || pLabel.pText.Length == 0) && (pSource != null && pSource.Length > 0))
+            if (pSource != null && pSource.Length > 0)
             {
                 String text = cPreviewText.getText(parent.Name, pSource);
-                if (pLabel != null)
+                if (text.Length > 0)
+                {
+                    if (pLabel != null && (pLabel.pText == null || pLabel.pText.Length == 0))
                         pLabel.pPreviewText = text;
+                    if (pListbox != null)
+                        pListbox.pPreviewEntries = text.Split('|');
+                }
             }
 
             if (node.HasChildNodes)
@@ -480,7 +485,7 @@ namespace e2skinner2.Structures
 
                         if (pLabel != null)
                         {
-                            if (pLabel.pText == null || pLabel.pText.Length > 0)
+                            if (text.Length > 0 && (pLabel.pText == null || pLabel.pText.Length <= 0))
                                 pLabel.pPreviewText = text;
 
                             if (text == "MAGIC#TRUE") 

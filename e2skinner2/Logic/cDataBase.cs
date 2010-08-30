@@ -296,12 +296,15 @@ namespace e2skinner2.Logic
             {
                 foreach (XmlNode myXmlNode in nodes)
                 {
+                    if (myXmlNode.NodeType != XmlNodeType.Element)
+                        continue;
+
                     if (myXmlNode.HasChildNodes)
                         checkColor(myXmlNode.ChildNodes);
 
                     if (myXmlNode.Attributes != null)
                     {
-                        if(myXmlNode.Attributes["color"] != null)
+                        if (myXmlNode.Attributes["color"] != null)
                         {
                             if (myXmlNode.Attributes["color"].Value[0] == '#')
                             {
@@ -317,7 +320,7 @@ namespace e2skinner2.Logic
                                 }
                             }
                         }
-                        if(myXmlNode.Attributes["foregroundColor"] != null)
+                        if (myXmlNode.Attributes["foregroundColor"] != null)
                         {
                             if (myXmlNode.Attributes["foregroundColor"].Value[0] == '#')
                             {
@@ -386,6 +389,9 @@ namespace e2skinner2.Logic
             {
                 foreach (XmlNode myXmlNode in nodes)
                 {
+                    if (myXmlNode.NodeType != XmlNodeType.Element)
+                        continue;
+
                     if (myXmlNode.HasChildNodes)
                         renameColor(myXmlNode.ChildNodes, name, to);
 
@@ -526,6 +532,9 @@ namespace e2skinner2.Logic
                 resolutionNode = XmlHandler.XmlGetRootNodeElement(path);
                 foreach (XmlNode myXmlNode in resolutionNode.ChildNodes)
                 {
+                    if (myXmlNode.NodeType != XmlNodeType.Element)
+                        continue;
+
                     pResolution = new sResolution(
                         Convert.ToUInt32(myXmlNode.Attributes["xres"].Value),
                         Convert.ToUInt32(myXmlNode.Attributes["yres"].Value),
@@ -547,6 +556,9 @@ namespace e2skinner2.Logic
                 string[] path = { /*"skin", */"output" };
                 foreach (XmlNode myXmlNode in resolutionNode.ChildNodes)
                 {
+                    if (myXmlNode.NodeType != XmlNodeType.Element)
+                        continue;
+
                     myXmlNode.Attributes["xres"].Value = x.ToString();
                     myXmlNode.Attributes["yres"].Value = y.ToString();
                     //myXmlNode.Attributes["bpp"].Value = bpp.ToString();
@@ -564,10 +576,13 @@ namespace e2skinner2.Logic
             XmlNode fontNode = XmlHandler.XmlGetRootNodeElement(path);
             foreach (XmlNode myXmlNode in fontNode.ChildNodes)
             {
+                if (myXmlNode.NodeType != XmlNodeType.Element)
+                        continue;
+
                 sFont font = new sFont(
-                    myXmlNode.Attributes["name"].Value, 
-                    myXmlNode.Attributes["filename"].Value, 
-                    Convert.ToInt32(myXmlNode.Attributes["scale"] != null?myXmlNode.Attributes["scale"].Value:"100"),
+                    myXmlNode.Attributes["name"].Value,
+                    myXmlNode.Attributes["filename"].Value,
+                    Convert.ToInt32(myXmlNode.Attributes["scale"] != null ? myXmlNode.Attributes["scale"].Value : "100"),
                     Convert.ToInt32(myXmlNode.Attributes["replacement"] != null ? myXmlNode.Attributes["replacement"].Value : "0") != 0
                 );
                 pFonts.Add(font.Name, font);
@@ -619,6 +634,9 @@ namespace e2skinner2.Logic
             {
                 foreach (XmlNode node in nodes)
                 {
+                    if (node.NodeType != XmlNodeType.Element)
+                        continue;
+
                     if (node.HasChildNodes)
                         checkLocations(node.ChildNodes);
 

@@ -3,6 +3,12 @@
 <!-- entry name='' is the name of the widget -->
 <screens>
 	<screen>
+		<name>menu_mainmenu</name>
+		<entries>
+			<entry name='menu' value='Item 1|Item 2|Item 3|Item 4' type='string'/>
+		</entries>
+	</screen>
+	<screen>
 		<name>About</name>
 		<entries>
 			<entry name='EnigmaVersion' value='Enigma: 01.01.2010' type='string'/>
