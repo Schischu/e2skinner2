@@ -1143,13 +1143,21 @@ namespace e2skinner2.Frames
         {
             trackBarZoom.Value = (int)((System.Windows.Forms.NumericUpDown)sender).Value;
         }
-
+        
         private void reloadConverterxmlToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Structures.cConverter.init();
             propertyGrid1.Refresh();
             pictureBox1.Invalidate();
         }
+
+        private void reloadPreviewTextxmlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Structures.cPreviewText.init();
+            propertyGrid1.Refresh();
+            pictureBox1.Invalidate();
+        }
+        
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {

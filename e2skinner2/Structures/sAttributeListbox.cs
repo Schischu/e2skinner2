@@ -66,6 +66,8 @@ namespace e2skinner2.Structures
         public String pSelectionPixmapName;
         public Image pSelectionPixmap;
 
+        public String[] pPreviewEntries = null;
+
         public cProperty.eScrollbarMode pScrollbarMode;
 
         [CategoryAttribute(entryName)]
@@ -133,6 +135,26 @@ namespace e2skinner2.Structures
         }
 
 
+        public Int32 pItemHeight;
+
+        [CategoryAttribute(entryName)]
+        public Int32 ItemHeight
+        {
+            get { return pItemHeight; }
+            set
+            {
+                pItemHeight = value;
+
+                if (myNode.Attributes["itemHeight"] != null)
+                    myNode.Attributes["itemHeight"].Value = pItemHeight.ToString();
+                else
+                {
+                    myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("itemHeight"));
+                    myNode.Attributes["itemHeight"].Value = pItemHeight.ToString();
+                }
+            }
+        }
+        
 
         public sAttributeListbox(sAttribute parent, XmlNode node)
             : base(parent, node)
@@ -208,8 +230,8 @@ namespace e2skinner2.Structures
             }
 
             if (myNode.Attributes["scrollbarMode"] != null)
-                pScrollbarMode = myNode.Attributes["scrollbarMode"].Value.ToLower() == "showAlways" ? cProperty.eScrollbarMode.showAlways :
-                    myNode.Attributes["scrollbarMode"].Value.ToLower() == "showOnDemand" ? cProperty.eScrollbarMode.showOnDemand :
+                pScrollbarMode = myNode.Attributes["scrollbarMode"].Value.ToLower() == "showAlways".ToLower() ? cProperty.eScrollbarMode.showAlways :
+                    myNode.Attributes["scrollbarMode"].Value.ToLower() == "showOnDemand".ToLower() ? cProperty.eScrollbarMode.showOnDemand :
                     cProperty.eScrollbarMode.showNever;
 
             sWindowStyle style = (sWindowStyle)cDataBase.pWindowstyles.get();
@@ -263,6 +285,17 @@ namespace e2skinner2.Structures
                     pbpBottomRight = borderset.pbpBottomRight;
                 }
             }
+
+
+            if (node.Attributes["itemHeight"] != null)
+                pItemHeight = Convert.ToInt32(node.Attributes["itemHeight"].Value.Trim());
+            else
+                pItemHeight = 20;
+
+
+            String entries = cPreviewText.getText(parent.Name, Name);
+            if(entries.Length > 0)
+                pPreviewEntries = entries.Split('|');
         }
     }
 }

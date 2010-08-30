@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 //using System.Linq;
 using System.Text;
+using System.Drawing;
+using e2skinner2.Logic;
 
 namespace e2skinner2.Structures
 {
@@ -172,10 +174,64 @@ namespace e2skinner2.Structures
                 }
             }
 
-            if (((sAttributeListbox)pAttr).pSelectionPixmapName != null)
-                new sGraphicImage(pAttr, ((sAttributeListbox)pAttr).pSelectionPixmapName).paint(sender, e);
-            else
-                new sGraphicRectangel(pAttr.pAbsolutX, pAttr.pAbsolutY, pAttr.pWidth, 20, true, 1.0F, ((sAttributeListbox)pAttr).pListboxSelectedBackgroundColor).paint(sender, e);
+            // scrollbar
+            //painter.clip(eRect(m_scrollbar->position() - ePoint(5, 0), eSize(5, m_scrollbar->size().height())));
+
+            // entries
+            if (((sAttributeListbox)pAttr).pPreviewEntries != null)
+            {
+                if (((sAttributeListbox)pAttr).pPreviewEntries.Length >= 1)
+                {
+                    int itemHeight = ((sAttributeListbox)pAttr).pItemHeight;
+                    sFont font = cDataBase.getFont("Regular");
+                    cProperty.eHAlign halign = cProperty.eHAlign.Left;
+                    cProperty.eVAlign valign = cProperty.eVAlign.Top;
+                    sColor foreground = ((sAttributeListbox)pAttr).pListboxSelectedForegroundColor;
+                    sColor background = ((sAttributeListbox)pAttr).pListboxSelectedBackgroundColor;
+                    String entry = ((sAttributeListbox)pAttr).pPreviewEntries[0];
+
+                    // Selection Pixmap
+                    if (((sAttributeListbox)pAttr).pSelectionPixmapName != null)
+                        new sGraphicImage(null, ((sAttributeListbox)pAttr).pSelectionPixmapName, pAttr.pAbsolutX, pAttr.pAbsolutY, pAttr.pWidth, ((sAttributeListbox)pAttr).pItemHeight).paint(sender, e);
+                    else
+                        new sGraphicRectangel(pAttr.pAbsolutX, pAttr.pAbsolutY, pAttr.pWidth, ((sAttributeListbox)pAttr).pItemHeight, true, 1.0F, ((sAttributeListbox)pAttr).pListboxSelectedBackgroundColor).paint(sender, e);
+
+                    if (pAttr.pTransparent)
+                        new sGraphicFont(null, pAttr.pAbsolutX, pAttr.pAbsolutY, entry, 20.0f/*always 20*/, font, foreground, halign, valign).paint(sender, e);
+                    else
+                        new sGraphicFont(null, pAttr.pAbsolutX, pAttr.pAbsolutY, entry, 20.0f/*always 20*/, font, foreground, background == null ? new sColor(Color.Black) : background, halign, valign).paint(sender, e);
+
+                    if (((sAttributeListbox)pAttr).pPreviewEntries.Length > 1)
+                    {
+                        foreground = ((sAttributeListbox)pAttr).pListboxForegroundColor;
+                        background = ((sAttributeListbox)pAttr).pListboxBackgroundColor;
+
+                        for (int i = 1; i < ((sAttributeListbox)pAttr).pPreviewEntries.Length; i++)
+                        {
+                            entry = ((sAttributeListbox)pAttr).pPreviewEntries[i];
+
+                            // NonSelection Pixmap
+                            if (((sAttributeListbox)pAttr).pBackgroundPixmapName != null)
+                                new sGraphicImage(null, ((sAttributeListbox)pAttr).pBackgroundPixmapName, pAttr.pAbsolutX, pAttr.pAbsolutY + i * itemHeight, pAttr.pWidth, ((sAttributeListbox)pAttr).pItemHeight).paint(sender, e);
+                            else
+                                new sGraphicRectangel(pAttr.pAbsolutX, pAttr.pAbsolutY + i * itemHeight, pAttr.pWidth, ((sAttributeListbox)pAttr).pItemHeight, true, 1.0F, ((sAttributeListbox)pAttr).pListboxBackgroundColor).paint(sender, e);
+
+                            if (pAttr.pTransparent)
+                                new sGraphicFont(null, pAttr.pAbsolutX, pAttr.pAbsolutY + i * itemHeight, entry, 20.0f/*always 20*/, font, foreground, halign, valign).paint(sender, e);
+                            else
+                                new sGraphicFont(null, pAttr.pAbsolutX, pAttr.pAbsolutY + i * itemHeight, entry, 20.0f/*always 20*/, font, foreground, background == null ? new sColor(Color.Black) : background, halign, valign).paint(sender, e);
+                        }
+                    }
+                }
+                else
+                {
+                    // Selection Pixmap
+                    if (((sAttributeListbox)pAttr).pSelectionPixmapName != null)
+                        new sGraphicImage(pAttr, ((sAttributeListbox)pAttr).pSelectionPixmapName).paint(sender, e);
+                    else
+                        new sGraphicRectangel(pAttr.pAbsolutX, pAttr.pAbsolutY, pAttr.pWidth, ((sAttributeListbox)pAttr).pItemHeight, true, 1.0F, ((sAttributeListbox)pAttr).pListboxSelectedBackgroundColor).paint(sender, e);
+                }
+            }
         }
     }
 }

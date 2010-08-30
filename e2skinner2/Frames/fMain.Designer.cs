@@ -56,6 +56,7 @@ namespace e2skinner2.Frames
             this.MiWindowStyles = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.reloadConverterxmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reloadPreviewTextxmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.MiPreferences = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -296,6 +297,7 @@ namespace e2skinner2.Frames
             this.MiWindowStyles,
             this.toolStripSeparator1,
             this.reloadConverterxmlToolStripMenuItem,
+            this.reloadPreviewTextxmlToolStripMenuItem,
             this.toolStripSeparator7,
             this.MiPreferences});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
@@ -345,6 +347,13 @@ namespace e2skinner2.Frames
             this.reloadConverterxmlToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.reloadConverterxmlToolStripMenuItem.Text = "Reload converter.xml";
             this.reloadConverterxmlToolStripMenuItem.Click += new System.EventHandler(this.reloadConverterxmlToolStripMenuItem_Click);
+            // 
+            // reloadPreviewTextxmlToolStripMenuItem
+            // 
+            this.reloadPreviewTextxmlToolStripMenuItem.Name = "reloadPreviewTextxmlToolStripMenuItem";
+            this.reloadPreviewTextxmlToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.reloadPreviewTextxmlToolStripMenuItem.Text = "Reload previewText.xml";
+            this.reloadPreviewTextxmlToolStripMenuItem.Click += new System.EventHandler(this.reloadPreviewTextxmlToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
@@ -943,6 +952,7 @@ namespace e2skinner2.Frames
         private System.Windows.Forms.TrackBar trackBarZoom;
         private System.Windows.Forms.NumericUpDown numericUpDownZoom;
         private System.Windows.Forms.ToolStripMenuItem reloadConverterxmlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reloadPreviewTextxmlToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton btnUndo;
         private System.Windows.Forms.ToolStripButton btnRedo;

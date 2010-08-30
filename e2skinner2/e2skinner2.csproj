@@ -175,6 +175,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Structures\cConverter.cs" />
+    <Compile Include="Structures\cPreviewText.cs" />
     <Compile Include="Structures\sAttributeListbox.cs" />
     <Compile Include="Structures\cProperty.cs" />
     <Compile Include="Structures\sAttribute.cs" />

@@ -23,7 +23,7 @@ namespace e2skinner2
             //Platform.sysPlatform = Platform.ePlatform.MONO;
 
             Logic.cProperties.init();
-            //Structures.cPreviewText.init();
+            Structures.cPreviewText.init();
             Structures.cConverter.init();
 
             Application.Run(new fMain());

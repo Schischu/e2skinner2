@@ -291,6 +291,11 @@ namespace e2skinner2.Structures
 
             if (myNode.Attributes["noWrap"] != null)
                 pNoWrap = Convert.ToUInt32(myNode.Attributes["noWrap"].Value.ToLower()) != 0 ? true : false;
+
+
+            if (pText == null || pText.Length > 0)
+                if(Name.Length > 0)
+                    pPreviewText = cPreviewText.getText(parent.Name, Name);
         }
     }
 }

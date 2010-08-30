@@ -135,12 +135,20 @@ namespace e2skinner2.Structures
             }
         }
 
+        static public void reset()
+        {
+            text = "";
+        }
+
         static public String getText(String Source, String Type, String Paramter)
         {
             switch (Type)
             {
                 case "ServiceName":
                     new ServiceName(Paramter, Source);
+                    break;
+                case "ServiceTime":
+                    new ServiceTime(Paramter, Source);
                     break;
                 case "ServiceInfo":
                     new ServiceInfo(Paramter, Source);
@@ -155,6 +163,7 @@ namespace e2skinner2.Structures
                     new EventTime(Paramter, Source);
                     break;
                 case "ServicePosition":
+                    new ServicePosition(Paramter, Source);
                     break;
                 case "TunerInfo":
                     new TunerInfo(Paramter, Source);
@@ -230,8 +239,161 @@ namespace e2skinner2.Structures
                     return (String)((Hashtable)pTable[Source])["reference"];
                 else
                     return "???";
+            }
+        }
+
+        public class ServiceTime
+        {
+            public int STARTTIME = 0;
+            public int ENDTIME = 1;
+            public int DURATION = 2;
+
+            private int type = 0;
+
+            public ServiceTime(String type, String Source)
+            {
+                if (type.Equals("StartTime"))
+                    this.type = this.STARTTIME;
+                else if (type.Equals("EndTime"))
+                    this.type = this.ENDTIME;
+                else
+                    this.type = this.DURATION;
+
+                text = getText(Source);
+                time = getTime(Source);
+            }
+
+            public int getTime(String Source)
+            {
+                if (this.type == this.STARTTIME)
+                    return (int)((Hashtable)pTable[Source])["event_starttime"];
+                else if (this.type == this.ENDTIME)
+                    return (int)((Hashtable)pTable[Source])["event_endtime"];
+                else if (this.type == this.DURATION)
+                    return (int)((Hashtable)pTable[Source])["event_duration"];
+                else
+                    return -1;
+            }
+
+            public String getText(String Source)
+            {
+                if (this.type == this.STARTTIME)
+                    return ((Hashtable)pTable[Source])["event_starttime"].ToString();
+                else if (this.type == this.ENDTIME)
+                    return ((Hashtable)pTable[Source])["event_endtime"].ToString();
+                else if (this.type == this.DURATION)
+                    return ((Hashtable)pTable[Source])["event_duration"].ToString();
+                else
+                    return "???";
+            }
+        }
+
+        public class ServicePosition
+        {
+            public int LENGTH = 0;
+            public int POSITION = 1;
+            public int REMAINING = 2;
+            public int GAUGE = 3;
+
+            private int type = 0;
+
+            bool negate = false;
+            bool detailed = false;
+            bool showHours = false;
+            bool showNoSeconds = false;
+
+            int poll_interval = 0;
+            bool poll_enabled = false;
+
+            public ServicePosition(String type, String Source)
+            {
+                String[] argsS = type.Split(',');
+                List<String> args = new List<String>(argsS.Length);
+                args.AddRange(argsS);
+
+                type = args[0];
+                type.Remove(0);
+
+                negate = args.Contains("Negate");
+                detailed = args.Contains("Detailed");
+                showHours = args.Contains("ShowHours");
+                showNoSeconds = args.Contains("ShowNoSeconds");
+
+                if (type.Equals("Length"))
+                    this.type = this.LENGTH;
+                else if (type.Equals("Position"))
+                    this.type = this.POSITION;
+                else if (type.Equals("Remaining"))
+                    this.type = this.REMAINING;
+                else if (type.Equals("Gauge"))
+                    this.type = this.GAUGE;
+                else
+                    this.type = -1;
+
+                if (detailed)
+                    poll_interval = 100;
+                else if (this.type == this.LENGTH)
+                    poll_interval = 2000;
+                else
+                    poll_interval = 500;
+
+                poll_enabled = true;
+
+                text = getText(Source);
+            }
 
 
+            public String getText(String Source)
+            {
+                Int32 l = 0;
+                String sign = "";
+                if (this.type == this.LENGTH)
+                    l = ((Int32)((Hashtable)pTable[Source])["type_length"]);
+                else if (this.type == this.POSITION)
+                    l = ((Int32)((Hashtable)pTable[Source])["type_position"]);
+                else if (this.type == this.REMAINING)
+                    l = (((Int32)((Hashtable)pTable[Source])["type_length"]) - ((Int32)((Hashtable)pTable[Source])["type_position"]));
+
+                if (!detailed)
+                    l /= 90000;
+
+                if (negate)
+                    l = -l;
+
+                if (l > 0)
+                    sign = "";
+                else
+                {
+                    l = -l;
+                    sign = "-";
+                }
+
+                if (!detailed)
+                {
+                    if (showHours)
+                    {
+                        if (showNoSeconds)
+                            return sign + String.Format("{0}:{1:00}", l / 3600, l % 3600 / 60);
+                        else
+                            return sign + String.Format("{0}:{1:00}:{2:00}", l / 3600, l % 3600 / 60, l % 60);
+                    }
+                    else
+                    {
+                        if (showNoSeconds)
+                            return sign + String.Format("{0}", l / 60);
+                        else
+                            return sign + String.Format("{0}:{1:00}", l / 60, l % 60);
+                    }
+                }
+                else
+                {
+                    if (showHours)
+                        return sign + String.Format("{0}:{1:00}:{2:00}:{3:000}", (l / 3600 / 90000), (l / 90000) % 3600 / 60, (l / 90000) % 60, (l % 90000) / 90);
+                    else
+                        return sign + String.Format("{0}:{1:00}:{2:000}", (l / 60 / 90000), (l / 90000) % 60, (l % 90000) / 90);
+                }
+
+                return "???";
             }
         }
 
@@ -654,18 +816,35 @@ namespace e2skinner2.Structures
             {
 
                 //int time = (int)((Hashtable)pTable[Source])["time_sec"];
-
-                if (time != -1)
+                if (time == -1)
                 {
-                    if (time == 0)
+                    time = (int)((Hashtable)pTable[Source])["time_sec"];
+
+                    // Current time to UNIX timestamp
+                    if (time == -2)
+                    {
+                        // http://dotnet-snippets.de/dns/c-datum-in-unix-timestamp-wandeln-SID165.aspx
+                        DateTime date1 = new DateTime(1970, 1, 1);  //Refernzdatum (festgelegt)
+                        DateTime date2 = DateTime.Now;              //jetztiges Datum / Uhrzeit
+                        TimeSpan ts = new TimeSpan(date2.Ticks - date1.Ticks);  // das Delta ermitteln
+                        // Das Delta als gesammtzahl der sekunden ist der Timestamp
+                        time = (Convert.ToInt32(ts.TotalSeconds));
+                    }
+                    else if (time == -1 || time == 0)
                         return "";
-                    if (this.type == this.IN_MINUTES)
-                        return String.Format("{0} min", (time / 60));
-                    else if (this.type == this.AS_LENGTH)
-                        return String.Format("{0}:{01}", (time / 60), (time % 60));
                 }
 
-                DateTime t = DateTime.Now.ToLocalTime();
+                if (this.type == this.IN_MINUTES)
+                    return String.Format("{0} min", (time / 60));
+                else if (this.type == this.AS_LENGTH)
+                    return String.Format("{0}:{01}", (time / 60), (time % 60));
+
+                // UNIX timestamp to current time
+                // http://dotnet-snippets.de/dns/unix-timestamp-in-datum-wandeln-SID164.aspx
+                DateTime t = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+                // den Timestamp addieren           
+                t = t.AddSeconds(time);
+
                 if (this.type == this.WITH_SECONDS)
                     return String.Format("{0:00}:{1:00}:{2:00}", t.Hour, t.Minute, t.Second);
                 else if (this.type == this.DEFAULT)

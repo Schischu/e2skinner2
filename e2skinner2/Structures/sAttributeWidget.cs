@@ -322,7 +322,7 @@ namespace e2skinner2.Structures
         }
 
         //######################################################################
-        //################# PIXMAP #############################################
+        //################# PROGRESS ###########################################
         private const String entryNameProgress = "6 Progress";
 
         [Editor(typeof(e2skinner2.Structures.cProperty.GradeEditor), typeof(System.Drawing.Design.UITypeEditor))]
@@ -376,6 +376,16 @@ namespace e2skinner2.Structures
             set { if (pRender.ToLower() == "listbox") pListbox.SelectionPixmap = value; }
         }
 
+        [CategoryAttribute(entryNameListbox)]
+        public Int32 ItemHeight
+        {
+            get
+            {
+                if (pRender.ToLower() == "listbox") return pListbox.ItemHeight;
+                else return 0;
+            }
+            set { if (pRender.ToLower() == "listbox") pListbox.ItemHeight = value; }
+        }
 
         //######################################################################
         //################# WIDGET #############################################
@@ -450,18 +460,17 @@ namespace e2skinner2.Structures
                 pListbox = new sAttributeListbox(parent, node);
             }
 
-            if (pLabel != null)
+            if (pLabel != null && (pLabel.pText == null || pLabel.pText.Length == 0) && (pSource != null && pSource.Length > 0))
             {
-                //if (pLabel.pText == null || pLabel.pText.Length > 0)
-                //    pLabel.pPreviewText = cPreviewText.getText(parent.Name, Name);
+                String text = cPreviewText.getText(parent.Name, pSource);
+                if (pLabel != null)
+                        pLabel.pPreviewText = text;
             }
 
             if (node.HasChildNodes)
             {
                 foreach (XmlNode nodeConverter in node.ChildNodes)
                 {
-                   // XmlNode nodeConverter = node.ChildNodes[0];
-
                     if (nodeConverter.Attributes != null)
                     {
                         String type = nodeConverter.Attributes["type"].Value;
@@ -494,6 +503,22 @@ namespace e2skinner2.Structures
                                 pPixmap.pPixmap = new Size(0, 0);
                                 pPixmap.pHide = true;
                             }
+                        }
+                    }
+                }
+                
+                cConverter.reset();
+            }
+            else
+            {
+                if (pSource != null)
+                {
+                    if (pSource.ToLower() == "title")
+                    {
+                        if (parent is sAttributeScreen)
+                        {
+                            if (pLabel != null)
+                                pLabel.pPreviewText = ((sAttributeScreen)parent).pTitle;
                         }
                     }
                 }

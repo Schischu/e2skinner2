@@ -4,7 +4,7 @@
   <source>
     <name>global.CurrentTime</name>
     <entries>
-      <entry name='time_sec' value='43200' type='int'/>
+      <entry name='time_sec' value='-2' type='int'/>
     </entries>
   </source>
 
@@ -80,13 +80,14 @@
     <name>ServiceEvent</name>
     <name>Service</name>
     <entries>
+      <entry name='time_sec' value='-2' type='int'/>
       <entry name='service_name'  value='BBC World' type='string'/>
       <entry name='event_name'  value='Living today' type='string'/>
       <entry name='extended_description'  value='Leaflets and phone messages in Arabic urged Gaza residents to keep away from sites linked to Hamas, ...' type='string'/>
       <entry name='event_starttime'  value='9000'   type='int'/>
       <entry name='event_endtime'  value='10000'   type='int'/>
       <entry name='event_remaining'  value='600'   type='int'/>
-      <entry name='event_duration"'  value='3600'   type='int'/>
+      <entry name='event_duration'  value='3600'   type='int'/>
       <entry name='event_progress'  value='80'   type='int'/>
     </entries>
   </source>
