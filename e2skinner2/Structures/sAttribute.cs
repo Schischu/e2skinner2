@@ -112,11 +112,18 @@ namespace e2skinner2.Structures
                 String X = _x.ToString();
                 String Y = _y.ToString();
 
-                //Test if valid input
-                if (!X.Equals("center"))
-                    Int32.Parse(X);
-                if (!Y.Equals("center"))
-                    Int32.Parse(Y);
+                try
+                {
+                    //Test if valid input
+                    if (!X.Equals("center"))
+                        Int32.Parse(X);
+                    if (!Y.Equals("center"))
+                        Int32.Parse(Y);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
 
                 Position po = new Position();
                 po.X = X;

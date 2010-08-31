@@ -397,16 +397,65 @@ namespace e2skinner2.Frames
                 
                 cmd.Helper = (s as PropertyGrid).SelectedObject;
 
-                PropertyInfo pi = ((s as PropertyGrid).SelectedObject as sAttribute).GetType().GetProperty(e.ChangedItem.Label);
-                Object obj = pi.GetValue(((s as PropertyGrid).SelectedObject as sAttribute), null);
+                String label = e.ChangedItem.Label;
+                PropertyInfo pi = ((s as PropertyGrid).SelectedObject as sAttribute).GetType().GetProperty(label);
+                Object oldValue = e.OldValue;
+                
+                if (pi == null)
+                {
+                    //FIXME: This is just a workaround
+                    label = e.ChangedItem.Parent.Label;
+                    pi = ((s as PropertyGrid).SelectedObject as sAttribute).GetType().GetProperty(label);
+                    Object gi = e.ChangedItem.Parent.Value;
+                    if (gi != null)
+                    {
+                        if (gi is e2skinner2.Structures.sAttribute.Position)
+                        {
+                            if (e.ChangedItem.Label == "X")
+                                (gi as e2skinner2.Structures.sAttribute.Position).X = (String)e.OldValue;
+                            else
+                                (gi as e2skinner2.Structures.sAttribute.Position).Y = (String)e.OldValue;
 
-                cmd.From = new Object[] {e.ChangedItem.Label, e.OldValue};
-                cmd.To = new Object[] { e.ChangedItem.Label, obj };
+                            oldValue = (gi as e2skinner2.Structures.sAttribute.Position);
+                        }
+                        else if (gi is System.Drawing.Size)
+                        {
+                            System.Drawing.Size size;
 
-                cmd.DoEvent += new cCommandQueue.EventHandler(eventDoPropertyGrid);
-                cmd.UndoEvent += new cCommandQueue.EventHandler(eventUndoPropertyGrid);
+                            size = (System.Drawing.Size)gi;
 
-                pQueue.addCmd(cmd);
+                            if (e.ChangedItem.Label == "Width")
+                                size.Width = Convert.ToInt32(e.OldValue);
+                            else
+                                size.Height = Convert.ToInt32(e.OldValue);
+
+                            oldValue = size;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error in propertyGrid1_PropertyValueChanged #1");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error in propertyGrid1_PropertyValueChanged #0");
+                    }
+                }
+
+                if (pi != null)
+                {
+                    Object newValue = pi.GetValue(((s as PropertyGrid).SelectedObject as sAttribute), null);
+
+                    cmd.From = new Object[] { label, oldValue };
+                    cmd.To = new Object[] { label, newValue };
+
+                    cmd.DoEvent += new cCommandQueue.EventHandler(eventDoPropertyGrid);
+                    cmd.UndoEvent += new cCommandQueue.EventHandler(eventUndoPropertyGrid);
+
+                    pQueue.addCmd(cmd);
+                }
+                else
+                    Console.WriteLine("Error in propertyGrid1_PropertyValueChanged #2");
             }
         }
 
