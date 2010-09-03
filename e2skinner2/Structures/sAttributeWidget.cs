@@ -482,31 +482,33 @@ namespace e2skinner2.Structures
                         String parameter = nodeConverter.InnerText;
 
                         String text = cConverter.getText(pSource, type, parameter);
-
-                        if (pLabel != null)
+                        if (text != null)
                         {
-                            if (text.Length > 0 && (pLabel.pText == null || pLabel.pText.Length <= 0))
-                                pLabel.pPreviewText = text;
+                            if (pLabel != null)
+                            {
+                                if (text.Length > 0 && (pLabel.pText == null || pLabel.pText.Length <= 0))
+                                    pLabel.pPreviewText = text;
 
-                            if (text == "MAGIC#TRUE") 
-                            {
-                                //pLabel.pText = "";
+                                if (text == "MAGIC#TRUE")
+                                {
+                                    //pLabel.pText = "";
+                                }
+                                else if (text == "MAGIC#FALSE")
+                                {
+                                    pLabel.pPreviewText = "";
+                                }
                             }
-                            else if (text == "MAGIC#FALSE") 
+                            else if (pPixmap != null)
                             {
-                                pLabel.pPreviewText = "";
-                            }
-                        }
-                        else if (pPixmap != null)
-                        {
-                            if (text == "MAGIC#TRUE") 
-                            {
-                            //pLabel.pText = "";
-                            }
-                            else if (text == "MAGIC#FALSE")
-                            {
-                                pPixmap.pPixmap = new Size(0, 0);
-                                pPixmap.pHide = true;
+                                if (text == "MAGIC#TRUE")
+                                {
+                                    //pLabel.pText = "";
+                                }
+                                else if (text == "MAGIC#FALSE")
+                                {
+                                    pPixmap.pPixmap = new Size(0, 0);
+                                    pPixmap.pHide = true;
+                                }
                             }
                         }
                     }
