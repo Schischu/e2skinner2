@@ -217,7 +217,7 @@ namespace e2skinner2.Structures
             get { return pName; }
             set { 
                 pName = value;
-                if (pName.Length > 0)
+                if (pName != null && pName.Length > 0)
                 {
                     if (myNode.Attributes["name"] != null)
                         myNode.Attributes["name"].Value = pName;
@@ -392,7 +392,7 @@ namespace e2skinner2.Structures
                 else return "(none)";
             }
             set {
-                if (value != "(none)")
+                if (value != null && value != "(none)")
                 {
                     pBorderColor = (sColor)cDataBase.pColors.get(value);
                     if (/*pBorderWidth > 0 && */pBorderColor != null) //First set the color, asecond set the width

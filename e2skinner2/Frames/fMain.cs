@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.IO;
 
+
 using e2skinner2.Logic;
 using e2skinner2.Structures;
 using System.Reflection;
@@ -20,6 +21,8 @@ namespace e2skinner2.Frames
         private cXMLHandler pXmlHandler = null;
         private cDesigner pDesigner = null;
         private cCommandQueue pQueue = null;
+
+        private bool keyCapture = false;
 
         public fMain()
         {
@@ -34,7 +37,31 @@ namespace e2skinner2.Frames
 
             pDesigner = new cDesigner(pictureBox1.CreateGraphics());
 
+            DirectoryInfo folder = new DirectoryInfo("elements");
+            foreach (FileInfo f in folder.GetFiles("*.ess"))
+            {
+                ToolStripMenuItem a = new ToolStripMenuItem();
+                a.Text = "Add " + f.Name.Remove(f.Name.Length - f.Extension.Length);
+                a.Tag = f;
+                a.Click += new System.EventHandler(this.addUserElement_Click);
+                elementToolStripMenuItem1.DropDownItems.Add(a);
+            }
+
             pQueue = new cCommandQueue();
+            pQueue.UndoPossibleEvent += new cCommandQueue.UndoRedoHandler(eventUndoPossible);
+            pQueue.RedoPossibleEvent += new cCommandQueue.UndoRedoHandler(eventRedoPossible);
+        }
+
+        private void eventUndoPossible(bool sender, EventArgs e)
+        {
+            undoToolStripMenuItem.Enabled = sender;
+            btnUndo.Enabled = sender;
+        }
+
+        private void eventRedoPossible(bool sender, EventArgs e)
+        {
+            redoToolStripMenuItem.Enabled = sender;
+            btnRedo.Enabled = sender;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -83,9 +110,10 @@ namespace e2skinner2.Frames
             btnSave.Enabled = true;
             btnSaveEditor.Enabled = true;
 
-            MiAddLabel.Enabled = true;
-            MiAddPixmap.Enabled = true;
-            MiAddWidget.Enabled = true;
+            this.addLabelToolStripMenuItem.Enabled = true;
+            this.addPixmapToolStripMenuItem.Enabled = true;
+            this.addWidgetToolStripMenuItem.Enabled = true;
+            this.deletToolStripMenuItem.Enabled = true;
         }
 
         public void close()
@@ -116,9 +144,10 @@ namespace e2skinner2.Frames
             btnSave.Enabled = false;
             btnSaveEditor.Enabled = false;
 
-            MiAddLabel.Enabled = false;
-            MiAddPixmap.Enabled = false;
-            MiAddWidget.Enabled = false;
+            this.addLabelToolStripMenuItem.Enabled = false;
+            this.addPixmapToolStripMenuItem.Enabled = false;
+            this.addWidgetToolStripMenuItem.Enabled = false;
+            this.deletToolStripMenuItem.Enabled = false;
 
             pQueue.clear();
         }
@@ -147,7 +176,7 @@ namespace e2skinner2.Frames
             if (selectedNode != null)
             {
                 int hash = selectedNode.GetHashCode();
-                XmlNode node = pXmlHandler.XmlGetNode(hash);
+                XmlNode node = pXmlHandler.getXmlNode(hash);
                 {
                     String text = node.OuterXml;
                     text = FormatXml(node);
@@ -175,7 +204,7 @@ namespace e2skinner2.Frames
             if (selectedNode != null)
             {
                 int hash = selectedNode.GetHashCode();
-                XmlNode node = pXmlHandler.XmlGetNode(hash);
+                XmlNode node = pXmlHandler.getXmlNode(hash);
                 {
                     //Get Screen Node
                     XmlNode screenNode = node;
@@ -183,7 +212,7 @@ namespace e2skinner2.Frames
                     while (screenNode != null && screenNode.Name != "screen")
                     {
                         hash = pXmlHandler.XmlGetParentHandle(hash);
-                        screenNode = pXmlHandler.XmlGetNode(hash);
+                        screenNode = pXmlHandler.getXmlNode(hash);
                     }
 
                     pDesigner.clear();
@@ -333,7 +362,7 @@ namespace e2skinner2.Frames
 
             Array objFrom = sender.To as Array;
 
-            treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode((sender.Helper as sAttribute).myNode);
+            treeView1.SelectedNode = pXmlHandler.getTreeNode((sender.Helper as sAttribute).myNode);
 
             propertyGrid1.Refresh();
 
@@ -355,7 +384,7 @@ namespace e2skinner2.Frames
 
             Array objFrom = sender.From as Array;
 
-            treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode((sender.Helper as sAttribute).myNode);
+            treeView1.SelectedNode = pXmlHandler.getTreeNode((sender.Helper as sAttribute).myNode);
 
             propertyGrid1.Refresh();
 
@@ -373,7 +402,8 @@ namespace e2skinner2.Frames
             //if (treeView1.SelectedNode != null)
             {
                 //Actually, this only syncs the name of the element with treeview, no saveing is done here
-                pXmlHandler.XmlSyncTreeChilds(treeView1.SelectedNode.GetHashCode(), treeView1.SelectedNode);
+                if (treeView1.SelectedNode != null)
+                    pXmlHandler.XmlSyncTreeChilds(treeView1.SelectedNode.GetHashCode(), treeView1.SelectedNode);
             }
 
             refresh();
@@ -393,7 +423,7 @@ namespace e2skinner2.Frames
 
             //if (treeView1.SelectedNode != null)
             {
-                cCommandQueue.cCommand cmd = new cCommandQueue.cCommand();
+                cCommandQueue.cCommand cmd = new cCommandQueue.cCommand("PropertyGridChanged");
                 
                 cmd.Helper = (s as PropertyGrid).SelectedObject;
 
@@ -566,26 +596,60 @@ namespace e2skinner2.Frames
 
         private void addLabelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            addElement("eLabel");
+            pQueue.clearUndo(); // We need to clear the UndoList. The problem is that we readded elements an these elements now have different hashes :-(
+            _addElement("eLabel", null);
         }
 
         private void addPixmapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            addElement("ePixmap");
+            pQueue.clearUndo(); // We need to clear the UndoList. The problem is that we readded elements an these elements now have different hashes :-(
+            _addElement("ePixmap", null);
         }
 
         private void widgetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            addElement("widget");
+            pQueue.clearUndo(); // We need to clear the UndoList. The problem is that we readded elements an these elements now have different hashes :-(
+            _addElement("widget", null);
         }
 
+        private void addUserElement_Click(object sender, EventArgs e)
+        {
+            if (!(sender is ToolStripMenuItem))
+                return;
+
+            TreeNode selectedNode = treeView1.SelectedNode;
+
+            FileInfo f = (sender as ToolStripMenuItem).Tag as FileInfo;
+
+            XmlDocument xDoc = new XmlDocument();
+
+            xDoc.Load(f.FullName);
+            if (!xDoc.HasChildNodes)
+                return;
+
+            XmlNode rootNode = xDoc.FirstChild;
+            if (rootNode.Name.Equals("element"))
+            {
+                if (rootNode.HasChildNodes)
+                {
+                    pQueue.clearUndo(); // We need to clear the UndoList. The problem is that we readded elements an these elements now have different hashes :-(
+
+                    foreach (XmlNode node in rootNode.ChildNodes)
+                    {
+                        _addElement(null, node.OuterXml);
+                    }
+                }
+            }
+        }
+
+        [Obsolete("use _addElement(String type, String outerXml) instead")]
         private void addElement(String type)
         {
             TreeNode selectedNode = treeView1.SelectedNode;
             if (selectedNode != null)
             {
                 int hash = selectedNode.GetHashCode();
-                XmlNode node = pXmlHandler.XmlGetNode(hash);
+                XmlNode node = pXmlHandler.getXmlNode(hash);
                 {
                     //Get Screen Node
                     XmlNode screenNode = node;
@@ -593,7 +657,7 @@ namespace e2skinner2.Frames
                     while (screenNode != null && screenNode.Name != "screen")
                     {
                         hash = pXmlHandler.XmlGetParentHandle(hash);
-                        screenNode = pXmlHandler.XmlGetNode(hash);
+                        screenNode = pXmlHandler.getXmlNode(hash);
                     }
 
                     String[] attributes = { type,
@@ -604,15 +668,111 @@ namespace e2skinner2.Frames
                     if (!treenode.Text.StartsWith("screen"))
                         treenode = treenode.Parent;
 
-                    treeView1.SelectedNode = pXmlHandler.XmlSyncAddTreeChild(treenode.GetHashCode(), treenode, pXmlHandler.XmlCreateNode(screenNode, attributes));
+                    treeView1.SelectedNode = pXmlHandler.XmlSyncAddTreeChild(treenode.GetHashCode(), treenode, pXmlHandler.XmlAppendNode(screenNode, attributes));
                     pXmlHandler.XmlSyncTreeChilds(treeView1.SelectedNode.GetHashCode(), treeView1.SelectedNode);
+                }
+            }
+        }
+
+        private void _addElement(String type, String outerXml)
+        {
+            TreeNode selectedNode = treeView1.SelectedNode;
+            if (selectedNode != null)
+            {
+                XmlNode node = pXmlHandler.getXmlNode(selectedNode); // The parent element where we want to add a child. This has to be screen !!
+
+                while (node != null && node.Name != "screen")
+                {
+                    node = node.ParentNode;
+                }
+
+                if (node != null)
+                {
+                    int nodeHash = pXmlHandler.getHash(node);
+
+                    cCommandQueue.cCommand cmd = new cCommandQueue.cCommand("addElement");
+                    cmd.DoEvent += new cCommandQueue.EventHandler(eventDoElement);
+                    cmd.UndoEvent += new cCommandQueue.EventHandler(eventUndoElement);
+
+                    cmd.Helper = nodeHash;
+                    cmd.From = node.OuterXml; // For from we need the parent outerxml, for to we dont need it
+
+                    //--
+                    XmlNode newXmlNode = null;
+                    if (outerXml == null)
+                    {
+                        String[] attributes = { type,
+                                                "name",  "new " + type,
+                                                "position",  "0, 0",
+                                                "size",  "10, 10" };
+
+                        newXmlNode = pXmlHandler.XmlAppendNode(node, attributes);
+                    }
+                    else
+                    {
+                        newXmlNode = pXmlHandler.XmlAppendNode(node, outerXml);
+                    }
+                    TreeNode newTreeNode = pXmlHandler.XmlSyncAddTreeChild(nodeHash, pXmlHandler.getTreeNode(nodeHash), newXmlNode);
+                    pXmlHandler.XmlSyncTreeChilds(newTreeNode.GetHashCode(), newTreeNode);
+                    //--
+
+                    cmd.To = node.OuterXml; // Set the result
+
+                    pQueue.addSilentCmd(cmd);
+
+                    refresh();
+                    refreshPropertyGrid();
+
+                    
                 }
             }
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            TreeNode selectedNode = treeView1.SelectedNode;
+            if (selectedNode != null)
+            {
+                pQueue.clearUndo(); // We need to clear the UndoList. The problem is that we readded elements an these elements now have different hashes :-(
 
+                XmlNode node = pXmlHandler.getXmlNode(selectedNode); // The element we want to delete
+                int nodeHash = pXmlHandler.getHash(node);
+                XmlNode parentNode = node.ParentNode;
+                int parentNodeHash = pXmlHandler.getHash(parentNode);
+
+                cCommandQueue.cCommand cmd = new cCommandQueue.cCommand("deleteElement");
+                cmd.DoEvent += new cCommandQueue.EventHandler(eventDoElement);
+                cmd.UndoEvent += new cCommandQueue.EventHandler(eventUndoElement);
+
+                cmd.Helper = parentNodeHash;
+                cmd.From = parentNode.OuterXml; // For from we need the parent outerxml, for to we dont need it
+                replaceXmlNode(nodeHash, ""); // Delete Element
+                cmd.To = parentNode.OuterXml; // Set the result
+
+                pQueue.addSilentCmd(cmd);
+            }           
+        }
+
+        private void eventDoElement(cCommandQueue.cCommand sender, EventArgs e)
+        {
+            int hash = (int)sender.Helper;
+            replaceXmlNode(hash, sender.To as String);
+
+            TreeNode focusNode = pXmlHandler.getTreeNode(hash);
+            if (focusNode != null)
+                treeView1.SelectedNode = focusNode;
+
+            pQueue.clearRedo(); // We need to clear the RedoList. The problem is that we readded elements an these elements now have different hashes :-(
+        }
+
+        private void eventUndoElement(cCommandQueue.cCommand sender, EventArgs e)
+        {
+            int hash = (int)sender.Helper;
+            replaceXmlNode(hash, sender.From as String);
+
+            TreeNode focusNode = pXmlHandler.getTreeNode(hash);
+            if (focusNode != null)
+                treeView1.SelectedNode = focusNode;
         }
 
         private void MiPreferences_Click(object sender, EventArgs e)
@@ -625,11 +785,17 @@ namespace e2skinner2.Frames
 
         }
 
+
+        private void replaceXmlNode(int hash, String xml)
+        {
+            pXmlHandler.XmlReplaceNodeAndChilds(hash, xml);
+            refresh();
+            refreshPropertyGrid();
+            //pXmlHandler.XmlSyncTreeChilds(treeView1.SelectedNode.GetHashCode(), treeView1.SelectedNode); //TODO: check
+        }
+
         private void btnSaveEditor_Click(object sender, EventArgs e)
         {
-            // Currently only the selected note is synced.
-            // This is wrong, the childs should also be synced !!!!!
-
             int hash = treeView1.SelectedNode.GetHashCode();
             try
             {
@@ -639,18 +805,14 @@ namespace e2skinner2.Frames
                 {
                     p = textBoxEditor.AutoScrollOffset;
                     //pXmlHandler.XmlReplaceNode(hash, textBoxEditor.Text);
-                    pXmlHandler.XmlReplaceNodeAndChilds(hash, textBoxEditor.Text);
+                    replaceXmlNode(hash, textBoxEditor.Text);
                 }
                 else
                 {
                     p = textBoxEditor2.AutoScrollOffset;
                     //pXmlHandler.XmlReplaceNode(hash, textBoxEditor2.Text);
-                    pXmlHandler.XmlReplaceNodeAndChilds(hash, textBoxEditor2.Text);
+                    replaceXmlNode(hash, textBoxEditor2.Text);
                 }
-
-                refresh();
-
-                refreshPropertyGrid();
 
                 toolStripLabel1.Text = "No Errors.";
 
@@ -665,6 +827,8 @@ namespace e2skinner2.Frames
                 }
 
                 pXmlHandler.XmlSyncTreeChilds(treeView1.SelectedNode.GetHashCode(), treeView1.SelectedNode);
+
+                pQueue.clear();
             }
             catch (Exception ex)
             {
@@ -706,7 +870,7 @@ namespace e2skinner2.Frames
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            System.Console.WriteLine("pictureBox1_MouseDown");
+            //System.Console.WriteLine("pictureBox1_MouseDown");
             if (e.Button == MouseButtons.Left)
             {
                 _StartX = (int)(((MouseEventArgs)e).X / pDesigner.zoomLevel());
@@ -718,19 +882,22 @@ namespace e2skinner2.Frames
                     sAttribute _Attr = elem.pAttr;
                     if (_Attr != null)
                     {
-                        if (isResize)
+                        /*if (isResize)
                         {
                             mouseDown = true;
                         }
-                        else if (inBounds(new PointF(_StartX, _StartY), _Attr.Rectangle, -2 / pDesigner.zoomLevel()))
+                        else*/
+                        if (inBounds(new PointF(_StartX, _StartY), _Attr.Rectangle, -2 / pDesigner.zoomLevel()))
                         {
-                            treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode(_Attr.myNode);
+                            treeView1.SelectedNode = pXmlHandler.getTreeNode(_Attr.myNode);
 
                             mouseDown = true;
                             this.Cursor = Cursors.SizeAll;
                         }
                         else if (inBounds(new PointF(_StartX, _StartY), _Attr.Rectangle, +2 / pDesigner.zoomLevel()))
                         {
+                            treeView1.SelectedNode = pXmlHandler.getTreeNode(_Attr.myNode); // CHECK: Hopefully this fixes the bug in designer were an command ist set without any change.
+
                             mouseDown = true;
                             //this.Cursor = Cursors.SizeAll;
                         }
@@ -739,6 +906,7 @@ namespace e2skinner2.Frames
                         {
                             remeberAttrSizeForUndo = _Attr.Size;
                             remeberAttrPositionForUndo = _Attr.Relativ;
+                            Console.Out.WriteLine("Size {0}", remeberAttrSizeForUndo);
                         }
                     }
                 }
@@ -751,7 +919,7 @@ namespace e2skinner2.Frames
                     if ((propertyGrid1.SelectedObject as sAttribute).Parent != null)
                     {
                         //propertyGrid1.SelectedObject = (propertyGrid1.SelectedObject as sAttribute).Parent;
-                        treeView1.SelectedNode = pXmlHandler.XmlGetTreeNode((propertyGrid1.SelectedObject as sAttribute).Parent.myNode);
+                        treeView1.SelectedNode = pXmlHandler.getTreeNode((propertyGrid1.SelectedObject as sAttribute).Parent.myNode);
                         //refresh();
                         //pDesigner.sort();
                         //refreshEditor();
@@ -784,7 +952,7 @@ namespace e2skinner2.Frames
             //System.Console.WriteLine("pictureBox1_MouseMove {0} {1}", ((MouseEventArgs)e).X, ((MouseEventArgs)e).Y);
             Int32 curX = (int)(((MouseEventArgs)e).X / pDesigner.zoomLevel());
             Int32 curY = (int)(((MouseEventArgs)e).Y / pDesigner.zoomLevel());
-            System.Console.WriteLine("{0} {1}", curX, curY);
+            //System.Console.WriteLine("{0} {1}", curX, curY);
             if (mouseDown)
             {
                 if (propertyGrid1.SelectedObject != null)
@@ -926,10 +1094,10 @@ namespace e2skinner2.Frames
 
         private void pictureBox1_MouseUp(object s, MouseEventArgs e)
         {
-            System.Console.WriteLine("pictureBox1_MouseUp");
+            //System.Console.WriteLine("pictureBox1_MouseUp");
             if (mouseDown)
             {
-                cCommandQueue.cCommand cmd = new cCommandQueue.cCommand();
+                cCommandQueue.cCommand cmd = new cCommandQueue.cCommand("MouseChange");
 
                 cmd.Helper = propertyGrid1.SelectedObject;
 
@@ -942,7 +1110,8 @@ namespace e2skinner2.Frames
                     cmd.To = new Object[] { "Size", (propertyGrid1.SelectedObject as sAttribute).Size };
                     pQueue.addCmd(cmd);
                 }
-                else if ((propertyGrid1.SelectedObject as sAttribute).Relativ != remeberAttrPositionForUndo)
+                else if ((propertyGrid1.SelectedObject as sAttribute).Relativ.X != remeberAttrPositionForUndo.X || 
+                    (propertyGrid1.SelectedObject as sAttribute).Relativ.Y != remeberAttrPositionForUndo.Y)
                 {
                     cmd.From = new Object[] {"Relativ", remeberAttrPositionForUndo};
                     cmd.To = new Object[] { "Relativ", (propertyGrid1.SelectedObject as sAttribute).Relativ };
@@ -1005,7 +1174,7 @@ namespace e2skinner2.Frames
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (this.keyCaptureNotifyButton.Image != global::e2skinner2.Properties.Resources.Lock_icon)
+            if (!this.keyCapture)
                 return;
 
             // If CTRL pressed, use margin 1, else margin 5
@@ -1033,7 +1202,7 @@ namespace e2skinner2.Frames
                     pos.X = ((UInt32)posX).ToString();
                     pos.Y = ((UInt32)posY).ToString();
 
-                    cCommandQueue.cCommand cmd = new cCommandQueue.cCommand();
+                    cCommandQueue.cCommand cmd = new cCommandQueue.cCommand("KeyboardChange");
 
                     cmd.Helper = propertyGrid1.SelectedObject;
 
@@ -1086,13 +1255,32 @@ namespace e2skinner2.Frames
 
         private void tabControl1_Enter(object sender, EventArgs e)
         {
-            this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.Lock_icon;
+            if (sender is TabControl)
+            {
+                if (((TabControl)sender).SelectedIndex == 0)
+                {
+                    this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.Lock_icon;
+                    this.keyCapture = true;
+                }
+            }
+            else if (sender is TabPage)
+            {
+                if (((TabPage)sender).Name.Equals("tabPage1"))
+                {
+                    this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.Lock_icon;
+                    this.keyCapture = true;
+                }
+            }
         }
 
         private void tabControl1_Leave(object sender, EventArgs e)
         {
-            this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.UnLock_icon;
-            this.Cursor = Cursors.Default;
+            //if (((TabPage)sender).Name.Equals("tabPage1"))
+            {
+                this.keyCaptureNotifyButton.Image = global::e2skinner2.Properties.Resources.UnLock_icon;
+                this.keyCapture = false;
+                this.Cursor = Cursors.Default;
+            }
         }
 
         private bool _bFullScreenMode = false, _bPreviewFullScreenMode = false;
@@ -1211,21 +1399,11 @@ namespace e2skinner2.Frames
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pQueue.undoCmd();
-
-            undoToolStripMenuItem.Enabled = pQueue.isUndoPossible();
-            btnUndo.Enabled = pQueue.isUndoPossible();
-            redoToolStripMenuItem.Enabled = pQueue.isRedoPossible();
-            btnRedo.Enabled = pQueue.isRedoPossible();
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pQueue.redoCmd();
-
-            undoToolStripMenuItem.Enabled = pQueue.isUndoPossible();
-            btnUndo.Enabled = pQueue.isUndoPossible();
-            redoToolStripMenuItem.Enabled = pQueue.isRedoPossible();
-            btnRedo.Enabled = pQueue.isRedoPossible();
         }
     }
 }

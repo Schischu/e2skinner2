@@ -38,7 +38,7 @@ namespace e2skinner2.Structures
             set
             {
                 pText = value;
-                if (pText.Length > 0)
+                if (pText != null && pText.Length > 0)
                 {
                     if (myNode.Attributes["text"] != null)
                         myNode.Attributes["text"].Value = pText;
@@ -68,21 +68,21 @@ namespace e2skinner2.Structures
             }
             set
             {
-                if (value != "(none)")
+                if (value != null && !value.Equals("(none)"))
                 {
                     pFont = cDataBase.getFont(value);
+
+                    if (myNode.Attributes["font"] != null)
+                        myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
+                    else
+                    {
+                        myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("font"));
+                        myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
+                    }
                 }
                 else
                 {
                     pFont = null;
-                }
-
-                if (myNode.Attributes["font"] != null)
-                    myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
-                else
-                {
-                    myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("font"));
-                    myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
                 }
             }
         }
@@ -118,9 +118,12 @@ namespace e2skinner2.Structures
             get { return pForegroundColor.pName; }
             set
             {
-                pForegroundColor = (sColor)cDataBase.pColors.get(value);
+                if (value != null)
+                    pForegroundColor = (sColor)cDataBase.pColors.get(value);
+                else
+                    pForegroundColor = null;
 
-                if (pForegroundColor != (sColor)pWindowStyle.pColors["LabelForeground"])
+                if (pForegroundColor != null && pForegroundColor != (sColor)pWindowStyle.pColors["LabelForeground"])
                 {
                     if (myNode.Attributes["foregroundColor"] != null)
                         myNode.Attributes["foregroundColor"].Value = pForegroundColor.pName;
@@ -142,10 +145,13 @@ namespace e2skinner2.Structures
         public String BackgroundColor
         {
             get { return pBackgroundColor.pName; }
-            set { 
-                pBackgroundColor = (sColor)cDataBase.pColors.get(value);
-                
-                if (pBackgroundColor != (sColor)pWindowStyle.pColors["LabelBackground"])
+            set {
+                if (value != null)
+                    pBackgroundColor = (sColor)cDataBase.pColors.get(value);
+                else
+                    pBackgroundColor = null;
+
+                if (pBackgroundColor != null && pBackgroundColor != (sColor)pWindowStyle.pColors["LabelBackground"])
                 {
                     if (myNode.Attributes["backgroundColor"] != null)
                         myNode.Attributes["backgroundColor"].Value = pBackgroundColor.pName;

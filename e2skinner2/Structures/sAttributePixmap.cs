@@ -30,7 +30,7 @@ namespace e2skinner2.Structures
             get { return pPixmapName; }
             set {
                 pPixmapName = value;
-                if (pPixmapName.Length > 0)
+                if (pPixmapName != null && pPixmapName.Length > 0)
                 {
                     if (myNode.Attributes["pixmap"] != null)
                         myNode.Attributes["pixmap"].Value = pPixmapName;
@@ -60,8 +60,8 @@ namespace e2skinner2.Structures
             get { return pAlphatest.ToString(); }
             set
             {
-                if (value == cProperty.eAlphatest.on.ToString()) pAlphatest = cProperty.eAlphatest.on;
-                else if (value == cProperty.eAlphatest.blend.ToString()) pAlphatest = cProperty.eAlphatest.blend;
+                if (value != null && value == cProperty.eAlphatest.on.ToString()) pAlphatest = cProperty.eAlphatest.on;
+                else if (value != null && value == cProperty.eAlphatest.blend.ToString()) pAlphatest = cProperty.eAlphatest.blend;
                 else pAlphatest = cProperty.eAlphatest.off;
 
                 if (myNode.Attributes["alphatest"] != null)

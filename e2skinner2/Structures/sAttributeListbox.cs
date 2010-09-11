@@ -77,7 +77,7 @@ namespace e2skinner2.Structures
             set {
                 pBackgroundPixmapName = value;
 
-                if (pBackgroundPixmapName.Length > 0)
+                if (pBackgroundPixmapName != null && pBackgroundPixmapName.Length > 0)
                 {
                     if (myNode.Attributes["backgroundPixmap"] != null)
                         myNode.Attributes["backgroundPixmap"].Value = pBackgroundPixmapName;
@@ -100,7 +100,7 @@ namespace e2skinner2.Structures
             set { 
                 pSelectionPixmapName = value;
 
-                if (pSelectionPixmapName.Length > 0)
+                if (pSelectionPixmapName != null && pSelectionPixmapName.Length > 0)
                 {
                     if (myNode.Attributes["selectionPixmap"] != null)
                         myNode.Attributes["selectionPixmap"].Value = pSelectionPixmapName;
@@ -124,8 +124,8 @@ namespace e2skinner2.Structures
             get { return pScrollbarMode.ToString(); }
             set
             {
-                if (value == cProperty.eScrollbarMode.showAlways.ToString()) pScrollbarMode = cProperty.eScrollbarMode.showAlways;
-                else if (value == cProperty.eScrollbarMode.showOnDemand.ToString()) pScrollbarMode = cProperty.eScrollbarMode.showOnDemand;
+                if (value != null && value == cProperty.eScrollbarMode.showAlways.ToString()) pScrollbarMode = cProperty.eScrollbarMode.showAlways;
+                else if (value != null && value == cProperty.eScrollbarMode.showOnDemand.ToString()) pScrollbarMode = cProperty.eScrollbarMode.showOnDemand;
                 else pScrollbarMode = cProperty.eScrollbarMode.showNever;
 
                 if (pScrollbarMode == cProperty.eScrollbarMode.showAlways) myNode.Attributes["scrollbarMode"].Value = "showAlways";
@@ -145,13 +145,20 @@ namespace e2skinner2.Structures
             {
                 pItemHeight = value;
 
-                if (myNode.Attributes["itemHeight"] != null)
-                    myNode.Attributes["itemHeight"].Value = pItemHeight.ToString();
-                else
+                if (pItemHeight != null)
                 {
-                    myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("itemHeight"));
-                    myNode.Attributes["itemHeight"].Value = pItemHeight.ToString();
+                    if (myNode.Attributes["itemHeight"] != null)
+                        myNode.Attributes["itemHeight"].Value = pItemHeight.ToString();
+                    else
+                    {
+                        myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("itemHeight"));
+                        myNode.Attributes["itemHeight"].Value = pItemHeight.ToString();
+                    }
                 }
+                else
+                    if (myNode.Attributes["itemHeight"] != null)
+                        myNode.Attributes.RemoveNamedItem("itemHeight");
+                
             }
         }
         

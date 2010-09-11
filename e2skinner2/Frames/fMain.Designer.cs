@@ -44,11 +44,14 @@ namespace e2skinner2.Frames
             this.elementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MiAddLabel = new System.Windows.Forms.ToolStripMenuItem();
-            this.MiAddPixmap = new System.Windows.Forms.ToolStripMenuItem();
-            this.MiAddWidget = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.MiDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.elementToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addPixmapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addWidgetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.deletToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MiResolution = new System.Windows.Forms.ToolStripMenuItem();
             this.MiColors = new System.Windows.Forms.ToolStripMenuItem();
@@ -146,6 +149,7 @@ namespace e2skinner2.Frames
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.elementToolStripMenuItem,
+            this.elementToolStripMenuItem1,
             this.settingsToolStripMenuItem,
             this.toolStripMenuItemHelp});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -224,11 +228,7 @@ namespace e2skinner2.Frames
             this.elementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem,
-            this.MiAddLabel,
-            this.MiAddPixmap,
-            this.MiAddWidget,
-            this.toolStripSeparator3,
-            this.MiDelete});
+            this.toolStripSeparator3});
             this.elementToolStripMenuItem.Name = "elementToolStripMenuItem";
             this.elementToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.elementToolStripMenuItem.Text = "Edit";
@@ -238,7 +238,7 @@ namespace e2skinner2.Frames
             this.undoToolStripMenuItem.Enabled = false;
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -247,46 +247,69 @@ namespace e2skinner2.Frames
             this.redoToolStripMenuItem.Enabled = false;
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
-            // 
-            // MiAddLabel
-            // 
-            this.MiAddLabel.Enabled = false;
-            this.MiAddLabel.Name = "MiAddLabel";
-            this.MiAddLabel.Size = new System.Drawing.Size(153, 22);
-            this.MiAddLabel.Text = "Add Label";
-            this.MiAddLabel.Click += new System.EventHandler(this.addLabelToolStripMenuItem_Click);
-            // 
-            // MiAddPixmap
-            // 
-            this.MiAddPixmap.Enabled = false;
-            this.MiAddPixmap.Name = "MiAddPixmap";
-            this.MiAddPixmap.Size = new System.Drawing.Size(153, 22);
-            this.MiAddPixmap.Text = "Add Pixmap";
-            this.MiAddPixmap.Click += new System.EventHandler(this.addPixmapToolStripMenuItem_Click);
-            // 
-            // MiAddWidget
-            // 
-            this.MiAddWidget.Enabled = false;
-            this.MiAddWidget.Name = "MiAddWidget";
-            this.MiAddWidget.Size = new System.Drawing.Size(153, 22);
-            this.MiAddWidget.Text = "Add Widget";
-            this.MiAddWidget.Click += new System.EventHandler(this.widgetToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(150, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(141, 6);
             // 
-            // MiDelete
+            // elementToolStripMenuItem1
             // 
-            this.MiDelete.Enabled = false;
-            this.MiDelete.Name = "MiDelete";
-            this.MiDelete.Size = new System.Drawing.Size(153, 22);
-            this.MiDelete.Text = "Delete Element";
-            this.MiDelete.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            this.elementToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addLabelToolStripMenuItem,
+            this.addPixmapToolStripMenuItem,
+            this.addWidgetToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.deletToolStripMenuItem,
+            this.toolStripSeparator9});
+            this.elementToolStripMenuItem1.Name = "elementToolStripMenuItem1";
+            this.elementToolStripMenuItem1.Size = new System.Drawing.Size(62, 20);
+            this.elementToolStripMenuItem1.Text = "Element";
+            // 
+            // addLabelToolStripMenuItem
+            // 
+            this.addLabelToolStripMenuItem.Enabled = false;
+            this.addLabelToolStripMenuItem.Name = "addLabelToolStripMenuItem";
+            this.addLabelToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.addLabelToolStripMenuItem.Text = "Add Label";
+            this.addLabelToolStripMenuItem.Click += new System.EventHandler(this.addLabelToolStripMenuItem_Click);
+            // 
+            // addPixmapToolStripMenuItem
+            // 
+            this.addPixmapToolStripMenuItem.Enabled = false;
+            this.addPixmapToolStripMenuItem.Name = "addPixmapToolStripMenuItem";
+            this.addPixmapToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.addPixmapToolStripMenuItem.Text = "Add Pixmap";
+            this.addPixmapToolStripMenuItem.Click += new System.EventHandler(this.addPixmapToolStripMenuItem_Click);
+            // 
+            // addWidgetToolStripMenuItem
+            // 
+            this.addWidgetToolStripMenuItem.Enabled = false;
+            this.addWidgetToolStripMenuItem.Name = "addWidgetToolStripMenuItem";
+            this.addWidgetToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.addWidgetToolStripMenuItem.Text = "Add Widget";
+            this.addWidgetToolStripMenuItem.Click += new System.EventHandler(this.widgetToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(150, 6);
+            // 
+            // deletToolStripMenuItem
+            // 
+            this.deletToolStripMenuItem.Enabled = false;
+            this.deletToolStripMenuItem.Name = "deletToolStripMenuItem";
+            this.deletToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.deletToolStripMenuItem.Text = "Delete selected";
+            this.deletToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(150, 6);
             // 
             // settingsToolStripMenuItem
             // 
@@ -308,7 +331,7 @@ namespace e2skinner2.Frames
             // 
             this.MiResolution.Enabled = false;
             this.MiResolution.Name = "MiResolution";
-            this.MiResolution.Size = new System.Drawing.Size(185, 22);
+            this.MiResolution.Size = new System.Drawing.Size(198, 22);
             this.MiResolution.Text = "Resolution";
             this.MiResolution.Click += new System.EventHandler(this.resolutionToolStripMenuItem_Click);
             // 
@@ -316,7 +339,7 @@ namespace e2skinner2.Frames
             // 
             this.MiColors.Enabled = false;
             this.MiColors.Name = "MiColors";
-            this.MiColors.Size = new System.Drawing.Size(185, 22);
+            this.MiColors.Size = new System.Drawing.Size(198, 22);
             this.MiColors.Text = "Colors";
             this.MiColors.Click += new System.EventHandler(this.colorsToolStripMenuItem_Click);
             // 
@@ -324,7 +347,7 @@ namespace e2skinner2.Frames
             // 
             this.MiFonts.Enabled = false;
             this.MiFonts.Name = "MiFonts";
-            this.MiFonts.Size = new System.Drawing.Size(185, 22);
+            this.MiFonts.Size = new System.Drawing.Size(198, 22);
             this.MiFonts.Text = "Fonts";
             this.MiFonts.Click += new System.EventHandler(this.fontsToolStripMenuItem_Click);
             // 
@@ -332,38 +355,38 @@ namespace e2skinner2.Frames
             // 
             this.MiWindowStyles.Enabled = false;
             this.MiWindowStyles.Name = "MiWindowStyles";
-            this.MiWindowStyles.Size = new System.Drawing.Size(185, 22);
+            this.MiWindowStyles.Size = new System.Drawing.Size(198, 22);
             this.MiWindowStyles.Text = "WindowStyles";
             this.MiWindowStyles.Click += new System.EventHandler(this.windowStylesToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(195, 6);
             // 
             // reloadConverterxmlToolStripMenuItem
             // 
             this.reloadConverterxmlToolStripMenuItem.Name = "reloadConverterxmlToolStripMenuItem";
-            this.reloadConverterxmlToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.reloadConverterxmlToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.reloadConverterxmlToolStripMenuItem.Text = "Reload converter.xml";
             this.reloadConverterxmlToolStripMenuItem.Click += new System.EventHandler(this.reloadConverterxmlToolStripMenuItem_Click);
             // 
             // reloadPreviewTextxmlToolStripMenuItem
             // 
             this.reloadPreviewTextxmlToolStripMenuItem.Name = "reloadPreviewTextxmlToolStripMenuItem";
-            this.reloadPreviewTextxmlToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.reloadPreviewTextxmlToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.reloadPreviewTextxmlToolStripMenuItem.Text = "Reload previewText.xml";
             this.reloadPreviewTextxmlToolStripMenuItem.Click += new System.EventHandler(this.reloadPreviewTextxmlToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(182, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(195, 6);
             // 
             // MiPreferences
             // 
             this.MiPreferences.Name = "MiPreferences";
-            this.MiPreferences.Size = new System.Drawing.Size(185, 22);
+            this.MiPreferences.Size = new System.Drawing.Size(198, 22);
             this.MiPreferences.Text = "Preferences";
             this.MiPreferences.Click += new System.EventHandler(this.MiPreferences_Click);
             // 
@@ -400,6 +423,8 @@ namespace e2skinner2.Frames
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Designer";
             this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.Leave += new System.EventHandler(this.tabControl1_Leave);
+            this.tabPage1.Enter += new System.EventHandler(this.tabControl1_Enter);
             // 
             // panelDesigner
             // 
@@ -845,6 +870,7 @@ namespace e2skinner2.Frames
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 795);
             this.Controls.Add(this.toolStripContainer1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "fMain";
@@ -933,11 +959,7 @@ namespace e2skinner2.Frames
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem elementToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem MiAddLabel;
-        private System.Windows.Forms.ToolStripMenuItem MiAddPixmap;
-        private System.Windows.Forms.ToolStripMenuItem MiAddWidget;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem MiDelete;
         private System.Windows.Forms.Panel panelDesignerInner;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton btnFading;
@@ -958,6 +980,13 @@ namespace e2skinner2.Frames
         private System.Windows.Forms.ToolStripButton btnRedo;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem elementToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addLabelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addPixmapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addWidgetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem deletToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
     }
 }
 

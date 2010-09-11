@@ -157,7 +157,7 @@ namespace e2skinner2.Logic
             return treeNode;
         }
 
-        public XmlNode XmlCreateNode(XmlNode node, String[] attributes)
+        public XmlNode XmlAppendNode(XmlNode node, String[] attributes)
         {
             XmlNode xmlNode = null;
             xmlNode = xmlDocument.CreateElement(attributes[0]);
@@ -174,7 +174,25 @@ namespace e2skinner2.Logic
             return xmlNode;
         }
 
-        public XmlNode XmlGetNode(int hash)
+        public XmlNode XmlAppendNode(XmlNode node, String outerXml)
+        {
+            XmlNode xmlNode = null;
+            XmlTextReader xmlReader = new XmlTextReader(new StringReader(outerXml));
+            xmlNode = xmlDocument.ReadNode(xmlReader);
+
+            if(node != null)
+                node.AppendChild(xmlNode);
+
+            return xmlNode;
+        }
+
+        public XmlNode getXmlNode(TreeNode treeNode)
+        {
+            return getXmlNode(getHash(treeNode));
+        }
+
+
+        public XmlNode getXmlNode(int hash)
         {
             foreach (sElementList temp in ElementList)
             {
@@ -186,7 +204,7 @@ namespace e2skinner2.Logic
             return null;
         }
 
-        public int XmlGetHash(XmlNode node )
+        public int getHash(XmlNode node)
         {
             foreach (sElementList temp in ElementList)
             {
@@ -198,7 +216,32 @@ namespace e2skinner2.Logic
             return 0;
         }
 
-        public TreeNode XmlGetTreeNode(XmlNode node)
+        public int getHash(TreeNode treeNode)
+        {
+            return treeNode.GetHashCode();
+            /*foreach (sElementList temp in ElementList)
+            {
+                if (temp.TreeNode == treeNode)
+                {
+                    return temp.Handle;
+                }
+            }
+            return 0;*/
+        }
+
+        public TreeNode getTreeNode(int hash)
+        {
+            foreach (sElementList temp in ElementList)
+            {
+                if (temp.Handle == hash)
+                {
+                    return temp.TreeNode;
+                }
+            }
+            return null;
+        }
+
+        public TreeNode getTreeNode(XmlNode node)
         {
             foreach (sElementList temp in ElementList)
             {
@@ -256,9 +299,18 @@ namespace e2skinner2.Logic
                                 for (int i = 0; i < tempParent.Node.ChildNodes.Count; i++)
                                     if (tempParent.Node.ChildNodes[i] == temp.Node)
                                     {
-                                        temp.Node = xmlDocument.ReadNode(xmlReader);
-                                        tempParent.Node.ReplaceChild(temp.Node, tempParent.Node.ChildNodes[i]);
-                                        XmlRekursivImport(temp.TreeNode.Nodes, temp.Node.ChildNodes);
+                                        if (node.Length == 0) // Delete node
+                                        {
+                                            tempParent.Node.RemoveChild(tempParent.Node.ChildNodes[i]);
+                                            temp.TreeNode.Remove();
+                                            ElementList.Remove(temp);
+                                        }
+                                        else // Replace node
+                                        {
+                                            temp.Node = xmlDocument.ReadNode(xmlReader);
+                                            tempParent.Node.ReplaceChild(temp.Node, tempParent.Node.ChildNodes[i]);
+                                            XmlRekursivImport(temp.TreeNode.Nodes, temp.Node.ChildNodes);
+                                        }
                                         break;
                                     }
                                 break;

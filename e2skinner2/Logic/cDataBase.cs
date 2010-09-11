@@ -512,7 +512,7 @@ namespace e2skinner2.Logic
                     String[] attributes = { "color",
                                             "name",  color.pName, 
                                             "value", "#" + value };
-                    XmlHandler.XmlCreateNode(colorNode, attributes);
+                    XmlHandler.XmlAppendNode(colorNode, attributes);
                 }
 
                 return true;

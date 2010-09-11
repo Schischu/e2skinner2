@@ -20,10 +20,13 @@ namespace e2skinner2.Structures
         public String BackgroundColor
         {
             get { return pBackgroundColor.pName; }
-            set { 
-                pBackgroundColor = (sColor)cDataBase.pColors.get(value);
+            set {
+                if (value != null)
+                    pBackgroundColor = (sColor)cDataBase.pColors.get(value);
+                else
+                    pBackgroundColor = null;
 
-                if (pBackgroundColor != (sColor)((sWindowStyle)cDataBase.pWindowstyles.get()).pColors["Background"])
+                if (pBackgroundColor != null && pBackgroundColor != (sColor)((sWindowStyle)cDataBase.pWindowstyles.get()).pColors["Background"])
                 {
                     if (myNode.Attributes["backgroundColor"] != null)
                         myNode.Attributes["backgroundColor"].Value = pBackgroundColor.pName;

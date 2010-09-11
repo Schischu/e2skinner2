@@ -13,16 +13,28 @@ namespace e2skinner2.Logic
         // A delegate type for hooking up change notifications.
         public delegate void EventHandler(cCommand sender, EventArgs e);
 
+        public delegate void UndoRedoHandler(bool sender, EventArgs e);
+        public event UndoRedoHandler UndoPossibleEvent;
+        public event UndoRedoHandler RedoPossibleEvent;
+
         public class cCommand
         {
             // An event that clients can use to be notified
             public event EventHandler DoEvent;
             public event EventHandler UndoEvent;
 
+            public String Info;
+
             public Object Helper;
+            public Object Helper2;
 
             public Object From;
             public Object To;
+
+            public cCommand(String info)
+            {
+                Info = info;
+            }
 
             public virtual String toString()
             {
@@ -33,7 +45,7 @@ namespace e2skinner2.Logic
 
             public bool doCmd()
             {
-                Console.WriteLine("CQ: doCmd");
+                Console.WriteLine("CQ: do   " + Info);
 
                 DoEvent(this, EventArgs.Empty);
 
@@ -42,7 +54,7 @@ namespace e2skinner2.Logic
 
             public bool undoCmd()
             {
-                Console.WriteLine("CQ: undoCmd");
+                Console.WriteLine("CQ: undo " + Info);
 
                 UndoEvent(this, EventArgs.Empty);
 
@@ -54,16 +66,24 @@ namespace e2skinner2.Logic
         {
             pQueue = new LinkedList<cCommand>();
             pLastAction = pQueue.First;
+
+            isPossible();
         }
 
-        public void addCmd(cCommand cmd)
+        public void addSilentCmd(cCommand cmd)
         {
-            while (pQueue.Last != pLastAction)
-                pQueue.RemoveLast(); ;
+            clearRedo();
 
             pQueue.AddLast(cmd);
 
             pLastAction = pQueue.Last;
+
+            isPossible();
+        }
+
+        public void addCmd(cCommand cmd)
+        {
+            addSilentCmd(cmd);
             pLastAction.Value.doCmd();
         }
 
@@ -72,8 +92,12 @@ namespace e2skinner2.Logic
             if (pLastAction != null)
             {
                 pLastAction.Value.undoCmd();
-                pLastAction = pLastAction.Previous;
+                if (pLastAction != null)
+                    pLastAction = pLastAction.Previous;
+                RedoPossibleEvent(true, EventArgs.Empty); // Redo possible
             }
+
+            isPossible();
         }
 
         public void redoCmd()
@@ -81,13 +105,23 @@ namespace e2skinner2.Logic
             if (pLastAction == null)
             {
                 pLastAction = pQueue.First;
-                pLastAction.Value.doCmd();
+                if (pLastAction != null)
+                    pLastAction.Value.doCmd();
             }
             else if (pLastAction != null && pLastAction.Next != null)
             {
                 pLastAction = pLastAction.Next;
                 pLastAction.Value.doCmd();
             }
+
+            isPossible();
+        }
+
+        private void isPossible() {
+            if (RedoPossibleEvent != null)
+                RedoPossibleEvent(isRedoPossible(), EventArgs.Empty);
+            if (UndoPossibleEvent != null)
+                UndoPossibleEvent(isUndoPossible(), EventArgs.Empty);
         }
 
         public bool isUndoPossible()
@@ -99,7 +133,7 @@ namespace e2skinner2.Logic
 
         public bool isRedoPossible()
         {
-            if (pLastAction != null && pLastAction.Next == null)
+            if ((pLastAction != null && pLastAction.Next == null) || pQueue.First == null)
                 return false;
             return true;
         }
@@ -108,6 +142,29 @@ namespace e2skinner2.Logic
         {
             pQueue.Clear();
             pLastAction = pQueue.First;
+
+            isPossible();
+        }
+
+        public void clearRedo()
+        {
+            while (pQueue.Last != pLastAction)
+                pQueue.RemoveLast(); ;
+
+            isPossible();
+        }
+
+        public void clearUndo()
+        {
+            while (pQueue.First != pLastAction)
+                pQueue.RemoveFirst();
+
+            if (pQueue.First != null)
+                pQueue.RemoveFirst();
+
+            pLastAction = pQueue.First;
+
+            isPossible();
         }
     }
 }

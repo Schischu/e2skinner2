@@ -43,7 +43,7 @@ namespace e2skinner2.Structures
             get { return pSource; }
             set { 
                 pSource = value;
-                if (pSource.Length > 0)
+                if (pSource != null && pSource.Length > 0)
                 {
                     if (myNode.Attributes["source"] != null)
                         myNode.Attributes["source"].Value = pSource;
@@ -66,7 +66,7 @@ namespace e2skinner2.Structures
             get { return pRender; }
             set { 
                 pRender = value;
-                if (pRender.Length > 0)
+                if (pRender != null && pRender.Length > 0)
                 {
                     if (myNode.Attributes["render"] != null)
                         myNode.Attributes["render"].Value = pRender;
@@ -98,20 +98,6 @@ namespace e2skinner2.Structures
                 if (pRender.ToLower() == "label" || pRender.ToLower() == "fixedlabel")
                 {
                     pLabel.Text = value;
-
-                    /*if (pLabel.pText.Length > 0)
-                    {
-                        if (myNode.Attributes["text"] != null)
-                            myNode.Attributes["text"].Value = pLabel.pText;
-                        else
-                        {
-                            myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("text"));
-                            myNode.Attributes["text"].Value = pLabel.pText;
-                        }
-                    }
-                    else
-                        if (myNode.Attributes["text"] != null)
-                            myNode.Attributes.RemoveNamedItem("text");*/
                 }
             }
         }
@@ -144,15 +130,6 @@ namespace e2skinner2.Structures
                 if (pRender.ToLower() == "label" || pRender.ToLower() == "fixedlabel")
                 {
                     pLabel.Font = value;
-                    
-
-                    /*if (myNode.Attributes["font"] != null)
-                        myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
-                    else
-                    {
-                        myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("font"));
-                        myNode.Attributes["font"].Value = pFont.Name + "; " + pFontSize;
-                    }*/
                 }
             }
         }
@@ -170,14 +147,6 @@ namespace e2skinner2.Structures
                 if (pRender.ToLower() == "label" || pRender.ToLower() == "fixedlabel")
                 {
                     pLabel.FontSize = value;
-
-                    /*if (myNode.Attributes["font"] != null)
-                        myNode.Attributes["font"].Value = pLabel.pFont.Name + ", " + pLabel.pFontSize;
-                    else
-                    {
-                        myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("font"));
-                        myNode.Attributes["font"].Value = pLabel.pFont.Name + ", " + pLabel.pFontSize;
-                    }*/
                 }
             }
         }
@@ -197,20 +166,6 @@ namespace e2skinner2.Structures
                 if (pRender.ToLower() == "label" || pRender.ToLower() == "fixedlabel")
                 {
                     pLabel.ForegroundColor = value;
-
-                    /*if (pLabel.pForegroundColor != (sColor)((sWindowStyle)cDataBase.pWindowstyles.get()).pColors["LabelForeground"])
-                    {
-                        if (myNode.Attributes["foregroundColor"] != null)
-                            myNode.Attributes["foregroundColor"].Value = pLabel.pForegroundColor.pName;
-                        else
-                        {
-                            myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("foregroundColor"));
-                            myNode.Attributes["foregroundColor"].Value = pLabel.pForegroundColor.pName;
-                        }
-                    }
-                    else
-                        if (myNode.Attributes["foregroundColor"] != null)
-                            myNode.Attributes.RemoveNamedItem("foregroundColor");*/
                 }
             }
         }
@@ -230,20 +185,6 @@ namespace e2skinner2.Structures
                 if (pRender.ToLower() == "label" || pRender.ToLower() == "fixedlabel")
                 {
                     pLabel.BackgroundColor = value;
-
-                    /*if (pLabel.BackgroundColor != (sColor)((sWindowStyle)cDataBase.pWindowstyles.get()).pColors["LabelBackground"])
-                    {
-                        if (myNode.Attributes["backgroundColor"] != null)
-                            myNode.Attributes["backgroundColor"].Value = pLabel.BackgroundColor.pName;
-                        else
-                        {
-                            myNode.Attributes.Append(myNode.OwnerDocument.CreateAttribute("backgroundColor"));
-                            myNode.Attributes["backgroundColor"].Value = pLabel.BackgroundColor.pName;
-                        }
-                    }
-                    else
-                        if (myNode.Attributes["backgroundColor"] != null)
-                            myNode.Attributes.RemoveNamedItem("backgroundColor");*/
                 }
             }
         }
