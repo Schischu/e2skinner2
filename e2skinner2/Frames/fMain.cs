@@ -38,18 +38,33 @@ namespace e2skinner2.Frames
             pDesigner = new cDesigner(pictureBox1.CreateGraphics());
 
             DirectoryInfo folder = new DirectoryInfo("elements");
+
+            buildAddElementsMenu(folder, elementToolStripMenuItem1);
+
+            pQueue = new cCommandQueue();
+            pQueue.UndoPossibleEvent += new cCommandQueue.UndoRedoHandler(eventUndoPossible);
+            pQueue.RedoPossibleEvent += new cCommandQueue.UndoRedoHandler(eventRedoPossible);
+        }
+
+        private void buildAddElementsMenu(DirectoryInfo folder, ToolStripMenuItem toolStripMenuItem)
+        {
+            foreach (DirectoryInfo f in folder.GetDirectories())
+            {
+                ToolStripMenuItem a = new ToolStripMenuItem();
+                a.Text = f.Name;
+                a.Tag = f;
+                toolStripMenuItem.DropDownItems.Add(a);
+                buildAddElementsMenu(f, a);
+            }
+
             foreach (FileInfo f in folder.GetFiles("*.ess"))
             {
                 ToolStripMenuItem a = new ToolStripMenuItem();
                 a.Text = "Add " + f.Name.Remove(f.Name.Length - f.Extension.Length);
                 a.Tag = f;
                 a.Click += new System.EventHandler(this.addUserElement_Click);
-                elementToolStripMenuItem1.DropDownItems.Add(a);
+                toolStripMenuItem.DropDownItems.Add(a);
             }
-
-            pQueue = new cCommandQueue();
-            pQueue.UndoPossibleEvent += new cCommandQueue.UndoRedoHandler(eventUndoPossible);
-            pQueue.RedoPossibleEvent += new cCommandQueue.UndoRedoHandler(eventRedoPossible);
         }
 
         private void eventUndoPossible(bool sender, EventArgs e)
