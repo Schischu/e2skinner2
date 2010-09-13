@@ -15,23 +15,29 @@
     <ManifestCertificateThumbprint>4D01805CAE65F861C43BA8CB8CEBE06E36E3FE55</ManifestCertificateThumbprint>
     <ManifestKeyFile>e2skinner2_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
+    <ApplicationIcon>Resources\e2skinner2.ico</ApplicationIcon>
+    <StartupObject>e2skinner2.Program</StartupObject>
+    <TargetFrameworkSubset>Client</TargetFrameworkSubset>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>e2skinner2.pfx</AssemblyOriginatorKeyFile>
+    <PublishUrl>c:\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>4</ApplicationRevision>
+    <UpdateUrl>http://localhost/e2skinner2/</UpdateUrl>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ApplicationIcon>e2skinner.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -165,7 +171,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -214,14 +219,17 @@
     <None Include="Resources\openfolderHS.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
     <None Include="e2skinner2_TemporaryKey.pfx" />
     <None Include="Properties\DataSources\e2skinner2.Logic.cProperties.datasource" />
     <None Include="Properties\DataSources\e2skinner2.Structures.sAttribute.datasource" />
     <None Include="Resources\saveHS.png" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -237,6 +245,11 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
       <ProductName>Windows Installer 3.1</ProductName>
@@ -247,17 +260,17 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Lock-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Lock-icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="e2skinner2.pfx" />
+    <None Include="e2skinner2.snk" />
     <None Include="Properties\DataSources\e2skinner2.Logic.cProperties1.datasource" />
     <None Include="Resources\UnLock-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="e2skinner.ico" />
+    <None Include="Resources\e2skinner2.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Frames\UserControls\" />
