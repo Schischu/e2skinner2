@@ -519,7 +519,6 @@ namespace e2skinner2.Frames
             this.btnSkinned.CheckOnClick = true;
             this.btnSkinned.CheckState = System.Windows.Forms.CheckState.Checked;
             this.btnSkinned.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSkinned.Image = ((System.Drawing.Image)(resources.GetObject("btnSkinned.Image")));
             this.btnSkinned.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSkinned.Name = "btnSkinned";
             this.btnSkinned.Size = new System.Drawing.Size(53, 22);
@@ -532,7 +531,6 @@ namespace e2skinner2.Frames
             this.btnSkinnedScreen.CheckOnClick = true;
             this.btnSkinnedScreen.CheckState = System.Windows.Forms.CheckState.Checked;
             this.btnSkinnedScreen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSkinnedScreen.Image = ((System.Drawing.Image)(resources.GetObject("btnSkinnedScreen.Image")));
             this.btnSkinnedScreen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSkinnedScreen.Name = "btnSkinnedScreen";
             this.btnSkinnedScreen.Size = new System.Drawing.Size(69, 22);
@@ -545,7 +543,6 @@ namespace e2skinner2.Frames
             this.btnSkinnedLabel.CheckOnClick = true;
             this.btnSkinnedLabel.CheckState = System.Windows.Forms.CheckState.Checked;
             this.btnSkinnedLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSkinnedLabel.Image = ((System.Drawing.Image)(resources.GetObject("btnSkinnedLabel.Image")));
             this.btnSkinnedLabel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSkinnedLabel.Name = "btnSkinnedLabel";
             this.btnSkinnedLabel.Size = new System.Drawing.Size(73, 22);
@@ -558,7 +555,6 @@ namespace e2skinner2.Frames
             this.btnSkinnedPixmap.CheckOnClick = true;
             this.btnSkinnedPixmap.CheckState = System.Windows.Forms.CheckState.Checked;
             this.btnSkinnedPixmap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSkinnedPixmap.Image = ((System.Drawing.Image)(resources.GetObject("btnSkinnedPixmap.Image")));
             this.btnSkinnedPixmap.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSkinnedPixmap.Name = "btnSkinnedPixmap";
             this.btnSkinnedPixmap.Size = new System.Drawing.Size(76, 22);
@@ -571,7 +567,6 @@ namespace e2skinner2.Frames
             this.btnSkinnedWidget.CheckOnClick = true;
             this.btnSkinnedWidget.CheckState = System.Windows.Forms.CheckState.Checked;
             this.btnSkinnedWidget.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSkinnedWidget.Image = ((System.Drawing.Image)(resources.GetObject("btnSkinnedWidget.Image")));
             this.btnSkinnedWidget.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSkinnedWidget.Name = "btnSkinnedWidget";
             this.btnSkinnedWidget.Size = new System.Drawing.Size(87, 22);
@@ -589,7 +584,6 @@ namespace e2skinner2.Frames
             this.btnFading.CheckOnClick = true;
             this.btnFading.CheckState = System.Windows.Forms.CheckState.Checked;
             this.btnFading.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnFading.Image = ((System.Drawing.Image)(resources.GetObject("btnFading.Image")));
             this.btnFading.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFading.Name = "btnFading";
             this.btnFading.Size = new System.Drawing.Size(47, 22);
@@ -620,7 +614,6 @@ namespace e2skinner2.Frames
             // 
             this.toolStripButton2.CheckOnClick = true;
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(42, 22);
@@ -652,7 +645,7 @@ namespace e2skinner2.Frames
             this.panelEditor.Controls.Add(this.toolStripEditor);
             this.panelEditor.Location = new System.Drawing.Point(3, 3);
             this.panelEditor.Name = "panelEditor";
-            this.panelEditor.Size = new System.Drawing.Size(958, 688);
+            this.panelEditor.Size = new System.Drawing.Size(958, 674);
             this.panelEditor.TabIndex = 2;
 #if !DESIGNER
             if (Platform.sysPlatform == Platform.ePlatform.MONO)
@@ -787,7 +780,7 @@ namespace e2skinner2.Frames
             // btnOpen
             // 
             this.btnOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnOpen.Image")));
+            this.btnOpen.Image = global::e2skinner2.Properties.Resources.OpenHH;
             this.btnOpen.ImageTransparentColor = System.Drawing.Color.Black;
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(36, 36);
@@ -798,7 +791,7 @@ namespace e2skinner2.Frames
             // 
             this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnSave.Enabled = false;
-            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.Image = global::e2skinner2.Properties.Resources.SaveHH;
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Black;
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(36, 36);
@@ -809,7 +802,7 @@ namespace e2skinner2.Frames
             // 
             this.btnUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnUndo.Enabled = false;
-            this.btnUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnUndo.Image")));
+            this.btnUndo.Image = global::e2skinner2.Properties.Resources.Undo;
             this.btnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUndo.Name = "btnUndo";
             this.btnUndo.Size = new System.Drawing.Size(36, 36);
@@ -820,7 +813,7 @@ namespace e2skinner2.Frames
             // 
             this.btnRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnRedo.Enabled = false;
-            this.btnRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnRedo.Image")));
+            this.btnRedo.Image = global::e2skinner2.Properties.Resources.Redo;
             this.btnRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRedo.Name = "btnRedo";
             this.btnRedo.Size = new System.Drawing.Size(36, 36);
@@ -837,7 +830,6 @@ namespace e2skinner2.Frames
             this.toolStripButton1.BackColor = System.Drawing.Color.Transparent;
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton1.ForeColor = System.Drawing.Color.Transparent;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(36, 36);
