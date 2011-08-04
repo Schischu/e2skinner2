@@ -26,7 +26,7 @@ namespace e2skinner2.Structures
             }
             catch (FileNotFoundException ex)
             {
-                Console.WriteLine("File not found! (" + cDataBase.getPath(image) + ")");
+                Console.WriteLine("File not found! (" + cDataBase.getPath(image) + ")\n" + ex);
                 return;
             }
             pX = x;

@@ -314,7 +314,7 @@ namespace e2skinner2.Logic
                                     uint colorValue = Convert.ToUInt32(colorString, 16);
                                     myXmlNode.Attributes["color"].Value = get(colorValue);
                                 }
-                                catch (Exception ex)
+                                catch (Exception)
                                 {
                                     myXmlNode.Attributes["color"].Value = colorString;
                                 }

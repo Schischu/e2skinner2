@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>e2skinner2</RootNamespace>
     <AssemblyName>e2skinner2</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ManifestCertificateThumbprint>4D01805CAE65F861C43BA8CB8CEBE06E36E3FE55</ManifestCertificateThumbprint>
     <ManifestKeyFile>e2skinner2_TemporaryKey.pfx</ManifestKeyFile>
@@ -19,9 +19,15 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>Resources\e2skinner2.ico</ApplicationIcon>
     <StartupObject>e2skinner2.Program</StartupObject>
-    <TargetFrameworkSubset>Client</TargetFrameworkSubset>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>e2skinner2.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
     <PublishUrl>c:\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -47,6 +53,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,6 +64,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ScintillaNet, Version=2.2.3581.19319, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
@@ -171,6 +182,37 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="elements\colored buttons.ess">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="elements\current\current date.ess">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="elements\current\current time.ess">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="fonts\ae_AlMateen.license">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="fonts\ae_AlMateen.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="fonts\lcd.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="fonts\md_khmurabi_10.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="fonts\nmsbd.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="fonts\tuxtxt.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -205,6 +247,15 @@
     <Compile Include="Structures\sGraphicWidget.cs" />
     <Compile Include="Structures\sResolution.cs" />
     <Compile Include="Structures\sWindowStyle.cs" />
+    <None Include="skins\DMConcinnity-HD\fonts\HandelGotD.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="skins\DMConcinnity-HD\fonts\HandelGotDBol.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="skins\Elgato-HD\num.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\OpenHH.bmp" />
@@ -227,7 +278,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework Client Profile</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -263,9 +314,6 @@
     <None Include="Resources\Lock-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="e2skinner2.pfx" />
-    <None Include="e2skinner2.snk" />
     <None Include="Properties\DataSources\e2skinner2.Logic.cProperties1.datasource" />
     <None Include="Resources\UnLock-icon.png" />
   </ItemGroup>
@@ -280,6 +328,1492 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Frames\UserControls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SciLexer.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SciLexerx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\background.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\bs_b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\bs_bl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\bs_br.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\bs_l.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\bs_r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\bs_t.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\bs_tl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\bs_tr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\grey.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\left.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\menu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\pvr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\repeat_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\repeat_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\right.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\shuffle_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\shuffle_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\buttons\yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extensions\directory.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extensions\movie.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extensions\music.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extensions\picture.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\blue.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_0.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_1.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_2.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_2_red.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_3.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_3_blue.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_4.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_5.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_6.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_7.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_8.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\button_9.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\cdtrack.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\directory.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\file_delete.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\file_new.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\folder_delete.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\folder_new.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\gplo.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\green.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\icon_glogo.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\link.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\link_bad.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\movie.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\music.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\package.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\picture.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\playlist.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\pythonscript.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\red.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\rss_atom.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\shellscript.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\torrent.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\unknown.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\extra_icons\yellow.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\picon_default - Kopie.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\picon_default.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\prev.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin.xml" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_0.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_1.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_2.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_3.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_4.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_5.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_6.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_7.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_8.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_9.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_blue.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_green.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_red.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\buttons\key_yellow.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\folder.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\ico_mp_forward.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\ico_mp_pause.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\ico_mp_play.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\ico_mp_rewind.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\ico_mp_stop.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\lock_error.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\lock_off.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\lock_on.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\marker.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\redx.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\icons\selectioncross.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_backspace.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_bg.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_clr.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_esc.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_left.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_ok.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_right.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_sel.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_shift.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_shift_sel.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font-2IB\skin_default\vkey_space.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extensions\directory.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extensions\movie.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extensions\music.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extensions\picture.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\blue.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_0.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_1.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_2.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_2_red.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_3.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_3_blue.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_4.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_5.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_6.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_7.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_8.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\button_9.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\cdtrack.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\directory.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\file_delete.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\file_new.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\folder_delete.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\folder_new.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\gplo.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\green.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\icon_glogo.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\link.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\link_bad.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\movie.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\music.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\package.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\picture.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\playlist.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\pythonscript.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\red.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\rss_atom.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\shellscript.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\torrent.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\unknown.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\extra_icons\yellow.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\picon_default - Kopie.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\picon_default.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\prev.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin.xml" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_0.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_1.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_2.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_3.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_4.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_5.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_6.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_7.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_8.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_9.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_blue.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_green.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_red.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\buttons\key_yellow.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\folder.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\ico_mp_forward.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\ico_mp_pause.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\ico_mp_play.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\ico_mp_rewind.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\ico_mp_stop.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\lock_error.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\lock_off.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\lock_on.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\marker.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\redx.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\icons\selectioncross.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_backspace.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_bg.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_clr.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_esc.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_left.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_ok.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_right.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_sel.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_shift.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_shift_sel.png" />
+    <Content Include="skins\DMConcinnity-HD\classic-font\skin_default\vkey_space.png" />
+    <Content Include="skins\DMConcinnity-HD\epg_more.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\epg_next.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\epg_now.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\extra.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_crypt_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_crypt_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_dolby_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_dolby_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_format_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_format_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_hd_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_hd_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_line_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_line_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_rec_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_txt_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\icons\ico_txt_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\infobar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\infobarle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\infobarmovie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\kerni.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\bp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\cal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\dvd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\hdd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\lan-sel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\lan-sel300.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\lan-seloff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\mainbg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\media.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\menubg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\menusel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\mpbg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\net.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\plugin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\power.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\scan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\scart.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel1040x30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel1040x35.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel1040x60.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel1040x75.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel360x30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel420x25.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel520x38.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel700x25.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel700x30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel700x75.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x110.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x120.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x35.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x60.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x70.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x75.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel780x90.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel800x50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel900x28.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel900x30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sel900x32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\seph.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\setup.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\setupbg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\sub.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\timer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\menu\weather.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\mmp\dvr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\mmp\dvr_pau.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\mmp\dvr_pl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\mmp\placeholder1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\mmp\repeat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\mmp\shuffle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\mmp\wallpaper.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\mp_buttons.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\mute.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extensions\directory.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extensions\movie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extensions\music.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extensions\picture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_2_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_3_blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\button_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\cdtrack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\directory.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\file_delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\file_new.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\folder_delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\folder_new.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\gplo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\icon_glogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\link.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\link_bad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\movie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\music.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\package.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\picture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\playlist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\pythonscript.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\rss_atom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\shellscript.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\torrent.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\unknown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\extra_icons\yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\picon_default - Kopie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\picon_default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\prev.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\buttons\key_yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\ico_mp_forward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\ico_mp_pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\ico_mp_play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\ico_mp_rewind.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\ico_mp_stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\lock_error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\lock_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\lock_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\marker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\redx.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\icons\selectioncross.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_backspace.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_clr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_esc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_left.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_ok.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_right.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_sel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_shift.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_shift_sel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font-2IB\skin_default\vkey_space.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extensions\directory.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extensions\movie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extensions\music.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extensions\picture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_2_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_3_blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\button_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\cdtrack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\directory.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\file_delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\file_new.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\folder_delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\folder_new.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\gplo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\icon_glogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\link.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\link_bad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\movie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\music.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\package.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\picture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\playlist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\pythonscript.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\rss_atom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\shellscript.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\torrent.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\unknown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\extra_icons\yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\picon_default - Kopie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\picon_default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\prev.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\buttons\key_yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\ico_mp_forward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\ico_mp_pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\ico_mp_play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\ico_mp_rewind.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\ico_mp_stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\lock_error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\lock_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\lock_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\marker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\redx.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\icons\selectioncross.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_backspace.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_clr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_esc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_left.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_ok.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_right.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_sel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_shift.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_shift_sel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\new-font\skin_default\vkey_space.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\no_coverArt.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\progress.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\progressmp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\rc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\rcold.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\repeat_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\repeat_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\ico_mp_forward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\ico_mp_pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\ico_mp_play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\ico_mp_rewind.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\ico_mp_stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\lock_error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\lock_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\lock_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\marker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\redx.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_default\icons\selectioncross.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\skin_work.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\star.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\starbg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\strip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\timeline-now.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\timeline.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\tsbg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\vol.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\DMConcinnity-HD\vol_back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\al.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\back1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\button.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\menu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\pvr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\repeat_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\repeat_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\buttons\yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\button_sel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\b_b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\b_bl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\b_br.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\b_l.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\b_r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\b_t.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\b_tl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\b_tr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\dvd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\extensions\directory.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\extensions\movie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\extensions\music.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\extensions\picture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\clock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\dmm_logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_crypt_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_crypt_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_dolby_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_dolby_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_format_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_format_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_hd_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_hd_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_txt_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\ico_txt_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\input_error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\input_info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\icons\input_question.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\info_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\kerni.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\menu_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\menu_bg2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\menu_bg3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\c-d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\camd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\console.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\dvd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\hdd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\help.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\home.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\key.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\movie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\net.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\par.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\pic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\power.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\setup.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\soft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\sub.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\timer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\tube.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\tv.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\wlan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\micon\world.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\movie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\mute.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\mytube.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\nim_active.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\picon_default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\prev.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\prog.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\prog_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\prog_mp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\prog_mp_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\rc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\rcold.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\rec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\sel40.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel100_1060.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel25.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel25nt.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel30_1060.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel32_1060.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel35.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel50_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel60.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sel75.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sep1080.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sep450.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sep610.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\selpic\sep750.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\sel_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\epgclock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\epgclock_add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\epgclock_post.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\epgclock_pre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\epgclock_prepost.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\ico_mp_forward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\ico_mp_pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\ico_mp_play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\ico_mp_rewind.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\ico_mp_stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\lock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\lock_error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\lock_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\lock_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\marker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\redx.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\icons\selectioncross.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_backspace.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_clr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_esc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_left.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_ok.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_right.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_sel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_shift.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_shift_sel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\skin_default\vkey_space.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\volume.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\volume_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\wizard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\Elgato-HD\yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="skins\noprev.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xml\converter.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xml\previewText.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

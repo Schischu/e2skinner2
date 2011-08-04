@@ -82,7 +82,7 @@ namespace e2skinner2.Frames
                 }
                 catch (Exception error)
                 {
-                    Console.WriteLine("Font painting failed! (" + pFont.Name + ")");
+                    Console.WriteLine("Font painting failed! (" + pFont.Name + ")\n" + error);
                     textBoxPreview.Text = "Font failed !";
                     return;
                 }

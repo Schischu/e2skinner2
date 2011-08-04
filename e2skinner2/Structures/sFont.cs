@@ -90,7 +90,7 @@ namespace e2skinner2.Structures
                 errorMessage += "or it is not a vaild font.\n";
                 errorMessage += "\n";
                 errorMessage += "Location:\n";
-                errorMessage += "\t" + new FileInfo(lookupPath).FullName + "\n";
+                errorMessage += "\t" + new FileInfo(lookupPath).FullName + "\n" + error + "\n";
 
                 MessageBox.Show(errorMessage,
                     "Error while loading fonts",

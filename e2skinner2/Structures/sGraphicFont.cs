@@ -82,7 +82,7 @@ namespace e2skinner2.Structures
             }
             catch (Exception error)
             {
-                Console.WriteLine("Font painting failed! (" + pFont.Name + ")");
+                Console.WriteLine("Font painting failed! (" + pFont.Name + ")\n" + error);
 
                 /*String errormessage = error.Message + ":\n\n";
                 errormessage += error.StackTrace + "\n\n";

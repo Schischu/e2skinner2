@@ -145,7 +145,7 @@ namespace e2skinner2.Structures
             {
                 pItemHeight = value;
 
-                if (pItemHeight != null)
+                //if (pItemHeight != null)
                 {
                     if (myNode.Attributes["itemHeight"] != null)
                         myNode.Attributes["itemHeight"].Value = pItemHeight.ToString();
@@ -155,9 +155,9 @@ namespace e2skinner2.Structures
                         myNode.Attributes["itemHeight"].Value = pItemHeight.ToString();
                     }
                 }
-                else
-                    if (myNode.Attributes["itemHeight"] != null)
-                        myNode.Attributes.RemoveNamedItem("itemHeight");
+                //else
+                //    if (myNode.Attributes["itemHeight"] != null)
+                //        myNode.Attributes.RemoveNamedItem("itemHeight");
                 
             }
         }
@@ -218,7 +218,7 @@ namespace e2skinner2.Structures
                 {
                     pBackgroundPixmap = Image.FromFile(cDataBase.getPath(pBackgroundPixmapName));
                 }
-                catch (FileNotFoundException e)
+                catch (FileNotFoundException)
                 {
                     pBackgroundPixmap = null;
                 }
@@ -230,7 +230,7 @@ namespace e2skinner2.Structures
                 {
                     pSelectionPixmap = Image.FromFile(cDataBase.getPath(pSelectionPixmapName));
                 }
-                catch (FileNotFoundException e)
+                catch (FileNotFoundException)
                 {
                     pSelectionPixmap = null;
                 }

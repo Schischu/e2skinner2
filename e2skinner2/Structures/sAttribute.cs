@@ -455,7 +455,7 @@ namespace e2skinner2.Structures
                     pRelativX = (Int32)(cDataBase.pResolution.getResolution().Xres - pWidth) >> 1 /*1/2*/;
                 else
                     pRelativX = Convert.ToInt32(sRelativeX);
-            } catch(OverflowException e)
+            } catch(OverflowException)
             {
                 pRelativX = 0;
             }

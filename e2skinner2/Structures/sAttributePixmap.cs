@@ -102,7 +102,7 @@ namespace e2skinner2.Structures
                     pPixmap = pixmap.Size;
                     pixmap.Dispose();
                 }
-                catch (FileNotFoundException e)
+                catch (FileNotFoundException)
                 {
                     pPixmap = new Size(0,0);
                     pHide = true;
