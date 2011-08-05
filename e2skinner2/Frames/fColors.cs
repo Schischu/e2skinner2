@@ -14,6 +14,10 @@ namespace e2skinner2.Frames
 {
     public partial class fColors : Form
     {
+        const Int32 COL_NAME = 0;
+        const Int32 COL_VALUE_AS_STRING = 1;
+        const Int32 COL_VALUE = 2;
+
         private cXMLHandler pXmlHandler = null;
 
         public fColors()
@@ -29,20 +33,20 @@ namespace e2skinner2.Frames
 
             foreach (sColor color in colors)
             {
-                Int32 colName = 0;
-                Int32 colValue = 1;
-                Int32 colColor = 2;
-
                 System.Windows.Forms.ListViewItem.ListViewSubItem[] subtitems = new System.Windows.Forms.ListViewItem.ListViewSubItem[3];
-                subtitems[colName] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
-                subtitems[colName].Text = color.pName;
 
-                subtitems[colValue] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
-                subtitems[colValue].Text = Convert.ToString(color.pValue, 16);
+                subtitems[COL_NAME] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
+                subtitems[COL_NAME].Text = color.pName;
 
-                subtitems[colColor] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
-                subtitems[colColor].BackColor = Color.FromArgb(255, color.pColor);
-                subtitems[colColor].Text = "    ";
+                subtitems[COL_VALUE_AS_STRING] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
+                if (color.isNamedColor)
+                    continue; //subtitems[COL_VALUE_AS_STRING].Text = color.pValueName;
+                else
+                    subtitems[COL_VALUE_AS_STRING].Text = "#" + Convert.ToString(color.pValue, 16);
+
+                subtitems[COL_VALUE] = new System.Windows.Forms.ListViewItem.ListViewSubItem();
+                subtitems[COL_VALUE].BackColor = Color.FromArgb(255, color.Color);
+                subtitems[COL_VALUE].Text = "    ";
 
                 ListViewItem item = new ListViewItem(subtitems, 0);
                 item.UseItemStyleForSubItems = false;
@@ -63,8 +67,8 @@ namespace e2skinner2.Frames
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                textBoxName.Text = listView1.SelectedItems[0].SubItems[0].Text;
-                Color color = Color.FromArgb(Convert.ToInt32(listView1.SelectedItems[0].SubItems[1].Text, 16));
+                textBoxName.Text = listView1.SelectedItems[0].SubItems[COL_NAME].Text;
+                Color color = listView1.SelectedItems[0].SubItems[COL_VALUE].BackColor;
                 textBoxValue.Text = Convert.ToString(color.ToArgb(), 16);
                 textBoxAlpha.Text = color.A.ToString();
                 textBoxRed.Text = color.R.ToString();
@@ -79,10 +83,12 @@ namespace e2skinner2.Frames
         {
             foreach (ListViewItem item in listView1.Items)
             {
-                String itmName = item.SubItems[0].Text;
-                UInt32 itmColor = Convert.ToUInt32(item.SubItems[1].Text, 16);
-
-                cDataBase.pColors.add((Object)new sColor(itmName, itmColor));
+                String itmName = item.SubItems[COL_NAME].Text;
+                String itmValueAsString = item.SubItems[COL_VALUE_AS_STRING].Text;
+                if (itmValueAsString[0] == '#')
+                    cDataBase.pColors.add((Object)new sColor(itmName, Convert.ToUInt32(itmValueAsString.Substring(1), 16)));
+                else
+                    cDataBase.pColors.add((Object)new sColor(itmName, itmValueAsString));
             }
 
             refresh();
@@ -100,6 +106,7 @@ namespace e2skinner2.Frames
 
                 cDataBase.pColors.add((Object)new sColor(itmName, itmColor));
             }
+            refresh();
         }
 
         private void textBoxValue_TextChanged(object sender, EventArgs e)
@@ -137,8 +144,8 @@ namespace e2skinner2.Frames
             textBoxBlue.Text = blue.ToString();
             pictureBoxColor.BackColor = Color.FromArgb(/*alpha, */(int)red, (int)green, (int)blue);
 
-            listView1.SelectedItems[0].SubItems[1].Text = textBoxValue.Text;
-            listView1.SelectedItems[0].SubItems[2].BackColor = pictureBoxColor.BackColor;
+            listView1.SelectedItems[0].SubItems[COL_VALUE_AS_STRING].Text = "#" + textBoxValue.Text;
+            listView1.SelectedItems[0].SubItems[COL_VALUE].BackColor = pictureBoxColor.BackColor;
         }
 
         private void textBoxAlpha_TextChanged(object sender, EventArgs e)
@@ -269,14 +276,14 @@ namespace e2skinner2.Frames
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Colors will be automatically removed if no screens are using it anylonger.");
+            MessageBox.Show("Unused colors are removed automatically.");
         }
 
 
         private void buttonRename_Click(object sender, EventArgs e)
         {
-            cDataBase.pColors.rename(pXmlHandler, listView1.SelectedItems[0].SubItems[0].Text, textBoxName.Text);
-            listView1.SelectedItems[0].SubItems[0].Text = textBoxName.Text;
+            cDataBase.pColors.rename(pXmlHandler, listView1.SelectedItems[0].SubItems[COL_NAME].Text, textBoxName.Text);
+            listView1.SelectedItems[0].SubItems[COL_NAME].Text = textBoxName.Text;
             Refresh();
         }
 

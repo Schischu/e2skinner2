@@ -36,9 +36,9 @@ namespace e2skinner2.Structures
             Graphics g = e.Graphics;
 
 
-            Color penColor = pColor.pColor;
+            Color penColor = pColor.Color;
             if (Logic.cProperties.getPropertyBool("enable_alpha"))
-                penColor = pColor.pColorAlpha;
+                penColor = pColor.ColorAlpha;
 
             if (pFilled)
                 g.FillRectangle(new SolidBrush(penColor), pX, pY, pWidth, pHeight);

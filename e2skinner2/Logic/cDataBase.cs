@@ -309,13 +309,15 @@ namespace e2skinner2.Logic
                     if (myXmlNode.NodeType != XmlNodeType.Element)
                         continue;
                     String colorString = myXmlNode.Attributes["value"].Value;
-                    UInt32 colorValue;
+                    sColor color;
                     if (colorString[0] == '#')
-                        colorValue = Convert.ToUInt32(colorString.Substring(1), 16);
+                    {
+                        UInt32 colorValue = Convert.ToUInt32(colorString.Substring(1), 16);
+                        color = new sColor(myXmlNode.Attributes["name"].Value, colorValue);
+                    }
                     else
-                        colorValue = ((sColor)pColors[colorString]).pValue;
+                        color = new sColor(myXmlNode.Attributes["name"].Value, colorString);
                     
-                    sColor color = new sColor(myXmlNode.Attributes["name"].Value, colorValue);
                     if (pColors[color.pName] == null)
                         pColors.Add(color.pName, color);
                     else
@@ -429,7 +431,7 @@ namespace e2skinner2.Logic
                 color.pName = to;
                 add(color);
 
-                string[] path = { "skin" };
+                string[] path = { /*"skin", */"colors" };
                 XmlNode Node = XmlHandler.XmlGetRootNodeElement(path);
 
                 renameColor(Node.ChildNodes, name, to);
@@ -555,14 +557,24 @@ namespace e2skinner2.Logic
 
                 foreach (sColor color in sorter)
                 {
-                    String value = Convert.ToString(color.pValue, 16);
-                    while (value.Length < 8)
-                        value = "0" + value;
+                    if (color.isNamedColor)
+                    {
+                        String[] attributes = { "color",
+                                            "name",  color.pName, 
+                                            "value", color.pValueName };
+                        XmlHandler.XmlAppendNode(colorNode, attributes);
+                    }
+                    else
+                    {
+                        String value = Convert.ToString(color.pValue, 16);
+                        while (value.Length < 8)
+                            value = "0" + value;
 
-                    String[] attributes = { "color",
+                        String[] attributes = { "color",
                                             "name",  color.pName, 
                                             "value", "#" + value };
-                    XmlHandler.XmlAppendNode(colorNode, attributes);
+                        XmlHandler.XmlAppendNode(colorNode, attributes);
+                    }
                 }
 
                 return true;

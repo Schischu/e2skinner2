@@ -98,6 +98,11 @@ namespace e2skinner2.Structures
                 pPixmapName = node.Attributes["pixmap"].Value;
                 try
                 {
+                    //PVMC Workaround
+                    if (pPixmapName.Contains("ProjectValerie"))
+                    {
+                        pPixmapName = pPixmapName.Substring(pPixmapName.IndexOf("ProjectValerie/skins/") + "ProjectValerie/skins/".Length);
+                    }
                     Image pixmap = Image.FromFile(cDataBase.getPath(pPixmapName));
                     pPixmap = pixmap.Size;
                     pixmap.Dispose();

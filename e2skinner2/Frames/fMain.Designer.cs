@@ -81,7 +81,8 @@ namespace e2skinner2.Frames
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.keyCaptureNotifyButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.btnAlpha = new System.Windows.Forms.ToolStripButton();
+            this.btnBackground = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelEditor = new System.Windows.Forms.Panel();
 #if !DESIGNER
@@ -122,6 +123,7 @@ namespace e2skinner2.Frames
                 ((System.ComponentModel.ISupportInitialize)(this.textBoxEditor2)).BeginInit();
 #endif
             this.toolStripEditor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -409,9 +411,9 @@ namespace e2skinner2.Frames
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(972, 714);
             this.tabControl1.TabIndex = 2;
-            this.tabControl1.Leave += new System.EventHandler(this.tabControl1_Leave);
             this.tabControl1.Enter += new System.EventHandler(this.tabControl1_Enter);
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
+            this.tabControl1.Leave += new System.EventHandler(this.tabControl1_Leave);
             // 
             // tabPage1
             // 
@@ -423,8 +425,8 @@ namespace e2skinner2.Frames
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Designer";
             this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.Leave += new System.EventHandler(this.tabControl1_Leave);
             this.tabPage1.Enter += new System.EventHandler(this.tabControl1_Enter);
+            this.tabPage1.Leave += new System.EventHandler(this.tabControl1_Leave);
             // 
             // panelDesigner
             // 
@@ -444,7 +446,7 @@ namespace e2skinner2.Frames
             // 
             // numericUpDownZoom
             // 
-            this.numericUpDownZoom.Location = new System.Drawing.Point(608, 4);
+            this.numericUpDownZoom.Location = new System.Drawing.Point(693, 4);
             this.numericUpDownZoom.Minimum = new decimal(new int[] {
             60,
             0,
@@ -474,16 +476,16 @@ namespace e2skinner2.Frames
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
             // trackBarZoom
             // 
             this.trackBarZoom.BackColor = System.Drawing.SystemColors.Control;
-            this.trackBarZoom.Location = new System.Drawing.Point(497, 3);
+            this.trackBarZoom.Location = new System.Drawing.Point(582, 3);
             this.trackBarZoom.Maximum = 100;
             this.trackBarZoom.Minimum = -60;
             this.trackBarZoom.Name = "trackBarZoom";
@@ -506,7 +508,8 @@ namespace e2skinner2.Frames
             this.toolStripSeparator5,
             this.toolStripSeparator6,
             this.keyCaptureNotifyButton,
-            this.toolStripButton2});
+            this.btnAlpha,
+            this.btnBackground});
             this.toolStripDesigner.Location = new System.Drawing.Point(0, 0);
             this.toolStripDesigner.Name = "toolStripDesigner";
             this.toolStripDesigner.Size = new System.Drawing.Size(954, 25);
@@ -610,15 +613,25 @@ namespace e2skinner2.Frames
             this.keyCaptureNotifyButton.Size = new System.Drawing.Size(23, 22);
             this.keyCaptureNotifyButton.Text = "Capturing Keyboard Events";
             // 
-            // toolStripButton2
+            // btnAlpha
             // 
-            this.toolStripButton2.CheckOnClick = true;
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(42, 22);
-            this.toolStripButton2.Text = "Alpha";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.btnAlpha.CheckOnClick = true;
+            this.btnAlpha.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnAlpha.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAlpha.Name = "btnAlpha";
+            this.btnAlpha.Size = new System.Drawing.Size(42, 22);
+            this.btnAlpha.Text = "Alpha";
+            this.btnAlpha.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // btnBackground
+            // 
+            this.btnBackground.CheckOnClick = true;
+            this.btnBackground.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnBackground.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnBackground.Name = "btnBackground";
+            this.btnBackground.Size = new System.Drawing.Size(75, 22);
+            this.btnBackground.Text = "Background";
+            this.btnBackground.Click += new System.EventHandler(this.btnBackground_Click);
             // 
             // tabPage2
             // 
@@ -868,9 +881,9 @@ namespace e2skinner2.Frames
             this.Name = "fMain";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "e2skinner v2.0.0.0";
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.fMain_KeyUp);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fMain_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fMain_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.fMain_KeyUp);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -895,6 +908,7 @@ namespace e2skinner2.Frames
             this.toolStripEditor.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
@@ -962,7 +976,7 @@ namespace e2skinner2.Frames
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripButton keyCaptureNotifyButton;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton btnAlpha;
         private System.Windows.Forms.TrackBar trackBarZoom;
         private System.Windows.Forms.NumericUpDown numericUpDownZoom;
         private System.Windows.Forms.ToolStripMenuItem reloadConverterxmlToolStripMenuItem;
@@ -979,6 +993,7 @@ namespace e2skinner2.Frames
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem deletToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripButton btnBackground;
     }
 }
 

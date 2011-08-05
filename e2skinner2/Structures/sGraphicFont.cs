@@ -127,9 +127,9 @@ namespace e2skinner2.Structures
             {
                 SizeF StringSize = g.MeasureString(pText, font);
 
-                Color penColor = pColor.pColor;
+                Color penColor = pColor.Color;
                 if (cProperties.getPropertyBool("enable_alpha"))
-                    penColor = pColor.pColorAlpha;
+                    penColor = pColor.ColorAlpha;
 
                 //int x = pX;
                 int y = pY;

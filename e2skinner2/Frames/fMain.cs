@@ -28,7 +28,8 @@ namespace e2skinner2.Frames
         {
             InitializeComponent();
 
-            toolStripButton2.Checked = cProperties.getPropertyBool("enable_alpha"); ;
+            btnAlpha.Checked = cProperties.getPropertyBool("enable_alpha");
+            btnBackground.Checked = cProperties.getPropertyBool("enable_backdrop"); ;
 
             if (Platform.sysPlatform != Platform.ePlatform.MONO)
                 textBoxEditor2.ConfigurationManager.Language = "xml";
@@ -236,7 +237,8 @@ namespace e2skinner2.Frames
                     {
                         //Draw Screen and its Elements
 
-                        pDesigner.drawBackground();
+                        if (cProperties.getPropertyBool("enable_backdrop"))
+                            pDesigner.drawBackground();
 
                         sAttribute subattr = null;
                         {
@@ -1371,7 +1373,7 @@ namespace e2skinner2.Frames
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            cProperties.setProperty("enable_alpha", toolStripButton2.Checked);
+            cProperties.setProperty("enable_alpha", btnAlpha.Checked);
 
             pictureBox1.Invalidate();
         }
@@ -1419,6 +1421,13 @@ namespace e2skinner2.Frames
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pQueue.redoCmd();
+        }
+
+        private void btnBackground_Click(object sender, EventArgs e)
+        {
+            cProperties.setProperty("enable_backdrop", btnBackground.Checked);
+            refresh();
+            //pictureBox1.Invalidate();
         }
     }
 }

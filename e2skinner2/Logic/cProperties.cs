@@ -59,6 +59,7 @@ namespace e2skinner2.Logic
             pDefaultTable.Add("path_skin", (string)"C:\\");
             pDefaultTable.Add("path", (string)"C:\\");
             pDefaultTable.Add("enable_alpha", (bool)true);
+            pDefaultTable.Add("enable_backdrop", (bool)true);
             pDefaultTable.Add("path_fonts", (string)"E:\\Visual Studio 2008\\e2skinner2\\fonts");
             pDefaultTable.Add("path_skins", (string)"./skins/");
 
@@ -87,9 +88,9 @@ namespace e2skinner2.Logic
         static public void setProperty(String name, bool value)
         {
             if (pTable[name] == null)
-                pTable.Add(name, value);
+                pTable.Add(name, value.ToString());
             else
-                pTable[name] = value;
+                pTable[name] = value.ToString();
         }
 
 

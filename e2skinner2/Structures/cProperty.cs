@@ -56,7 +56,7 @@ namespace e2skinner2.Structures
 
                 // draw that bitmap onto the surface provided.
                 if(color != null)
-                    pe.Graphics.FillRectangle(new SolidBrush(color.pColor), pe.Bounds);
+                    pe.Graphics.FillRectangle(new SolidBrush(color.Color), pe.Bounds);
                 else
                     pe.Graphics.DrawRectangle(new Pen(Color.Black, 1.0F), pe.Bounds);
             }

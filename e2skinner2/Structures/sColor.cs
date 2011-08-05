@@ -10,9 +10,30 @@ namespace e2skinner2.Structures
     public class sColor : IComparable
     {
         public String pName;
+        public Boolean isNamedColor = false;
         public UInt32 pValue;
-        public Color pColor;
-        public Color pColorAlpha;
+        public String pValueName;
+        protected Color pColor;
+        public Color Color {
+            get
+            {
+                if (isNamedColor)
+                    return ((sColor)cDataBase.pColors.get(pValueName)).Color;
+                else
+                    return pColor;
+            }
+        }
+        protected Color pColorAlpha;
+        public Color ColorAlpha
+        {
+            get
+            {
+                if (isNamedColor)
+                    return ((sColor)cDataBase.pColors.get(pValueName)).ColorAlpha;
+                else
+                    return pColorAlpha;
+            }
+        }
 
         public sColor(Color value)
         {
@@ -45,9 +66,21 @@ namespace e2skinner2.Structures
             pColor = Color.FromArgb((int)red, (int)green, (int)blue);
         }
 
+        public sColor(String name, String value)
+        {
+            pName = name;
+            pValueName = value;
+            isNamedColor = true;
+        }
+
         public int CompareTo(object obj)
         {
             sColor val = (sColor)obj;
+            if (this.isNamedColor && !val.isNamedColor) 
+                return 1;
+            else if (!this.isNamedColor && val.isNamedColor)
+                return -1;
+
             if (val.pName.CompareTo(this.pName) < 0)
                 return 1;
             else if (val.pName.Equals(this.pName))
