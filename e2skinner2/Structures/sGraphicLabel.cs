@@ -40,10 +40,13 @@ namespace e2skinner2.Structures
                     else if (((sAttributeLabel)pAttr).pPreviewText == "MAGIC#FALSE")
                         text = "";
 
-                    if (pAttr.pTransparent)
-                        new sGraphicFont(pAttr, pAttr.pAbsolutX, pAttr.pAbsolutY, text, ((sAttributeLabel)pAttr).pFontSize * (((float)((sAttributeLabel)pAttr).pFont.Scale) / 100.0F), ((sAttributeLabel)pAttr).pFont, ((sAttributeLabel)pAttr).pForegroundColor, ((sAttributeLabel)pAttr).pHalign, ((sAttributeLabel)pAttr).pValign).paint(sender, e);
-                    else
-                        new sGraphicFont(pAttr, pAttr.pAbsolutX, pAttr.pAbsolutY, text, ((sAttributeLabel)pAttr).pFontSize * (((float)((sAttributeLabel)pAttr).pFont.Scale) / 100.0F), ((sAttributeLabel)pAttr).pFont, ((sAttributeLabel)pAttr).pForegroundColor, ((sAttributeLabel)pAttr).pBackgroundColor == null ? new sColor(Color.Black) : ((sAttributeLabel)pAttr).pBackgroundColor, ((sAttributeLabel)pAttr).pHalign, ((sAttributeLabel)pAttr).pValign).paint(sender, e);
+                    if (((sAttributeLabel)pAttr).pFont != null)
+                    {
+                        if (pAttr.pTransparent)
+                            new sGraphicFont(pAttr, pAttr.pAbsolutX, pAttr.pAbsolutY, text, ((sAttributeLabel)pAttr).pFontSize * (((float)((sAttributeLabel)pAttr).pFont.Scale) / 100.0F), ((sAttributeLabel)pAttr).pFont, ((sAttributeLabel)pAttr).pForegroundColor, ((sAttributeLabel)pAttr).pHalign, ((sAttributeLabel)pAttr).pValign).paint(sender, e);
+                        else
+                            new sGraphicFont(pAttr, pAttr.pAbsolutX, pAttr.pAbsolutY, text, ((sAttributeLabel)pAttr).pFontSize * (((float)((sAttributeLabel)pAttr).pFont.Scale) / 100.0F), ((sAttributeLabel)pAttr).pFont, ((sAttributeLabel)pAttr).pForegroundColor, ((sAttributeLabel)pAttr).pBackgroundColor == null ? new sColor(Color.Black) : ((sAttributeLabel)pAttr).pBackgroundColor, ((sAttributeLabel)pAttr).pHalign, ((sAttributeLabel)pAttr).pValign).paint(sender, e);
+                    }
                 }
                 else
                 {

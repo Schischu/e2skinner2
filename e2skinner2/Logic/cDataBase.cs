@@ -70,91 +70,135 @@ namespace e2skinner2.Logic
                 ArrayList bordersets = new ArrayList();
 
                 string[] path = { /*"skin", */"windowstyle" };
-                XmlNode fontNode = XmlHandler.XmlGetRootNodeElement(path);
-                foreach (XmlNode myXmlNode in fontNode.ChildNodes)
+                XmlNode styleNode = XmlHandler.XmlGetRootNodeElement(path);
+                if (styleNode == null)
                 {
-                    if (myXmlNode.Name == "color")
-                    {
-                        if (colors[myXmlNode.Attributes["color"].Value] == null)
-                            colors.Add(myXmlNode.Attributes["name"].Value, pColors.get(myXmlNode.Attributes["color"].Value));
-                    }
-                    else if (myXmlNode.Name == "title")
-                    {
-                        String font = myXmlNode.Attributes["font"].Value;
-                        titlesize = Convert.ToSingle(font.Substring(font.IndexOf(';') + 1));
-                        font = font.Substring(0, font.IndexOf(';'));
-                        titlefont = getFont(font);
-                        xOff = Convert.ToInt32(myXmlNode.Attributes["offset"].Value.Substring(0, myXmlNode.Attributes["offset"].Value.IndexOf(',')));
-                        yOff = Convert.ToInt32(myXmlNode.Attributes["offset"].Value.Substring(myXmlNode.Attributes["offset"].Value.IndexOf(',') + 1));
-                    }
-                    else if (myXmlNode.Name == "borderset")
-                    {
-                        String pbpTopLeftName = "";
-                        String pbpTopName = "";
-                        String pbpTopRightName = "";
-                        String pbpLeftName = "";
-                        String pbpRightName = "";
-                        String pbpBottomLeftName = "";
-                        String pbpBottomName = "";
-                        String pbpBottomRightName = "";
+                    //<font filename= name= scale="90" />
+                    sFont font = new sFont(
+                        "Regular",
+                        "nmsbd.ttf",
+                        90,
+                        false
+                    );
+                    pFonts.Add(font.Name, font);
 
-                        //string[] path2 = { "skin", "windowstyle", "borderset" };
-                        //XmlNode fontNode2 = XmlHandler.XmlGetRootNodeElement(path2);
-                        foreach (XmlNode myXmlNode2 in /*fontNode2*/myXmlNode.ChildNodes)
-                        {
-                            if (myXmlNode2.Attributes["pos"].Value == "bpTopLeft")
-                            {
-                                pbpTopLeftName = myXmlNode2.Attributes["filename"].Value;
-                            }
-                            else if (myXmlNode2.Attributes["pos"].Value == "bpTop")
-                            {
-                                pbpTopName = myXmlNode2.Attributes["filename"].Value;
-                            }
-                            else if (myXmlNode2.Attributes["pos"].Value == "bpTopRight")
-                            {
-                                pbpTopRightName = myXmlNode2.Attributes["filename"].Value;
-                            }
-                            else if (myXmlNode2.Attributes["pos"].Value == "bpLeft")
-                            {
-                                pbpLeftName = myXmlNode2.Attributes["filename"].Value;
-                            }
-                            else if (myXmlNode2.Attributes["pos"].Value == "bpRight")
-                            {
-                                pbpRightName = myXmlNode2.Attributes["filename"].Value;
-                            }
-                            else if (myXmlNode2.Attributes["pos"].Value == "bpBottomLeft")
-                            {
-                                pbpBottomLeftName = myXmlNode2.Attributes["filename"].Value;
-                            }
-                            else if (myXmlNode2.Attributes["pos"].Value == "bpBottom")
-                            {
-                                pbpBottomName = myXmlNode2.Attributes["filename"].Value;
-                            }
-                            else if (myXmlNode2.Attributes["pos"].Value == "bpBottomRight")
-                            {
-                                pbpBottomRightName = myXmlNode2.Attributes["filename"].Value;
-                            }
-                        }
+                    colors.Add("Background", pColors.get("#25062748"));
+                    colors.Add("LabelForeground", pColors.get("#ffffff"));
+                    colors.Add("ListboxBackground", pColors.get("#25062748"));
+                    colors.Add("ListboxForeground", pColors.get("#ffffff"));
+                    colors.Add("ListboxSelectedBackground", pColors.get("#254f7497"));
+                    colors.Add("ListboxSelectedForeground", pColors.get("#ffffff"));
+                    colors.Add("ListboxMarkedBackground", pColors.get("#ff0000"));
+                    colors.Add("ListboxMarkedForeground", pColors.get("#ffffff"));
+                    colors.Add("ListboxMarkedAndSelectedBackground", pColors.get("#800000"));
+                    colors.Add("ListboxMarkedAndSelectedForeground", pColors.get("#ffffff"));
+                    colors.Add("WindowTitleForeground", pColors.get("#ffffff"));
+                    colors.Add("WindowTitleBackground", pColors.get("#25062748"));
 
-                        sWindowStyle.sBorderSet borderset = new sWindowStyle.sBorderSet(
-                            myXmlNode.Attributes["name"].Value,
-                            pbpTopLeftName, 
-                            pbpTopName, 
-                            pbpTopRightName, 
-                            pbpLeftName, 
-                            pbpRightName, 
-                            pbpBottomLeftName, 
-                            pbpBottomName, 
-                            pbpBottomRightName);
-                        bordersets.Add(borderset);
-                    }
+                    sWindowStyle.sBorderSet borderset = new sWindowStyle.sBorderSet(
+                                "bsWindow",
+                                "skin_default/b_tl.png",
+                                "skin_default/b_t.png",
+                                "skin_default/b_tr.png",
+                                "skin_default/b_l.png",
+                                "skin_default/b_r.png",
+                                "skin_default/b_bl.png",
+                                "skin_default/b_b.png",
+                                "skin_default/b_br.png");
+                    bordersets.Add(borderset);
+
+                    pWindowStyle = new sWindowStyle(getFont("Regular"), 20.0f, 33, 14, colors, (sWindowStyle.sBorderSet[])bordersets.ToArray(typeof(sWindowStyle.sBorderSet)));
                 }
+                else
+                {
+                    foreach (XmlNode myXmlNode in styleNode.ChildNodes)
+                    {
+                        if (myXmlNode.Name == "color")
+                        {
+                            if (colors[myXmlNode.Attributes["color"].Value] == null)
+                                colors.Add(myXmlNode.Attributes["name"].Value, pColors.get(myXmlNode.Attributes["color"].Value));
+                        }
+                        else if (myXmlNode.Name == "title")
+                        {
+                            String font = myXmlNode.Attributes["font"].Value;
+                            titlesize = Convert.ToSingle(font.Substring(font.IndexOf(';') + 1));
+                            font = font.Substring(0, font.IndexOf(';'));
+                            titlefont = getFont(font);
+                            xOff = Convert.ToInt32(myXmlNode.Attributes["offset"].Value.Substring(0, myXmlNode.Attributes["offset"].Value.IndexOf(',')));
+                            yOff = Convert.ToInt32(myXmlNode.Attributes["offset"].Value.Substring(myXmlNode.Attributes["offset"].Value.IndexOf(',') + 1));
+                        }
+                        else if (myXmlNode.Name == "borderset")
+                        {
+                            String pbpTopLeftName = "";
+                            String pbpTopName = "";
+                            String pbpTopRightName = "";
+                            String pbpLeftName = "";
+                            String pbpRightName = "";
+                            String pbpBottomLeftName = "";
+                            String pbpBottomName = "";
+                            String pbpBottomRightName = "";
 
-                pWindowStyle = new sWindowStyle(titlefont, titlesize, xOff, yOff, colors, (sWindowStyle.sBorderSet[])bordersets.ToArray(typeof(sWindowStyle.sBorderSet)));
+                            //string[] path2 = { "skin", "windowstyle", "borderset" };
+                            //XmlNode fontNode2 = XmlHandler.XmlGetRootNodeElement(path2);
+                            foreach (XmlNode myXmlNode2 in /*fontNode2*/myXmlNode.ChildNodes)
+                            {
+                                if (myXmlNode2.Attributes["pos"].Value == "bpTopLeft")
+                                {
+                                    pbpTopLeftName = myXmlNode2.Attributes["filename"].Value;
+                                }
+                                else if (myXmlNode2.Attributes["pos"].Value == "bpTop")
+                                {
+                                    pbpTopName = myXmlNode2.Attributes["filename"].Value;
+                                }
+                                else if (myXmlNode2.Attributes["pos"].Value == "bpTopRight")
+                                {
+                                    pbpTopRightName = myXmlNode2.Attributes["filename"].Value;
+                                }
+                                else if (myXmlNode2.Attributes["pos"].Value == "bpLeft")
+                                {
+                                    pbpLeftName = myXmlNode2.Attributes["filename"].Value;
+                                }
+                                else if (myXmlNode2.Attributes["pos"].Value == "bpRight")
+                                {
+                                    pbpRightName = myXmlNode2.Attributes["filename"].Value;
+                                }
+                                else if (myXmlNode2.Attributes["pos"].Value == "bpBottomLeft")
+                                {
+                                    pbpBottomLeftName = myXmlNode2.Attributes["filename"].Value;
+                                }
+                                else if (myXmlNode2.Attributes["pos"].Value == "bpBottom")
+                                {
+                                    pbpBottomName = myXmlNode2.Attributes["filename"].Value;
+                                }
+                                else if (myXmlNode2.Attributes["pos"].Value == "bpBottomRight")
+                                {
+                                    pbpBottomRightName = myXmlNode2.Attributes["filename"].Value;
+                                }
+                            }
+
+                            sWindowStyle.sBorderSet borderset = new sWindowStyle.sBorderSet(
+                                myXmlNode.Attributes["name"].Value,
+                                pbpTopLeftName,
+                                pbpTopName,
+                                pbpTopRightName,
+                                pbpLeftName,
+                                pbpRightName,
+                                pbpBottomLeftName,
+                                pbpBottomName,
+                                pbpBottomRightName);
+                            bordersets.Add(borderset);
+                        }
+                    }
+
+                    pWindowStyle = new sWindowStyle(titlefont, titlesize, xOff, yOff, colors, (sWindowStyle.sBorderSet[])bordersets.ToArray(typeof(sWindowStyle.sBorderSet)));
+                }
             }
 
             public Object get()
             {
+                // Valerie workaround till font loading is supported by skins
+                // At this point the font should be loaded
+                if (pWindowStyle.pFont == null) pWindowStyle.pFont = getFont("Regular");
                 return (Object)pWindowStyle;
             }
 
@@ -264,8 +308,14 @@ namespace e2skinner2.Logic
                 {
                     if (myXmlNode.NodeType != XmlNodeType.Element)
                         continue;
-
-                    sColor color = new sColor(myXmlNode.Attributes["name"].Value, Convert.ToUInt32(myXmlNode.Attributes["value"].Value.Substring(1), 16));
+                    String colorString = myXmlNode.Attributes["value"].Value;
+                    UInt32 colorValue;
+                    if (colorString[0] == '#')
+                        colorValue = Convert.ToUInt32(colorString.Substring(1), 16);
+                    else
+                        colorValue = ((sColor)pColors[colorString]).pValue;
+                    
+                    sColor color = new sColor(myXmlNode.Attributes["name"].Value, colorValue);
                     if (pColors[color.pName] == null)
                         pColors.Add(color.pName, color);
                     else
@@ -574,18 +624,57 @@ namespace e2skinner2.Logic
 
             string[] path = { /*"skin", */"fonts" };
             XmlNode fontNode = XmlHandler.XmlGetRootNodeElement(path);
-            foreach (XmlNode myXmlNode in fontNode.ChildNodes)
+            if (fontNode == null)
             {
-                if (myXmlNode.NodeType != XmlNodeType.Element)
+                //PVMC Workaround till proper fonts for plugins is implemented in enigma2
+                //We expect that the fontloader pseudo screen is the first screen in the skin
+                path[0] = "screen";
+                fontNode = XmlHandler.XmlGetRootNodeElement(path);
+                if (fontNode.Attributes["name"].Value == "PVMC_FontLoader")
+                {
+                    Hashtable elements = new Hashtable();
+                    foreach (XmlNode myXmlNode in fontNode.ChildNodes)
+                    {
+                        if (myXmlNode.NodeType != XmlNodeType.Element)
+                            continue;
+                        elements.Add(myXmlNode.Attributes["name"].Value, myXmlNode.Attributes["text"].Value);
+                    }
+
+                    Int32 api = Convert.ToInt32(elements["API"] != null ? elements["API"] : "1");
+                    if (api >= 2)
+                    {
+                        Int32 count = Convert.ToInt32(elements["COUNT"] != null ? elements["COUNT"] : "0");
+                        for (int i = 0; i < count; i++)
+                        {
+                            string[] fontString = ((string)elements["FONT" + i.ToString()]).Split('|');
+
+                            sFont font = new sFont(
+                                fontString[1],
+                                fontString[0],
+                                Convert.ToInt32(fontString[2]),
+                                fontString[3] != "False"
+                            );
+                            pFonts.Add(font.Name, font);
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                foreach (XmlNode myXmlNode in fontNode.ChildNodes)
+                {
+                    if (myXmlNode.NodeType != XmlNodeType.Element)
                         continue;
 
-                sFont font = new sFont(
-                    myXmlNode.Attributes["name"].Value,
-                    myXmlNode.Attributes["filename"].Value,
-                    Convert.ToInt32(myXmlNode.Attributes["scale"] != null ? myXmlNode.Attributes["scale"].Value : "100"),
-                    Convert.ToInt32(myXmlNode.Attributes["replacement"] != null ? myXmlNode.Attributes["replacement"].Value : "0") != 0
-                );
-                pFonts.Add(font.Name, font);
+                    sFont font = new sFont(
+                        myXmlNode.Attributes["name"].Value,
+                        myXmlNode.Attributes["filename"].Value,
+                        Convert.ToInt32(myXmlNode.Attributes["scale"] != null ? myXmlNode.Attributes["scale"].Value : "100"),
+                        Convert.ToInt32(myXmlNode.Attributes["replacement"] != null ? myXmlNode.Attributes["replacement"].Value : "0") != 0
+                    );
+                    pFonts.Add(font.Name, font);
+                }
             }
         }
 

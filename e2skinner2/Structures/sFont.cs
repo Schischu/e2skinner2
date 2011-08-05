@@ -30,6 +30,8 @@ namespace e2skinner2.Structures
         public sFont(String name, String path, int scale, bool replacement)
         {
             String fontPath = cProperties.getProperty("path_fonts");
+            String skinPath = cProperties.getProperty("path_skin");
+            String skinsPath = cProperties.getProperty("path");
 
             pfc = new PrivateFontCollection();
 
@@ -43,21 +45,34 @@ namespace e2skinner2.Structures
             //Lets check all posibilities
             Filename = Path.Substring(Path.LastIndexOf('/')>0?Path.LastIndexOf('/')+1:0);
             String AbsolutPathFont = fontPath + "/" + Filename;
+            String AbsolutPathSkinPathFont = skinsPath + "/" + skinPath + "/" + Filename;
             String RelativPathFont = Path;
+            String RelativPathSkinPathFont = skinsPath + "/" + skinPath + "/" + Path;
             RelativPathFont = Path;
             RelativPathFont = RelativPathFont.Replace("enigma2", "");
             RelativPathFont = RelativPathFont.Replace("usr", "");
             RelativPathFont = RelativPathFont.Replace("local", "");
             RelativPathFont = RelativPathFont.Replace("share", "");
             RelativPathFont = RelativPathFont.Replace("var", "");
-            RelativPathFont = cProperties.getProperty("path") + "/" + RelativPathFont;
+            RelativPathFont = skinsPath + "/" + RelativPathFont;
+
+            AbsolutPathFont = AbsolutPathFont.Replace("\\", "/");
+            AbsolutPathSkinPathFont = AbsolutPathSkinPathFont.Replace("\\", "/");
+            RelativPathFont = RelativPathFont.Replace("\\", "/");
+            RelativPathSkinPathFont = RelativPathSkinPathFont.Replace("\\", "/");
+
+
             //RelativPathFont = fontPath.Replace("fonts", "") + RelativPathFont;
 
             String lookupPath = "";
             if (File.Exists(AbsolutPathFont))
                 lookupPath = new FileInfo(AbsolutPathFont).FullName;
+            else if (File.Exists(AbsolutPathSkinPathFont))
+                lookupPath = new FileInfo(AbsolutPathSkinPathFont).FullName;
             else if (File.Exists(RelativPathFont))
                 lookupPath = new FileInfo(RelativPathFont).FullName;
+            else if (File.Exists(RelativPathSkinPathFont))
+                lookupPath = new FileInfo(RelativPathSkinPathFont).FullName;
             else
             {
                 String errorMessage = "";
@@ -66,7 +81,9 @@ namespace e2skinner2.Structures
                 errorMessage += "\n";
                 errorMessage += "Search Locations:\n";
                 errorMessage += "\t" + new FileInfo(AbsolutPathFont).FullName + "\n";
+                errorMessage += "\t" + new FileInfo(AbsolutPathSkinPathFont).FullName + "\n";
                 errorMessage += "\t" + new FileInfo(RelativPathFont).FullName + "\n";
+                errorMessage += "\t" + new FileInfo(RelativPathSkinPathFont).FullName + "\n";
 
                 MessageBox.Show(errorMessage,
                     "Error while loading fonts",
